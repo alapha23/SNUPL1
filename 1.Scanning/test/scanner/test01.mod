@@ -88,3 +88,5 @@ false
 "hello, world!"
 "this\tis\ta\ttab!"
 "a"
+"dsa\\a"
+

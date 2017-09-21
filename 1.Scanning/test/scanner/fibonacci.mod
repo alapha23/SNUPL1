@@ -3,7 +3,10 @@
 //
 module fibonacci;
 
+procedure temp;
+
 var n: integer;
+integer ianf
 
 // fib(n: integer): integer
 // compute the fibonacci number of n. n >= 0

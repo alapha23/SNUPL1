@@ -10,6 +10,8 @@ var A : integer[5];
     i : integer;
     b : boolean;
     c : char;
+ifsome
+varwFh:
 
 procedure print_array(array: integer[]);
 begin

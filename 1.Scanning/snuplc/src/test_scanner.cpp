@@ -50,6 +50,8 @@ int main(int argc, char *argv[])
 
     while (s->Good()) {
       CToken t = s->Get();
+     if (t.GetType() == tComment)
+     	continue;
       cout << "  " << t << endl;
       if (t.GetType() == tEOF) break;
     }

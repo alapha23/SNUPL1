@@ -48,6 +48,8 @@ using namespace std;
 // token names
 //
 #define TOKEN_STRLEN 16
+#define IS_IDENT(c) (((c >= 'a') && (c <= 'z')) || (( c >= 'A') && (c <= 'Z') ) || (c=='_') || (( c <= 0x39) && (c >= 0x30))) 
+
 
 char ETokenName[][TOKEN_STRLEN] = {
   "tIdent",                         ///< ident
@@ -220,7 +222,7 @@ string CToken::escape(const string text)
       case '\t': s += "\\t";  break;
       case '\0': s += "\\0";  break;
       case '\'': s += "\\'";  break;
-      case '\"': s += "\\\""; break;
+      case '\"': s += "\""; break;
       case '\\': s += "\\\\"; break;
       default :  s += *t;
     }
@@ -254,7 +256,6 @@ CScanner::CScanner(istream *in)
   _line = _char = 1;
   _token = NULL;
   _good = in->good(); 
-  _temp = "";
   NextToken();
 }
 
@@ -266,7 +267,6 @@ CScanner::CScanner(string in)
   _line = _char = 1;
   _token = NULL;
   _good = true;
-  _temp = "";
   NextToken();
 }
 
@@ -340,7 +340,7 @@ CToken* CScanner::Scan()
   if (!_in->good()) return NewToken(tIOError);
 
   c = GetChar();
-  tokval = c;
+  tokval = "";
   token = tUndefined;
 
 __REPARSE:
@@ -360,182 +360,447 @@ __REPARSE:
     case 'm':
 	if(_in->peek() == 'o')
 	{
-		tokval = "";		
-		tokval += GetChar(5);
-	}else goto __DEFAULT;
-	if (tokval.compare("odule") == 0)	
-		token = tModule;
-	while (_in->peek() == ' ') GetChar();
-
-	tokval = "";
-	while (_in->peek() != '\n') tokval +=GetChar();
-
-		break;
-    case 'p':
-	if(_in->peek() == 'r')
-	{		
-		tokval = "";				
-		tokval += GetChar(8);
-	}else goto __DEFAULT;
-	if (tokval.compare("rocedure") == 0)
-		token = tProcedure;
-	else{
-		_temp = "p";
-		_temp += tokval;
+		tokval = "m";		
+		tokval += GetChar();
+		if(_in->peek() == 'd') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'u') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'l') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'e') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( IS_IDENT(_in->peek()) )
+		{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+	}else {
+		c = GetChar();
+		cout << tokval << endl;
 		goto __DEFAULT;
 	}
+	token = tModule;
+	break;
+
+    case 'p':
+	if(_in->peek() == 'r')
+	{
+		tokval = "p";		
+		tokval +=GetChar();
+		if(_in->peek() == 'o') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'c') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'e') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'd') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'u') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'r') tokval += GetChar();		
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'e') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}		
+		if( IS_IDENT(_in->peek()) ) 
+		{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+	}else {
+		c = GetChar();
+		goto __DEFAULT;
+	}
+		token = tProcedure;
 	tokval = "";
-	if (_in->peek() == 32) GetChar();
+	if (_in->peek() == 32) GetChar();	
 	break;
 
     case 'f':
-        if(_in->peek() == 'a')
-		goto __FALSE;
-	if(_in->peek() == 'u')
+ 	if(_in->peek() == 'u')
 	{
-		tokval = "";		
-		tokval += GetChar(7);
-	}else goto __DEFAULT;
-	if (tokval.compare("unction") == 0)
-		token = tFunction;
-	while (_in->peek() == ' ') GetChar();
-	tokval = "";
-	while (_in->peek() != '\n') tokval +=GetChar();
+		tokval = "f";		
+		GetChar();
+		if(_in->peek() == 'n') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'c') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 't') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'i') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'o') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'n') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( !IS_IDENT(_in->peek()) ) tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+	}else if (_in->peek() == 'a') goto __FALSE;
+	else {
+		goto __DEFAULT;
+	}
+	token = tFunction;
 	break;
 
 __FALSE:
-	tokval = "";
-	tokval += GetChar(4);
-	if (tokval.compare("alse")==0)
-		token = tBoolConst;
-	while(_in->peek() == ' ') GetChar();
-	tokval = "";
-	while(_in->peek() != '\n') tokval += GetChar();
-	tokval = "false";
+	if(_in->peek() == 'a')
+	{
+		tokval = "f";		
+		tokval +=GetChar();
+		if(_in->peek() == 'l') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 's') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'e') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( !IS_IDENT(_in->peek()) ) tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+	}else {
+		c = GetChar();
+		goto __DEFAULT;
+	}
+	token = tBoolConst;
 	break;
 
     case 'v':
 	if(_in->peek() == 'a')
 	{
-		tokval = "";		
-		tokval += GetChar(2);
-	}else goto __DEFAULT;
-	if (tokval.compare("ar") == 0)
-		token = tVarDecl;		
-	while (_in->peek() == ' ') GetChar();
-
-	tokval = "";
-
+		tokval = "v";		
+		tokval +=GetChar();
+		if(_in->peek() == 'r') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( !IS_IDENT(_in->peek()) ) tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		
+	}
+	token = tVarDecl;
 	break;
+
 
     case 'i':
     	if(_in->peek() == 'f')
-	{
+	{	
+		tokval = "i";
+		tokval += GetChar();
+		if( IS_IDENT(_in->peek()) ) {
+			c = GetChar();
+			goto __DEFAULT;
+		}
 		token = tIf;
-		GetChar();
 		break;
 	}else if(_in->peek() == 'n')
 	{
-		tokval = "";		
-		tokval += GetChar(6);
-	}else goto __DEFAULT; 
-	if (tokval.compare("nteger") == 0)
+		tokval = "i";		
+		tokval +=GetChar();
+		if(_in->peek() == 't') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'e') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'g') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'e') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'r') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( IS_IDENT(_in->peek()) )
+		{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+	}else {
+		goto __DEFAULT;
+	}
 		token = tInteger;
-	while (_in->peek() == ' ') GetChar();
-	tokval = "";
 	break;
 
      case 'b':
 	if(_in->peek() == 'o')
-	{
-		tokval = "";		
-		tokval += GetChar(6);
 		goto __BOOLEAN;
-	}else if (_in->peek() == 'e')
-	{
-		tokval = "";
-		tokval += GetChar(4);
+	else if (_in->peek() == 'e')
 		goto __BEGIN;
+	else 
+		goto __DEFAULT;
+	
+
+__BOOLEAN:
+	if(_in->peek() == 'o')
+	{
+		tokval = "b";		
+		tokval +=GetChar();
+		if(_in->peek() == 'o') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'l') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'e') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'a') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'n') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( IS_IDENT(_in->peek()) )
+		{
+			goto __DEFAULT;
+		}
 	}else {
 		goto __DEFAULT;
 	}
-
-__BOOLEAN:
-	if (tokval.compare("oolean") == 0)
-		token = tBoolean;
-	while (_in->peek() == ' ') GetChar();
-	tokval = "";
+	token = tBoolean;
 	break;
 __BEGIN:
-	if (tokval.compare("egin") == 0)
-		token = tBegin;
-	while (_in->peek() == ' ') GetChar();
-	tokval = "";
-	while (_in->peek() != '\n') tokval +=GetChar();
+	if(_in->peek() == 'e')
+	{
+		tokval = "b";		
+		tokval +=GetChar();
+		if(_in->peek() == 'g') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'i') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'n') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( IS_IDENT(_in->peek()) )
+		{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+	}else {
+		goto __DEFAULT;
+	}
+	token = tBegin;
 	break;
 
     case 'c':
 	if(_in->peek() == 'h')
 	{
-		tokval = "";		
-		tokval += GetChar(3);
-	}else goto __DEFAULT;
-	if (tokval.compare("har") == 0)
-		token = tChar;
-	while (_in->peek() == ' ') GetChar();
-
-	tokval = "";
-//	while (_in->peek() != '\n') tokval +=GetChar();
+		tokval = "c";		
+		tokval +=GetChar();
+		if(_in->peek() == 'a') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'r') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( IS_IDENT(_in->peek()) )
+		{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+	}else {
+		goto __DEFAULT;
+	}
+	token = tChar;
 	break;
 
 
     case 'e':
         if(_in->peek() == 'l')
 		goto __ELSE;
-	if(_in->peek() == 'n')
+	else if(_in->peek() == 'n')
 	{
-		tokval = "";		
-		tokval += GetChar(2);
-	}else goto __DEFAULT;
-	if (tokval.compare("nd") == 0)
-		token = tEnd;
-	while (_in->peek() == ' ') GetChar();
-	tokval = "";
-//	while (_in->peek() != '\n') tokval +=GetChar();
+		tokval = "e";
+		tokval += GetChar();
+		if(_in->peek() == 'd') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( IS_IDENT(_in->peek()) ) 
+		{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+	}else goto __DEFAULT;	
+	token = tEnd;
 	break;
 __ELSE:
-	tokval ="";
-	tokval += GetChar(3);
-	if (tokval.compare("lse") == 0)
-		token = tElse;
-/*	while (_in->peek() == ' ') GetChar();
-	tokval = "";
-	while (_in->peek() != '\n') tokval +=GetChar();*/
+	if(_in->peek() == 'l')
+	{
+		tokval = "e";		
+		tokval +=GetChar();
+		if(_in->peek() == 's') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'e') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( IS_IDENT(_in->peek()) )
+		{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+	}else {
+		goto __DEFAULT;
+	}
+	token = tElse;
 	break;
 
      case 't':
      	if(_in->peek() == 'r')
 		goto __TRUE;	
 	if(_in->peek() == 'h')
-	{
-		tokval = "";		
-		tokval += GetChar(3);
-	}else goto __DEFAULT;
-	if (tokval.compare("hen") == 0)
+	{	
+		tokval = "t";		
+		tokval +=GetChar();
+		if(_in->peek() == 'e') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'n') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( IS_IDENT(_in->peek()) ) 
+		{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+	} else goto __DEFAULT;
 		token = tThen;
 	break;
-/*	while (_in->peek() == ' ') GetChar();
-	tokval = "";
-	while (_in->peek() != '\n') tokval +=GetChar();
-	break;*/
 __TRUE:
-	tokval ="";
-	tokval += GetChar(3);
-	if (tokval.compare("rue") == 0)
-		token = tBoolConst;
-	while (_in->peek() == ' ') GetChar();
-	tokval = "";
-	while (_in->peek() != '\n') tokval +=GetChar();
+	if(_in->peek() == 'r')
+	{
+		tokval = "t";		
+		tokval +=GetChar();
+		if(_in->peek() == 'u') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'e') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( IS_IDENT(_in->peek()) ) 
+		{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+	}else {
+		goto __DEFAULT;
+	}
+	token = tBoolConst;	
 	tokval = "true";
 	break;
 
@@ -543,28 +808,69 @@ __TRUE:
      case 'w':
 	if(_in->peek() == 'h')
 	{
-		tokval = "";		
-		tokval += GetChar(4);
-	}else goto __DEFAULT; 
-	if (tokval.compare("hile") == 0)
-		token = tWhile;
-	while (_in->peek() == ' ') GetChar();
-	tokval = "";
-	while (_in->peek() != '\n') tokval +=GetChar();
+		tokval = "w";		
+		tokval +=GetChar();
+		if(_in->peek() == 'i') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'l') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'e') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( IS_IDENT(_in->peek()) )  
+		{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+	}else {
+		goto __DEFAULT;
+	}
+	token = tWhile;
 	break;
 
 
      case 'r':
 	if(_in->peek() == 'e')
 	{
-		tokval = "";		
-		tokval += GetChar(5);
-	}else goto __DEFAULT; 
-	if (tokval.compare("eturn") == 0)
-		token = tReturn;
-	while (_in->peek() == ' ') GetChar();
-	tokval = "";
-	while (_in->peek() != '\n') tokval +=GetChar();
+		tokval = "r";		
+		tokval +=GetChar();
+		if(_in->peek() == 't') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'u') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'r') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if(_in->peek() == 'n') tokval += GetChar();
+		else{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+		if( IS_IDENT(_in->peek()) ) 
+		{
+			c = GetChar();
+			goto __DEFAULT;
+		}
+	}else {
+		goto __DEFAULT;
+	}
+	token = tReturn;
 	break;
 
     case 'd':
@@ -597,8 +903,12 @@ __TRUE:
 	token = tOr;
 	break;
     case '+':
+      token = tPlusMinus;
+      tokval = "+";
+      break;
     case '-':
       token = tPlusMinus;
+      tokval = "-";
       break;
 
     case '&':
@@ -636,14 +946,18 @@ __TRUE:
 	token = tRelOp;
 	break;
     case '<':
-    	if (_in->peek() == '=')
+    	if (_in->peek() == '='){
 		tokval = "<=";
+		GetChar();
+	}
 	else tokval = "<";
 	token = tRelOp;
 	break;
     case '>':
-    	if (_in->peek() == '=')
+    	if (_in->peek() == '='){
 		tokval = ">=";
+		GetChar();
+	}
 	else tokval = ">";    
       token = tRelOp;
       break;
@@ -663,7 +977,7 @@ __TRUE:
       break;
 
     case ')':
-      token = tRParens;
+      token =tRParens;
       break;
 
     case '[':
@@ -709,8 +1023,6 @@ __TRUE:
 		}
 
 
-
-
 		tokval += GetChar();
 
 __L2:		
@@ -720,6 +1032,11 @@ __L2:
 		}
 	}
 	GetChar();
+	
+	tokval += "\"";
+	tokval += tokval;
+	tokval = tokval.substr((tokval.length()/2)-1 );
+	tokval = tokval.substr(0,tokval.length()-2)+tokval.substr(tokval.length()-2);
 	break;
 
     case '\'':
@@ -776,14 +1093,14 @@ __L1:
 	break;
     default:
 __DEFAULT:
-	if(_temp!=""){
+/*	if(_temp!=""){
 		const char * re_parse = _temp.c_str();
 		_temp = _temp.substr(1, _temp.length());
 		goto __REPARSE;
-	}else{
-		tokval = "";
+	}else*/{
 		bool b;
-		b = ((c >= 'a') && (c <= 'z')) || (( c >= 'A') && (c <= 'Z') ) || (c=='_') || (( c <= 0x39) && (c >= 0x30)) ;
+		b = IS_IDENT(c);
+		//b = ((c >= 'a') && (c <= 'z')) || (( c >= 'A') && (c <= 'Z') ) || (c=='_') || (( c <= 0x39) && (c >= 0x30)) ;
 		if(b){	
 			token = tIdent;
 			do{
@@ -792,7 +1109,7 @@ __DEFAULT:
 				if (b)	c = GetChar();
 				else break;
 			}while(1);
-		token = tIdent;
+			token = tIdent;
 		}else{
 			token = tUndefined;
 			tokval = c;
@@ -808,6 +1125,18 @@ char CScanner::GetChar()
   if (c == '\n') { _line++; _char = 1; } else _char++;
   return c;
 }
+
+void CScanner::RollBack(const char *__t, char c)
+{
+	while(*__t != '\0'){
+		_in->putback(*(__t));
+		__t++;
+		_char--;
+	}
+	_in->putback(c);
+	_char--;
+}
+
 
 string CScanner::GetChar(int n)
 {
@@ -830,8 +1159,8 @@ void CScanner::error(const char *c)
 	}while(*c != 0);
 	cout << endl;
 }
-
-char NEXT(void)
+/*
+char CScanner::NEXT(void)
 {
 	char _next;
 	if (_temp=="")
@@ -839,4 +1168,4 @@ char NEXT(void)
 	else 
 
 }
-
+*/

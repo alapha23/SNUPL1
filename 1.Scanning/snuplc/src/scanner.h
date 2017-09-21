@@ -309,6 +309,7 @@ class CScanner {
     /// @retval false character is not white space
     bool IsWhite(char c) const;
     char NEXT(void);
+    void RollBack(const char *, char);
     /// @}
     void error(const char *c);
 
@@ -322,8 +323,8 @@ class CScanner {
     int     _char;                  ///< current stream position (character pos)
     int     _saved_line;            ///< saved stream position (line)
     int     _saved_char;            ///< saved stream position (character pos)
-    const char * re_parse;
-    string  _temp;		    ///< saved string template
+//    const char * re_parse;
+//    string  _temp;		    ///< saved string template
     CToken *_token;                 ///< next token in input stream
 };
 
