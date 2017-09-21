@@ -215,7 +215,7 @@ string CToken::escape(const string text)
       case '\n': s += "\\n";  break;
       case '\t': s += "\\t";  break;
       case '\0': s += "\\0";  break;
-      case '\'': s += "\\'";  break;
+      case '\'': s += "\'";  break;
       case '\"': s += "\""; break;
       case '\\': s += "\\\\"; break;
       default :  s += *t;
@@ -1072,6 +1072,11 @@ __L1:
 			break;
 		}
 	}
+	tokval += '\'';
+	tokval += tokval;
+	tokval = tokval.substr((tokval.length()/2)-1 );
+	tokval = tokval.substr(0,tokval.length()-2)+tokval.substr(tokval.length()-2);
+	
 	break;
     default:
 __DEFAULT:
@@ -1109,18 +1114,6 @@ char CScanner::GetChar()
   return c;
 }
 
-void CScanner::RollBack(const char *__t, char c)
-{
-	while(*__t != '\0'){
-		_in->putback(*(__t));
-		__t++;
-		_char--;
-	}
-	_in->putback(c);
-	_char--;
-}
-
-
 string CScanner::GetChar(int n)
 {
   string str;
@@ -1133,22 +1126,4 @@ bool CScanner::IsWhite(char c) const
   return ((c == ' ') || (c == '\n'));
 }
 
-void CScanner::error(const char *c)
-{
-	do
-	{
-	cout << *c;
-	c++;
-	}while(*c != 0);
-	cout << endl;
-}
-/*
-char CScanner::NEXT(void)
-{
-	char _next;
-	if (_temp=="")
-		return _in->peek();
-	else 
 
-}
-*/

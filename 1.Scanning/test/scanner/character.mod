@@ -24,3 +24,6 @@ begin
   WriteLn("Hello, world!\n")
 end character.
 
+
+'f'
+

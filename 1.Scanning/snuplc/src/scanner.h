@@ -305,10 +305,7 @@ class CScanner {
     /// @retval true character is white space
     /// @retval false character is not white space
     bool IsWhite(char c) const;
-    char NEXT(void);
-    void RollBack(const char *, char);
-    /// @}
-    void error(const char *c);
+ 
 
 
   private:
