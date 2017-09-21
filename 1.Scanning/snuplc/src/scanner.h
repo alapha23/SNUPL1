@@ -39,7 +39,6 @@
 #include <istream>
 #include <ostream>
 #include <iomanip>
-#include <map>
 
 using namespace std;
 
@@ -260,8 +259,6 @@ class CScanner {
     int GetCharPosition() const { return _char; };
 
   private:
-    /// @brief initialize list of reserved keywords
-    void InitKeywords(void);
 
     /// @brief scan the next token
     void NextToken(void);
@@ -315,7 +312,6 @@ class CScanner {
 
 
   private:
-    static map<string, EToken> keywords;///< reserved keywords with corr. tokens
     istream *_in;                   ///< input stream
     bool    _delete_in;             ///< delete input stream upon destruction
     bool    _good;                  ///< scanner status flag

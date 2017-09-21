@@ -148,13 +148,6 @@ char ETokenStr[][TOKEN_STRLEN] = {
 };
 
 
-//------------------------------------------------------------------------------
-// reserved keywords
-//
-pair<const char*, EToken> Keywords[] =
-{
-};
-
 
 
 //------------------------------------------------------------------------------
@@ -247,11 +240,9 @@ ostream& operator<<(ostream &out, const CToken *t)
 //------------------------------------------------------------------------------
 // CScanner
 //
-map<string, EToken> CScanner::keywords;
 
 CScanner::CScanner(istream *in)
 {
-  InitKeywords();
   _in = in;
   _delete_in = false;
   _line = _char = 1;
@@ -262,7 +253,6 @@ CScanner::CScanner(istream *in)
 
 CScanner::CScanner(string in)
 {
-  InitKeywords();
   _in = new istringstream(in);
   _delete_in = true;
   _line = _char = 1;
@@ -275,16 +265,6 @@ CScanner::~CScanner()
 {
   if (_token != NULL) delete _token;
   if (_delete_in) delete _in;
-}
-
-void CScanner::InitKeywords(void)
-{
-  if (keywords.size() == 0) {
-    int size = sizeof(Keywords) / sizeof(Keywords[0]);
-    for (int i=0; i<size; i++) {
-      keywords[Keywords[i].first] = Keywords[i].second;
-    }
-  }
 }
 
 CToken CScanner::Get()
@@ -1101,13 +1081,13 @@ __DEFAULT:
 		goto __REPARSE;
 	}else*/{
 		bool b;
-		b = IS_PART(c);
+		b = IS_IDENT(c);
 		//b = ((c >= 'a') && (c <= 'z')) || (( c >= 'A') && (c <= 'Z') ) || (c=='_') || (( c <= 0x39) && (c >= 0x30)) ;
 		if(b){	
 			token = tIdent;
 			do{
 				tokval += c;
-				b = IS_PART(_in->peek() );
+				b = IS_IDENT(_in->peek() );
 //			b = ((_in->peek()>=  'a') && (_in->peek() <= 'z')) || (( _in->peek() >= 'A') && ( _in->peek() <= 'Z') ) || (_in->peek()=='_') ||( ( _in->peek() <= 0x39)&& (_in->peek()>= 0x30)) ;
 				if (b)	c = GetChar();
 				else break;
