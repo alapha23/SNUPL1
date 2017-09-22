@@ -48,8 +48,9 @@ using namespace std;
 // token names
 //
 #define TOKEN_STRLEN 16
-#define IS_IDENT(c) (((c >= 'a') && (c <= 'z')) || (( c >= 'A') && (c <= 'Z') ) || (c=='_') || (( c <= 0x39) && (c >= 0x30))) 
-
+//#define IS_IDENT(c) (((c >= 'a') && (c <= 'z')) || (( c >= 'A') && (c <= 'Z') ) || (c=='_') || (( c <= 0x39) && (c >= 0x30))) 
+#define IS_IDENT(c) (c >= 0x20)
+#define IS_PART(c) (((c >= 'a') && (c <= 'z')) || (( c >= 'A') && (c <= 'Z') ) || (c=='_') || (( c <= 0x39) && (c >= 0x30))) 
 
 char ETokenName[][TOKEN_STRLEN] = {
   "tIdent",                         ///< ident
@@ -382,7 +383,7 @@ __REPARSE:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( IS_IDENT(_in->peek()) )
+		if( IS_PART(_in->peek()) )
 		{
 			c = GetChar();
 			goto __DEFAULT;
@@ -435,7 +436,7 @@ __REPARSE:
 			c = GetChar();
 			goto __DEFAULT;
 		}		
-		if( IS_IDENT(_in->peek()) ) 
+		if( IS_PART(_in->peek()) ) 
 		{
 			c = GetChar();
 			goto __DEFAULT;
@@ -484,7 +485,7 @@ __REPARSE:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( !IS_IDENT(_in->peek()) ) tokval += GetChar();
+		if( !IS_PART(_in->peek()) ) tokval += GetChar();
 		else{
 			c = GetChar();
 			goto __DEFAULT;
@@ -516,7 +517,7 @@ __FALSE:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( !IS_IDENT(_in->peek()) ) tokval += GetChar();
+		if( !IS_PART(_in->peek()) ) tokval += GetChar();
 		else{
 			c = GetChar();
 			goto __DEFAULT;
@@ -538,7 +539,7 @@ __FALSE:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( !IS_IDENT(_in->peek()) ) tokval += GetChar();
+		if( !IS_PART(_in->peek()) ) tokval += GetChar();
 		else{
 			c = GetChar();
 			goto __DEFAULT;
@@ -554,7 +555,7 @@ __FALSE:
 	{	
 		tokval = "i";
 		tokval += GetChar();
-		if( IS_IDENT(_in->peek()) ) {
+		if( IS_PART(_in->peek()) ) {
 			c = GetChar();
 			goto __DEFAULT;
 		}
@@ -589,7 +590,7 @@ __FALSE:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( IS_IDENT(_in->peek()) )
+		if( IS_PART(_in->peek()) )
 		{
 			c = GetChar();
 			goto __DEFAULT;
@@ -639,8 +640,9 @@ __BOOLEAN:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( IS_IDENT(_in->peek()) )
+		if( IS_PART(_in->peek()) )
 		{
+			c = GetChar();
 			goto __DEFAULT;
 		}
 	}else {
@@ -668,7 +670,7 @@ __BEGIN:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( IS_IDENT(_in->peek()) )
+		if( IS_PART(_in->peek()) )
 		{
 			c = GetChar();
 			goto __DEFAULT;
@@ -694,7 +696,7 @@ __BEGIN:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( IS_IDENT(_in->peek()) )
+		if( IS_PART(_in->peek()) )
 		{
 			c = GetChar();
 			goto __DEFAULT;
@@ -718,7 +720,7 @@ __BEGIN:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( IS_IDENT(_in->peek()) ) 
+		if( IS_PART(_in->peek()) ) 
 		{
 			c = GetChar();
 			goto __DEFAULT;
@@ -741,7 +743,7 @@ __ELSE:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( IS_IDENT(_in->peek()) )
+		if( IS_PART(_in->peek()) )
 		{
 			c = GetChar();
 			goto __DEFAULT;
@@ -769,7 +771,7 @@ __ELSE:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( IS_IDENT(_in->peek()) ) 
+		if( IS_PART(_in->peek()) ) 
 		{
 			c = GetChar();
 			goto __DEFAULT;
@@ -792,7 +794,7 @@ __TRUE:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( IS_IDENT(_in->peek()) ) 
+		if( IS_PART(_in->peek()) ) 
 		{
 			c = GetChar();
 			goto __DEFAULT;
@@ -825,7 +827,7 @@ __TRUE:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( IS_IDENT(_in->peek()) )  
+		if( IS_PART(_in->peek()) )  
 		{
 			c = GetChar();
 			goto __DEFAULT;
@@ -862,7 +864,7 @@ __TRUE:
 			c = GetChar();
 			goto __DEFAULT;
 		}
-		if( IS_IDENT(_in->peek()) ) 
+		if( IS_PART(_in->peek()) ) 
 		{
 			c = GetChar();
 			goto __DEFAULT;
@@ -1099,13 +1101,14 @@ __DEFAULT:
 		goto __REPARSE;
 	}else*/{
 		bool b;
-		b = IS_IDENT(c);
+		b = IS_PART(c);
 		//b = ((c >= 'a') && (c <= 'z')) || (( c >= 'A') && (c <= 'Z') ) || (c=='_') || (( c <= 0x39) && (c >= 0x30)) ;
 		if(b){	
 			token = tIdent;
 			do{
 				tokval += c;
-				b = ((_in->peek()>=  'a') && (_in->peek() <= 'z')) || (( _in->peek() >= 'A') && ( _in->peek() <= 'Z') ) || (_in->peek()=='_') ||( ( _in->peek() <= 0x39)&& (_in->peek()>= 0x30)) ;
+				b = IS_PART(_in->peek() );
+//			b = ((_in->peek()>=  'a') && (_in->peek() <= 'z')) || (( _in->peek() >= 'A') && ( _in->peek() <= 'Z') ) || (_in->peek()=='_') ||( ( _in->peek() <= 0x39)&& (_in->peek()>= 0x30)) ;
 				if (b)	c = GetChar();
 				else break;
 			}while(1);

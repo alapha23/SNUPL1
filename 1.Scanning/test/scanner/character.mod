@@ -10,7 +10,13 @@ end test;
 procedure WriteLn(string: char[]);
 begin
 end WriteLn;
+boolean_ char
+"fadl"
 
+"d_sa21"
+
+"-dfa+"
+"|fda&^"
 begin
   c := '7';
   c := test(c);
