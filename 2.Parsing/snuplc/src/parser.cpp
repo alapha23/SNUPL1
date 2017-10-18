@@ -125,24 +125,33 @@ CAstModule* CParser::module(void)
   // assignment ::= "module" ident ";" [varDeclartion] {funcDeclaration} 	"begin" statSequence "end" ident "."
   //
 
-  CToken *t1;
-  CToken *t2;
+  CToken *t1 = NULL;
+  CToken *t2 = NULL;
   string module_name = "placeholder";
+  printf("Hellow\n\n\n");
 
-  Consume(tModule, t1);
+//  Consume(tModule, t1);
   Consume(tIdent, t2);
-  module_name = t2->GetValue();
-  Consume(tSemicolon);
+//  module_name = t2->GetValue();
+//  Consume(tSemicolon);
+  printf("Hellow\n\n\n");
+return NULL;
 
+
+/*
+  Consume(tBegin);
   CAstModule *m = new CAstModule(*t1, module_name);
   CAstStatement *statseq = NULL;
-
   statseq = statSequence(m);
+
+  Consume(tEnd);
+  Consume(tIdent, t2);
   Consume(tDot);
+  assert( !module_name.compare(t2->GetValue()));
 
   m->SetStatementSequence(statseq);
 
-  return m;
+  return m;*/
 }
 
 
@@ -218,7 +227,6 @@ CAstStatWhile* CParser::while_stat(CAstScope *s)
   cond = expression(s);
   Consume(tRParens);
   Consume(tDo);
-  body = statSequence(s);
   Consume(tEnd);
 
   return new CAstStatWhile(t, cond, body);
