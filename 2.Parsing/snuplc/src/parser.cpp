@@ -122,10 +122,19 @@ void CParser::InitSymbolTable(CSymtab *s)
 CAstModule* CParser::module(void)
 {
   //
-  // module ::= statSequence  ".".
+  // assignment ::= "module" ident ";" [varDeclartion] {funcDeclaration} 	"begin" statSequence "end" ident "."
   //
-  CToken dummy;
-  CAstModule *m = new CAstModule(dummy, "placeholder");
+
+  CToken *t1;
+  CToken *t2;
+  string module_name = "placeholder";
+
+  Consume(tModule, t1);
+  Consume(tIdent, t2);
+  module_name = t2->GetValue();
+  Consume(tSemicolon);
+
+  CAstModule *m = new CAstModule(*t1, module_name);
   CAstStatement *statseq = NULL;
 
   statseq = statSequence(m);
@@ -136,6 +145,7 @@ CAstModule* CParser::module(void)
   return m;
 }
 
+
 CAstStatement* CParser::statSequence(CAstScope *s)
 {
   //
@@ -143,6 +153,10 @@ CAstStatement* CParser::statSequence(CAstScope *s)
   // statement ::= assignment.
   // FIRST(statSequence) = { tNumber }
   // FOLLOW(statSequence) = { tDot }
+  //
+  // module ::= "module" ident ";" [varDeclartion] {funcDeclaration}
+  //		"begin" statSequence "end" ident "."
+  //
   //
   CAstStatement *head = NULL;
   EToken tt = _scanner->Peek().GetType();
@@ -152,12 +166,20 @@ CAstStatement* CParser::statSequence(CAstScope *s)
     do {
       CToken t;
       EToken tt = _scanner->Peek().GetType();
+
       CAstStatement *st = NULL;
       switch (tt) {
         // statement ::= assignment
         case tNumber:
           st = assignment(s);
           break;
+	// statement ::= 
+	case tWhile:
+	  st = while_stat(s);
+	  break;
+
+	case tEnd:
+	  return NULL;
 
         default:
           SetError(_scanner->Peek(), "statement expected.");
@@ -178,6 +200,28 @@ CAstStatement* CParser::statSequence(CAstScope *s)
     } while (!_abort);
   }
   return head;
+}
+
+
+CAstStatWhile* CParser::while_stat(CAstScope *s)
+{
+  //
+  // while_stat ::= "while" "(" expression ")" "do" statSequence "end"
+  //
+
+  CToken t;
+  CAstExpression *cond = NULL;
+  CAstStatement *body = NULL;
+
+  Consume(tWhile, &t);
+  Consume(tLParens);
+  cond = expression(s);
+  Consume(tRParens);
+  Consume(tDo);
+  body = statSequence(s);
+  Consume(tEnd);
+
+  return new CAstStatWhile(t, cond, body);
 }
 
 CAstStatAssign* CParser::assignment(CAstScope *s)

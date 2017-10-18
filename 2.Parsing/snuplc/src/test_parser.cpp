@@ -54,13 +54,13 @@ int main(int argc, char *argv[])
     if (p->HasError()) {
       const CToken *error = p->GetErrorToken();
       cout << "parse error : at " << error->GetLineNumber() << ":"
-           << error->GetCharPosition() << " : "
+           << error->GetCharPosition() << "\nError Messsage: "
            << p->GetErrorMessage() << endl;
     } else {
       CAstModule *m = dynamic_cast<CAstModule*>(n);
       assert(m != NULL);
 
-      cout << "successfully parsed." << endl
+      cout << "successfully parsed.\n" << endl
            << "  AST:" << endl;
       m->print(cout, 4);
       cout << endl << endl;

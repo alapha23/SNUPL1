@@ -23,3 +23,11 @@ begin
   b := (a + b) / c;
   c := -(-1 + a)
 end test04.
+
+module test041;
+
+var aa : integer;
+
+begin
+  aa := 1;
+end test041.

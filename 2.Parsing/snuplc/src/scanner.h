@@ -1,11 +1,10 @@
 //------------------------------------------------------------------------------
-/// @brief SnuPL/0 scanner
+/// @brief SnuPL/1 scanner
 /// @author Bernhard Egger <bernhard@csap.snu.ac.kr>
 /// @section changelog Change Log
 /// 2012/09/14 Bernhard Egger created
 /// 2013/03/07 Bernhard Egger adapted to SnuPL/0
 /// 2016/03/11 Bernhard Egger adapted to SnuPL/1
-/// 2016/03/13 Bernhard Egger assignment 1: scans SnuPL/-1
 /// 2017/09/22 Bernhard Egger fixed implementation of strings and characters
 ///
 /// @section license_section License
@@ -45,21 +44,49 @@
 using namespace std;
 
 //------------------------------------------------------------------------------
-/// @brief SnuPL/-1 token type
+/// @brief SnuPL/1 token type
 ///
-/// each member of this enumeration represents a token in SnuPL/-1
+/// each member of this enumeration represents a token in SnuPL/1
 ///
 enum EToken {
+  tIdent=0,                         ///< ident
   tNumber,                          ///< number
+  tBoolConst,                       ///< boolean constant
+  tCharConst,                       ///< character constant
+  tString,                          ///< string constant
   tPlusMinus,                       ///< '+' or '-'
   tMulDiv,                          ///< '*' or '/'
+  tOr,                              ///< '||'
+  tAnd,                             ///< '&&'
+  tNot,                             ///< '!'
   tRelOp,                           ///< relational operator
   tAssign,                          ///< assignment operator
+  tComma,                           ///< a comma
   tSemicolon,                       ///< a semicolon
+  tColon,                           ///< a colon
   tDot,                             ///< a dot
   tLParens,                         ///< a left parenthesis
   tRParens,                         ///< a right parenthesis
+  tLBrak,                           ///< a left bracket
+  tRBrak,                           ///< a right bracket
 
+  tModule,                          ///< 'module'
+  tProcedure,                       ///< 'procedure'
+  tFunction,                        ///< 'function'
+  tVarDecl,                         ///< 'var'
+  tInteger,                         ///< 'integer'
+  tBoolean,                         ///< 'boolean'
+  tChar,                            ///< 'char'
+  tBegin,                           ///< 'begin'
+  tEnd,                             ///< 'end'
+  tIf,                              ///< 'if'
+  tThen,                            ///< 'then'
+  tElse,                            ///< 'else'
+  tWhile,                           ///< 'while'
+  tDo,                              ///< 'do'
+  tReturn,                          ///< 'return'
+
+  tComment,                         ///< comment ('// .... \n')
   tEOF,                             ///< end of file
   tIOError,                         ///< I/O error
   tUndefined,                       ///< undefined
@@ -191,7 +218,7 @@ ostream& operator<<(ostream &out, const CToken *t);
 //------------------------------------------------------------------------------
 /// @brief scanner
 ///
-/// used by CParser to scan (tokenize) SnuPL/-1 code
+/// used by CParser to scan (tokenize) SnuPL/1 code
 ///
 class CScanner {
   public:
@@ -240,6 +267,15 @@ class CScanner {
     int GetCharPosition() const { return _char; };
 
   private:
+    /// @brief result type for the GetCharacter() method
+    enum ECharacter {
+      cOkay =0,                     ///< character parsed
+      cInvChar,                     ///< invalid character
+      cInvEnc,                      ///< invalid escape sequence
+      cEOF,                         ///< input stream EoF
+      cIOError,                     ///< input stream error
+    };
+
     /// @brief initialize list of reserved keywords
     void InitKeywords(void);
 
@@ -314,6 +350,13 @@ class CScanner {
     /// @retval true character is valid as an ID character
     /// @retval false character is not valid in an ID
     bool IsIDChar(unsigned char c) const;
+
+    /// @brief parse one (possibly escaped) character of a string/character constant
+    ///
+    /// @param &c parsed character. Only valid if return value is cOkay
+    /// @param mode mode. Must be tString or tCharConst
+    /// @retval ECharacter status of character parse
+    ECharacter GetCharacter(unsigned char &c, EToken mode);
 
     /// @}
 

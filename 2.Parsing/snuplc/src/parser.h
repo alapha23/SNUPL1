@@ -99,8 +99,9 @@ class CParser {
 
     CAstStatement*    statSequence(CAstScope *s);
 
+    CAstStatWhile*    while_stat(CAstScope *s);
     CAstStatAssign*   assignment(CAstScope *s);
-
+    
     CAstExpression*   expression(CAstScope *s);
     CAstExpression*   simpleexpr(CAstScope *s);
     CAstExpression*   term(CAstScope *s);
