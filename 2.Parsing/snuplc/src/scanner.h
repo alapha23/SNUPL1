@@ -151,7 +151,7 @@ class CToken {
     /// @retval token value
     string GetValue(void) const { return _value; };
     /// @}
-
+    
     /// @name stream attributes
     /// @{
 

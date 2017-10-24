@@ -16,15 +16,15 @@ begin
   b := 2;
   c := 3;
 
-  a := a + b + c;
-  b := a - b - c;
-  c := a + b * c;
-  a := -a;
-  b := (a + b) / c;
-  c := -(-1 + a)
+    a := a + b + c;
+    b := a - b - c;
+    c := a + b * c;
+    a := -a;
+    b := (a + b) / c;
+    c := -(-1 + a)
 end test04.
 
-module test041;
+module test04;
 
 var aa : integer;
 

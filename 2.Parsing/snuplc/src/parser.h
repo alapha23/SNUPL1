@@ -95,19 +95,27 @@ class CParser {
     /// @name methods for recursive-descent parsing
     /// @{
 
+    /// @brief parse var declaration
+    /// 	global variables
+    void stat_var(CAstModule *m);
+    
+
     CAstModule*       module(void);
 
     CAstStatement*    statSequence(CAstScope *s);
 
-    CAstStatWhile*    while_stat(CAstScope *s);
+    CAstStatWhile*    stat_while(CAstScope *s);
+    CAstStatCall*     stat_call(CAstScope *s);
+    CAstType*	      stat_type(vector <CToken>, CAstModule*);
     CAstStatAssign*   assignment(CAstScope *s);
+    CAstDesignator*   qualident(CAstScope *s);
     
     CAstExpression*   expression(CAstScope *s);
     CAstExpression*   simpleexpr(CAstScope *s);
     CAstExpression*   term(CAstScope *s);
     CAstExpression*   factor(CAstScope *s);
 
-    CAstConstant*     number(void);
+    CAstConstant*     number(int=0);
 
     /// @}
 
@@ -122,5 +130,6 @@ class CParser {
     bool          _abort;         ///< error flag
 
 };
+
 
 #endif // __SnuPL_PARSER_H__

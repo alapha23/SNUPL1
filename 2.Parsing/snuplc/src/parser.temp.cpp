@@ -114,42 +114,9 @@ bool CParser::Consume(EToken type, CToken *token)
 void CParser::InitSymbolTable(CSymtab *s)
 {
   CTypeManager *tm = CTypeManager::Get();
-  CSymProc *myfun;
- // function DIM(array: pointer to array; dim: integer): integer
-  myfun = new CSymProc("DIM", tm->GetInt());
-  myfun->AddParam(new CSymParam(0, "arr", tm->GetPointer(tm->GetNull())));
-  myfun->AddParam(new CSymParam(1, "dim", tm->GetInt()));
-  s->AddSymbol(myfun);
-  
-  // function DOFS(array: pointer to array): integer;
-  myfun = new CSymProc("DOFS", tm->GetInt());
-  myfun->AddParam(new CSymParam(0, "arr", tm->GetPointer(tm->GetNull())));
-  s->AddSymbol(myfun);
-  
-  // function ReadInt() : integer;
-  myfun = new CSymProc("ReadInt", tm->GetInt());
-  s->AddSymbol(myfun);
-  
-  // procedure WriteInt(i: integer);
-  myfun = new CSymProc("WriteInt", tm->GetNull());
-  myfun->AddParam(new CSymParam(0, "i", tm->GetInt()));
-  s->AddSymbol(myfun);
-  
-  // procedure WriteChar(c: char);
-  myfun = new CSymProc("WriteChar", tm->GetNull());
-  myfun->AddParam(new CSymParam(0, "c", tm->GetChar()));
-  s->AddSymbol(myfun);
-  
-  // procedure WriteStr(string: char[]);
-  myfun = new CSymProc("WriteStr", tm->GetNull());
-  myfun->AddParam(new CSymParam(0, "str", tm->GetPointer(tm->GetArray(CArrayType::OPEN, tm->GetChar()))));
-  s->AddSymbol(myfun);
-  
-  // procedure WriteLn();
-  myfun = new CSymProc("WriteLn", tm->GetNull());
-  s->AddSymbol(myfun);
-}
 
+  // TODO: add predefined functions here
+}
 
 CAstModule* CParser::module(void)
 {
@@ -168,8 +135,8 @@ CAstModule* CParser::module(void)
   InitSymbolTable(m->GetSymbolTable());
   cout << m->GetSymbolTable() << endl;
   stat_var(m);
-  if(_scanner->Peek().GetType() == tProcedure) 
-     ;
+  cout << m->GetSymbolTable() << endl;
+
   Consume(tBegin);  	
 cout << "Consume begin token\n" << endl;
   CAstStatement *statseq = NULL;
@@ -276,7 +243,6 @@ CAstType* CParser::stat_type(vector<CToken> t, CAstModule* m)
     m->GetSymbolTable()->AddSymbol(add_symbol);
   }
   Consume(_scanner->Peek().GetType());
-  cout << "Arrays not implemented" << endl;
   while(_scanner->Peek().GetType()==tLBrak)
   {
     Consume(tLBrak);
@@ -574,7 +540,7 @@ CAstExpression* CParser::factor(CAstScope *s)
   return n;
 }
 
-CAstConstant* CParser::number(int posflag)
+CAstConstant* CParser::number(void)
 {
   //
   // number ::= digit { digit }.
@@ -585,17 +551,10 @@ CAstConstant* CParser::number(int posflag)
   CToken t;
 
   Consume(tNumber, &t);
-  
+
   errno = 0;
   long long v = strtoll(t.GetValue().c_str(), NULL, 10);
-  long long max = 2147483647;
-  // is number is neg
-  if(posflag != 1)
-    max++;
-  if(v >= max)
-    SetError(t, "integer constant outside valid range");
   if (errno != 0) SetError(t, "invalid number.");
-
 
   return new CAstConstant(t, CTypeManager::Get()->GetInt(), v);
 }

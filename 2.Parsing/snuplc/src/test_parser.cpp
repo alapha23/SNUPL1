@@ -50,7 +50,8 @@ int main(int argc, char *argv[])
 
     cout << "parsing '" << argv[i] << "'..." << endl;
     CAstNode *n = p->Parse();
-
+//    if (n == NULL)
+//	printf("n is null\n");
     if (p->HasError()) {
       const CToken *error = p->GetErrorToken();
       cout << "parse error : at " << error->GetLineNumber() << ":"

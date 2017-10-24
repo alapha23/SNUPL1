@@ -295,9 +295,10 @@ const CSymbol* CSymtab::FindSymbol(const string name, EScope scope) const
 {
   map<string, CSymbol*>::const_iterator it = _symtab.find(name);
 
-  if (it != _symtab.end()) return (*it).second;
+  if (it != _symtab.end()) { cout <<"iterator not at the end, return second" << endl; return (*it).second;}
   else {
-    if ((scope == sLocal) || (_parent == NULL)) return NULL;
+  cout << "iterator at the end of symtab" << endl;
+    if ((scope == sLocal) || (_parent == NULL)) { cout <<"local end or parent is null. FindSymbol(...) return null" << endl; return NULL;}
     else return _parent->FindSymbol(name, scope);
   }
 }
