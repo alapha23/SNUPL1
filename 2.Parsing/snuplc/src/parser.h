@@ -97,16 +97,24 @@ class CParser {
 
     /// @brief parse var declaration
     /// 	global variables
-    void stat_var(CAstModule *m);
-    
+    void stat_var(CAstScope *m);
+
+    /// @brief subroutine
+    /// @param m the module where subroutine is defined
+    ///		global variables
+    void subroutineDecl(CAstScope *s);   
+    void procedureDecl(CAstScope *s);
+    void functionDecl(CAstScope *s);
 
     CAstModule*       module(void);
+
 
     CAstStatement*    statSequence(CAstScope *s);
 
     CAstStatWhile*    stat_while(CAstScope *s);
-    CAstStatCall*     stat_call(CAstScope *s);
-    CAstType*	      stat_type(vector <CToken>, CAstModule*);
+    CAstFunctionCall*     stat_call(CAstScope *s);
+    CAstStatReturn*   stat_return(CAstScope *s);
+    CAstType*	      stat_type(vector <CToken>, CAstScope*);
     CAstStatAssign*   assignment(CAstScope *s);
     CAstDesignator*   qualident(CAstScope *s);
     
@@ -114,9 +122,12 @@ class CParser {
     CAstExpression*   simpleexpr(CAstScope *s);
     CAstExpression*   term(CAstScope *s);
     CAstExpression*   factor(CAstScope *s);
+    
 
     CAstConstant*     number(int=0);
-
+    CAstConstant*     boolean(void);
+    CAstConstant*     character(void);
+    CAstStringConstant*     stringC(CAstScope* s);
     /// @}
 
 

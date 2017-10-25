@@ -53,6 +53,7 @@ using namespace std;
 class CAstStatement;
 class CAstExpression;
 class CAstFunctionCall;
+class CAstProcedure;
 class CAstConstant;
 class CAstDesignator;
 
