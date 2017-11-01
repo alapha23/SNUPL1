@@ -426,7 +426,6 @@ void CParser::varDecl(CAstScope *s)
   vector <CToken> t = ident(s);
   Consume(tColon);
   const CType* var_type = type(s);
-cout << "bang" << endl;
   for(int i=0; i < t.size(); i++)
   {  
     if( s->GetSymbolTable()->FindSymbol(t.at(i).GetValue(), sLocal) != NULL)
@@ -742,8 +741,25 @@ CAstDesignator* CParser::qualident(CAstScope *s)
   Consume(tIdent, &t);
 
   if( _scanner->Peek().GetType() == tLBrak)
-  {
-    return NULL;
+  { 
+    Consume(tLBrak);
+    const CSymbol* arr_sym =  symtab->FindSymbol(t.GetValue(), sLocal);
+    if(arr_sym == NULL)
+      arr_sym = symtab->FindSymbol(t.GetValue());
+    if(arr_sym == NULL) SetError(t, "token not found in symbol table\n");
+    CAstArrayDesignator* arr_parm = new CAstArrayDesignator(t, arr_sym);    
+
+    arr_parm->AddIndex(expression(s));
+    Consume(tRBrak);
+    
+    if(_scanner->Peek().GetType() == tLBrak)
+    {
+      Consume(tLBrak);
+      arr_parm->AddIndex(expression(s));
+      Consume(tRBrak);
+    }
+    arr_parm->IndicesComplete();
+    return arr_parm;
   }else
   {  
     const CSymbol *symbol = symtab->FindSymbol(t.GetValue(), sLocal);

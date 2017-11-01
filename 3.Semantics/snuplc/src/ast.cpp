@@ -1214,7 +1214,7 @@ bool CAstArrayDesignator::TypeCheck(CToken *t, string *msg) const
 
 const CType* CAstArrayDesignator::GetType(void) const
 {
-  return NULL;
+  return ((const CArrayType*)GetSymbol()->GetDataType())->GetBaseType();
 }
 
 ostream& CAstArrayDesignator::print(ostream &out, int indent) const
