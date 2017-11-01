@@ -11,6 +11,7 @@ var a,b,c: integer;
 
 procedure foo(a: integer  );
 var b: integer;
+// k: integer;
 begin
   b := c;
   c := (a+b)
@@ -31,7 +32,7 @@ end binop;
 
 function intop(p0, p1: integer): char;
  begin
-return "a"
+return 'a'
 //   return -p0 + (+p1)
  end intop;
 

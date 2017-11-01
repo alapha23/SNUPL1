@@ -86,7 +86,7 @@ digraph AST {
   node0 -> node25;
   node42 [label="p/f intop",shape=box];
   node44 [label="return",shape=box];
-  node43 [label="\"a\"",shape=ellipse];
+  node43 [label="97",shape=ellipse];
   node44->node43;
   node42 -> node44 [style=dotted];
   node0 -> node42;

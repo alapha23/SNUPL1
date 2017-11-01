@@ -390,6 +390,113 @@ L2:
     }
     ast_proc->SetStatementSequence(statseq);
 }
+
+void CParser::stat_var(CAstScope *m)
+{
+  // 
+  // stat_var ::= ["var" varDeclSequence ";"]
+  // varDeclSequence ::= varDecl { ";" varDecl }
+  // varDecl  ::= ident { "," ident } ":" type
+  //
+  if(_scanner->Peek().GetType() == tBegin ||_scanner->Peek().GetType() == tProcedure ||_scanner->Peek().GetType() == tFunction )
+    return ;
+  Consume(tVarDecl); 
+  
+  varDeclSequence(m);
+  //Consume(tSemicolon);    
+  //}while(_scanner->Peek().GetType() == tIdent);
+}
+
+void CParser::varDeclSequence(CAstScope *s)
+{
+  // varDeclSequence ::= varDecl { ";" varDecl }
+  do{
+    varDecl(s);
+    if(_scanner->Peek().GetType() == tSemicolon)
+      Consume(tSemicolon);
+  } while(_scanner->Peek().GetType() == tIdent);
+  
+}
+
+void CParser::varDecl(CAstScope *s)
+{
+  // varDecl  ::= ident { "," ident } ":" type
+  // idents are added to the scope
+
+  vector <CToken> t = ident(s);
+  Consume(tColon);
+  const CType* var_type = type(s);
+cout << "bang" << endl;
+  for(int i=0; i < t.size(); i++)
+  {  
+    if( s->GetSymbolTable()->FindSymbol(t.at(i).GetValue(), sLocal) != NULL)
+      SetError(_scanner->Peek(), "Redefined vars\n");
+    CAstType*  add_type = new CAstType(t.at(i), var_type);
+    CSymbol*   add_symbol = s->CreateVar(t.at(i).GetValue(), add_type->GetType());
+    s->GetSymbolTable()->AddSymbol(add_symbol);
+  }
+   
+}
+
+vector <CToken> CParser::ident(CAstScope *s)
+{
+// ident ::= letter {letter | digit}
+// idents are added to a vector
+  vector<CToken> t;
+  CToken tt;
+
+  do{
+    Consume(tIdent, &tt);
+    t.push_back(tt);
+    if(_scanner->Peek().GetType() == tComma)
+      Consume(tComma);
+  }while(_scanner->Peek().GetType() == tIdent);
+
+  return t;
+}
+
+const CType* CParser::type(CAstScope *s)
+{
+// type ::= basetype | type "[" [number]  "]"
+// Arrays need to be implemented
+  CToken tt = _scanner->Peek();
+  const CType* ttype;
+  CToken size;
+
+  switch(tt.GetType())
+  {
+    case tBoolean:
+      Consume(tBoolean);
+      ttype =  CTypeManager::Get()->GetBool();
+      if(_scanner->Peek().GetType() == tSemicolon)
+        return ttype;
+      else break;
+    case tChar:
+      Consume(tChar);
+      ttype = CTypeManager::Get()->GetChar();
+      if(_scanner->Peek().GetType() == tSemicolon)
+        return ttype;
+      else break;
+    case tInteger:
+      Consume(tInteger);
+      ttype = CTypeManager::Get()->GetInt();
+      if(_scanner->Peek().GetType() == tSemicolon)
+        return ttype;
+      else break;
+    default:
+      SetError(tt, "Var basetype are limited to boolean, char or integer\n");
+  }
+  while(_scanner->Peek().GetType() ==tLBrak)
+  {
+  Consume(tLBrak);
+  Consume(tNumber, &size);
+  Consume(tRBrak);
+  ttype = CTypeManager::Get()->GetArray(stoi(size.GetValue()), ttype);
+  }
+  return ttype;
+
+}
+
 /*
 void CParser::stat_var(CAstScope *m)
 {
