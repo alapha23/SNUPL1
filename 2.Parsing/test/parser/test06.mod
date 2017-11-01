@@ -9,18 +9,18 @@ module test06;
 var a,b,c: integer;
     b0,b1: boolean;
 
-procedure foo(a: integer  );
-var b: integer;
-begin
-  b := c;
-  c := (a+b)
-end foo;
+// procedure foo(a: integer  );
+//var b: integer;
+// begin
+//  b := c;
+//   c := (a+b)
+// end foo;
 
-procedure unary();
-begin
-  a := -b;
-  b0 := !b1
-end unary;
+//procedure unary();
+//begin
+//  a := -b;
+//  b0 := !b1
+//end unary;
 
 function binop(p0, p1: integer): boolean;
 begin
@@ -30,7 +30,7 @@ end binop;
 
 // function intop(p0, p1: integer): integer;
 // begin
-//   return -p0 + (+p1)
+//    return -p0 + (+p1)
 // end intop;
 
 // function compare(a, b: integer): boolean;
@@ -44,5 +44,5 @@ end binop;
 
 begin
   c := (a+b)
-
 end test06.
+
