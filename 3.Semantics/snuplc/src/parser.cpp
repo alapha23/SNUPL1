@@ -621,8 +621,9 @@ CAstStatement* CParser::statSequence(CAstScope *s)
 	  
 	  if(!temp) SetError(t, "Illegal Var");
 	  ESymbolType temp_type = temp->GetSymbolType();
-	  if(temp_type == stProcedure) st = dynamic_cast<CAstStatement*>(stat_call(s));
+	  if(temp_type == stProcedure) st = (stat_call(s));
 	  else st  = assignment(s);
+	  //cout << st << endl;
           break;
 	}
 	// statement ::= stat_while
@@ -676,13 +677,15 @@ CAstStatReturn* CParser::stat_return(CAstScope *s)
   return new CAstStatReturn(t, s, express);
 }
 
-CAstFunctionCall*  CParser::stat_call(CAstScope *s)
+CAstStatCall*  CParser::stat_call(CAstScope *s)
 {
   CToken t;
   Consume(tIdent, &t);
+
   const CSymbol *symbol = s->GetSymbolTable()->FindSymbol(t.GetValue());
-  assert(symbol==NULL);
-  CAstFunctionCall* ffff = new CAstFunctionCall(t, dynamic_cast<const CSymProc*>(symbol));
+  assert(symbol!=NULL);
+
+  CAstFunctionCall* ffff = new CAstFunctionCall(t, dynamic_cast<const CSymProc*>(symbol));  
   Consume(tLParens);
   while(_scanner->Peek().GetType() != tRParens)
   {
@@ -691,7 +694,7 @@ CAstFunctionCall*  CParser::stat_call(CAstScope *s)
       Consume(tComma);
   }
   Consume(tRParens);
-  return ffff;
+  return new CAstStatCall(t, ffff);
 }
 
 
@@ -875,7 +878,7 @@ CAstExpression* CParser::factor(CAstScope *s)
       if(!temp) SetError(t, "Illegal Var");
       ESymbolType temp_type = temp->GetSymbolType();
       if(temp_type == stProcedure) 
-        n = stat_call(s);
+        n = stat_call(s)->GetCall();
       else
       {
         n = qualident(s);
