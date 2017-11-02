@@ -111,6 +111,10 @@ class CParser {
     vector <CToken> ident(CAstScope *);
     const CType* type(CAstScope *);
 
+    void paramDeclSequence(CAstProcedure *s);
+    void paramDecl(CAstProcedure *s);
+
+
     CAstModule*       module(void);
 
 

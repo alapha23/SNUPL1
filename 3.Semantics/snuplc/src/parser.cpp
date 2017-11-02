@@ -315,18 +315,23 @@ void CParser::procedureDecl(CAstScope *s)
     if(s->GetSymbolTable()->FindSymbol(proc_name.GetValue(), sGlobal))
       SetError(proc_name, "procedure redefinition\n");
 
-    Consume(tLParens);    
     // create and add procedure symbol
     CSymProc *symbol = new CSymProc(proc_name.GetValue(), CTypeManager::Get()->GetNull());
     s->GetSymbolTable()->AddSymbol(symbol);
     CAstProcedure * ast_proc = new CAstProcedure(t, proc_name.GetValue(), s, symbol);
 
     // read vars
-    vector<CToken> param_token;
-    const CType* param_type;
-    CToken temp;
+
+    if(_scanner->Peek().GetType() == tLParens)
+    {
+     Consume(tLParens);    
+     paramDeclSequence(ast_proc);
+     Consume(tRParens);
+    }
+     Consume(tSemicolon); 
+    
     // if no argu
-    if(_scanner->Peek().GetType() == tRParens)
+/*    if(_scanner->Peek().GetType() == tRParens)
     {
       goto L2;
     }
@@ -375,7 +380,7 @@ void CParser::procedureDecl(CAstScope *s)
 L2:
     Consume(tRParens);
     Consume(tSemicolon);
-
+*/
 
     stat_var(ast_proc);
     // begin proc sequence
@@ -411,11 +416,50 @@ void CParser::varDeclSequence(CAstScope *s)
 {
   // varDeclSequence ::= varDecl { ";" varDecl }
   do{
-    varDecl(s);
+      varDecl(s);
     if(_scanner->Peek().GetType() == tSemicolon)
       Consume(tSemicolon);
   } while(_scanner->Peek().GetType() == tIdent);
   
+}
+
+void CParser::paramDeclSequence(CAstProcedure *s)
+{
+  do
+  {
+    paramDecl(s);
+    if(_scanner->Peek().GetType() == tSemicolon)
+      Consume(tSemicolon); 
+
+
+/*    for(int i = 0; i < s->GetSymbol()->GetNParams(); i++)
+    {
+    // add params to the symbol table
+      CSymProc* temp = s->GetSymbol();
+
+      CSymbol* add_symbol = new CSymProc(temp);
+
+      s->GetSymbolTable()->AddSymbol(add_symbol);
+    }*/
+  }while(_scanner->Peek().GetType() == tIdent);
+}
+
+void CParser::paramDecl(CAstProcedure *s)
+{
+  vector<CToken> t = ident(s);
+  Consume(tColon);
+  const CType* var_type = type(s);
+cout << "assa"  << var_type << endl;
+  for(int i=0; i < t.size(); i++)
+  {  
+//    CAstType*  add_type = new CAstType(t.at(i), var_type);
+//    CSymParam*   add_param = new CSymParam(i, t.at(i).GetValue(), add_type->GetType());
+    CSymParam*   add_param = new CSymParam(i, t.at(i).GetValue(), CTypeManager::Get()->GetPointer(var_type));
+
+    s->GetSymbol()->AddParam(add_param);
+    // add params to procedure symbol table
+    s->GetSymbolTable()->AddSymbol(add_param);
+  }   
 }
 
 void CParser::varDecl(CAstScope *s)
@@ -426,6 +470,7 @@ void CParser::varDecl(CAstScope *s)
   vector <CToken> t = ident(s);
   Consume(tColon);
   const CType* var_type = type(s);
+
   for(int i=0; i < t.size(); i++)
   {  
     if( s->GetSymbolTable()->FindSymbol(t.at(i).GetValue(), sLocal) != NULL)
@@ -433,8 +478,7 @@ void CParser::varDecl(CAstScope *s)
     CAstType*  add_type = new CAstType(t.at(i), var_type);
     CSymbol*   add_symbol = s->CreateVar(t.at(i).GetValue(), add_type->GetType());
     s->GetSymbolTable()->AddSymbol(add_symbol);
-  }
-   
+  }   
 }
 
 vector <CToken> CParser::ident(CAstScope *s)
@@ -444,7 +488,8 @@ vector <CToken> CParser::ident(CAstScope *s)
   vector<CToken> t;
   CToken tt;
 
-  do{
+  do
+  {
     Consume(tIdent, &tt);
     t.push_back(tt);
     if(_scanner->Peek().GetType() == tComma)
@@ -488,12 +533,19 @@ const CType* CParser::type(CAstScope *s)
   while(_scanner->Peek().GetType() ==tLBrak)
   {
   Consume(tLBrak);
-  Consume(tNumber, &size);
-  Consume(tRBrak);
-  ttype = CTypeManager::Get()->GetArray(stoi(size.GetValue()), ttype);
+  if(_scanner->Peek().GetType() == tNumber)
+  {
+    Consume(tNumber, &size);
+    Consume(tRBrak);
+    ttype = CTypeManager::Get()->GetArray(stoi(size.GetValue()), ttype);
+  }
+  else
+  {
+    Consume(tRBrak);
+    ttype = CTypeManager::Get()->GetArray(CArrayType::OPEN, ttype);
+  }
   }
   return ttype;
-
 }
 
 /*
@@ -618,7 +670,7 @@ CAstStatement* CParser::statSequence(CAstScope *s)
 	{
 	  const CSymbol *temp = s->GetSymbolTable()->FindSymbol(t.GetValue(), sLocal);
 	  if(!temp) temp = s->GetSymbolTable()->FindSymbol(t.GetValue(), sGlobal);	 
-	  
+
 	  if(!temp) SetError(t, "Illegal Var");
 	  ESymbolType temp_type = temp->GetSymbolType();
 	  if(temp_type == stProcedure) st = (stat_call(s));
