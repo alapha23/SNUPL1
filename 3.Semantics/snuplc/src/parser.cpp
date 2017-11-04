@@ -217,19 +217,37 @@ void CParser::functionDecl(CAstScope *s)
     CToken t;
     Consume(tFunction, &t);
     CToken proc_name;
+    const CType* return_type;
     Consume(_scanner->Peek().GetType(), &proc_name);
     // procedure do not have vars
     if(s->GetSymbolTable()->FindSymbol(proc_name.GetValue(), sGlobal))
       SetError(proc_name, "function redefinition\n");
 
-    Consume(tLParens);    
     // create and add procedure symbol
-    CSymProc *symbol = new CSymProc(proc_name.GetValue(), CTypeManager::Get()->GetNull());
+    CSymProc *symbol = new CSymProc(proc_name.GetValue(), return_type);
     s->GetSymbolTable()->AddSymbol(symbol);
     CAstProcedure * ast_proc = new CAstProcedure(t, proc_name.GetValue(), s, symbol);
+   
+    // read vars
+
+    if(_scanner->Peek().GetType() != tSemicolon)
+    {
+      Consume(tLParens);
+      if(_scanner->Peek().GetType() != tRParens)
+      {
+        paramDeclSequence(ast_proc);
+      }
+      Consume(tRParens);
+    }
+    Consume(tColon);
+    return_type = type(s);
+    Consume(tSemicolon);
+    // change procedure symbol with return type
+    ast_proc->GetSymbol()->SetDataType(return_type);
+
 
     // read vars
-    vector<CToken> param_token;
+/*    vector<CToken> param_token;
     const CType* param_type;
     CToken temp;
     // if no argu
@@ -277,20 +295,21 @@ void CParser::functionDecl(CAstScope *s)
     // if(_scanner->Peek().GetType() == tSemicolon)
     
        Consume(tSemicolon);
-     
+     */
+
      // create proc ast
      // create proc symbol
-     for(int i = 0; i< param_token.size(); i++){
+/*     for(int i = 0; i< param_token.size(); i++){
        CSymParam* param = new CSymParam(i, param_token.at(i).GetValue(), param_type);
        symbol->AddParam(param);
        ast_proc->GetSymbolTable()->AddSymbol(param);
      }
-    } while(_scanner->Peek().GetType() == tIdent);
+    } while(_scanner->Peek().GetType() == tIdent);*/
+
     // when next is tIdent, it means we are still declaring vars
 
-L2:    
-//    stat_var(ast_proc);
-//    stat_var(ast_proc);
+//L2:  
+
     // begin proc sequence
     Consume(tBegin);
     CAstStatement * statseq = statSequence(ast_proc);
@@ -334,58 +353,6 @@ void CParser::procedureDecl(CAstScope *s)
     }
     Consume(tSemicolon); 
     
-    // if no argu
-/*    if(_scanner->Peek().GetType() == tRParens)
-    {
-      goto L2;
-    }
-    do{
-//L1:
-     // read var name
-      param_token.erase(param_token.begin(), param_token.begin()+param_token.size());
-    while(_scanner->Peek().GetType() != tColon)
-    {
-      Consume(tIdent, &temp);
-      param_token.push_back(temp);
-    }
-    Consume(tColon);
- // read var type
-
-     switch(_scanner->Peek().GetType())
-     {
-      case tInteger:
-        param_type = CTypeManager::Get()->GetInt();
-	Consume(tInteger);
-	break;
-      case tChar:
-        param_type = CTypeManager::Get()->GetChar();	
-	Consume(tChar);
-	break;
-      case tBoolean:
-        param_type = CTypeManager::Get()->GetBool();
-	Consume(tBoolean);
-	break;
-      default:
-        SetError(_scanner->Peek(), "Unknown var type\n");
-     }
-     if(_scanner->Peek().GetType() == tSemicolon)
-     {
-       Consume(tSemicolon);
-     }
-     // create proc ast
-     // create proc symbol
-     for(int i = 0; i< param_token.size(); i++)
-     {
-       CSymParam* param = new CSymParam(i, param_token.at(i).GetValue(), param_type);
-       symbol->AddParam(param);
-       ast_proc->GetSymbolTable()->AddSymbol(param);
-     }
-    } while(_scanner->Peek().GetType() == tIdent);
-L2:
-    Consume(tRParens);
-    Consume(tSemicolon);
-*/
-
     stat_var(ast_proc);
     // begin proc sequence
     Consume(tBegin);
