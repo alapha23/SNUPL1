@@ -310,25 +310,29 @@ void CParser::procedureDecl(CAstScope *s)
     CToken t;
     Consume(tProcedure, &t);
     CToken proc_name;
-    Consume(_scanner->Peek().GetType(), &proc_name);
+    Consume(tIdent, &proc_name);
     // procedure do not have vars
     if(s->GetSymbolTable()->FindSymbol(proc_name.GetValue(), sGlobal))
       SetError(proc_name, "procedure redefinition\n");
 
-    // create and add procedure symbol
+    // create and add procedure symbol to parent symbol table
     CSymProc *symbol = new CSymProc(proc_name.GetValue(), CTypeManager::Get()->GetNull());
     s->GetSymbolTable()->AddSymbol(symbol);
+
     CAstProcedure * ast_proc = new CAstProcedure(t, proc_name.GetValue(), s, symbol);
 
     // read vars
 
-    if(_scanner->Peek().GetType() == tLParens)
+    if(_scanner->Peek().GetType() != tSemicolon)
     {
-     Consume(tLParens);    
-     paramDeclSequence(ast_proc);
-     Consume(tRParens);
+      Consume(tLParens);
+      if(_scanner->Peek().GetType() != tRParens)
+      {
+        paramDeclSequence(ast_proc);
+      }
+      Consume(tRParens);
     }
-     Consume(tSemicolon); 
+    Consume(tSemicolon); 
     
     // if no argu
 /*    if(_scanner->Peek().GetType() == tRParens)
@@ -430,15 +434,10 @@ void CParser::paramDeclSequence(CAstProcedure *s)
     paramDecl(s);
     if(_scanner->Peek().GetType() == tSemicolon)
       Consume(tSemicolon); 
-
-
-/*    for(int i = 0; i < s->GetSymbol()->GetNParams(); i++)
-    {
-    // add params to the symbol table
+/* for(int i = 0; i < s->GetSymbol()->GetNParams(); i++)
+    {    // add params to the symbol table
       CSymProc* temp = s->GetSymbol();
-
       CSymbol* add_symbol = new CSymProc(temp);
-
       s->GetSymbolTable()->AddSymbol(add_symbol);
     }*/
   }while(_scanner->Peek().GetType() == tIdent);
@@ -449,12 +448,11 @@ void CParser::paramDecl(CAstProcedure *s)
   vector<CToken> t = ident(s);
   Consume(tColon);
   const CType* var_type = type(s);
-cout << "assa"  << var_type << endl;
   for(int i=0; i < t.size(); i++)
   {  
-//    CAstType*  add_type = new CAstType(t.at(i), var_type);
-//    CSymParam*   add_param = new CSymParam(i, t.at(i).GetValue(), add_type->GetType());
-    CSymParam*   add_param = new CSymParam(i, t.at(i).GetValue(), CTypeManager::Get()->GetPointer(var_type));
+    CAstType*  add_type = new CAstType(t.at(i), var_type);
+    CSymParam*   add_param = new CSymParam(i, t.at(i).GetValue(), add_type->GetType());
+//    CSymParam*   add_param = new CSymParam(i, t.at(i).GetValue(), CTypeManager::Get()->GetPointer(var_type));
 
     s->GetSymbol()->AddParam(add_param);
     // add params to procedure symbol table
@@ -533,17 +531,18 @@ const CType* CParser::type(CAstScope *s)
   while(_scanner->Peek().GetType() ==tLBrak)
   {
   Consume(tLBrak);
-  if(_scanner->Peek().GetType() == tNumber)
-  {
-    Consume(tNumber, &size);
-    Consume(tRBrak);
-    ttype = CTypeManager::Get()->GetArray(stoi(size.GetValue()), ttype);
-  }
-  else
-  {
-    Consume(tRBrak);
-    ttype = CTypeManager::Get()->GetArray(CArrayType::OPEN, ttype);
-  }
+    if(_scanner->Peek().GetType() == tNumber)
+    {
+      Consume(tNumber, &size);
+      Consume(tRBrak);
+      ttype = CTypeManager::Get()->GetArray(stoi(size.GetValue()), ttype);
+    }
+    else
+    {
+      Consume(tRBrak);
+//      cout << "ejifeaja" << endl;
+      ttype = CTypeManager::Get()->GetArray(CArrayType::OPEN, ttype);
+    }
   }
   return ttype;
 }
@@ -651,8 +650,6 @@ CAstStatement* CParser::statSequence(CAstScope *s)
   //
   // statSequence ::= [ statement { ";" statement } ].
   // statement ::= assignment | subroutineCall | ifStatement | whileStatement | returnStatement
-  // FIRST(statSequence) = { tNumber }
-  // FOLLOW(statSequence) = { tDot }
   // 
   //
   CAstStatement *head = NULL; 
@@ -695,6 +692,9 @@ CAstStatement* CParser::statSequence(CAstScope *s)
           {
             perror("Expected end token after return \n");
           }
+	case tIf:
+	  st = stat_if(s);
+	  break;
 
         default:	  
           SetError(_scanner->Peek(), "statement expected. This is default");
@@ -706,7 +706,7 @@ CAstStatement* CParser::statSequence(CAstScope *s)
 
       tt = _scanner->Peek().GetType();
       if (tt == tDot) break;
-      if (_scanner->Peek().GetType() == tEnd  ) 
+      if (_scanner->Peek().GetType() == tEnd || _scanner->Peek().GetType() == tElse ) 
       {
         break;
       }else 
@@ -718,6 +718,29 @@ CAstStatement* CParser::statSequence(CAstScope *s)
   return head;
 }
 
+CAstStatIf* 	CParser::stat_if(CAstScope *s)
+{
+  CToken t;
+  CAstExpression* cond = NULL;
+  CAstStatement* ifBody = NULL;
+  CAstStatement* elseBody = NULL;
+  Consume(tIf, &t);
+  Consume(tLParens);
+
+  cond = expression(s);
+
+  Consume(tRParens);
+  Consume(tThen);
+  ifBody = statSequence(s);
+
+  if(_scanner->Peek().GetType() == tElse)
+  {
+    Consume(tElse);
+    elseBody = statSequence(s);
+  }
+  Consume(tEnd);
+  return new CAstStatIf(t, cond, ifBody, elseBody);
+}
 CAstStatReturn* CParser::stat_return(CAstScope *s)
 {
   CToken t;

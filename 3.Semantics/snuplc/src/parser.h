@@ -121,6 +121,7 @@ class CParser {
     CAstStatement*    statSequence(CAstScope *s);
 
     CAstStatWhile*    stat_while(CAstScope *s);
+    CAstStatIf*       stat_if(CAstScope *s);
     CAstStatCall*     stat_call(CAstScope *s);
     CAstStatReturn*   stat_return(CAstScope *s);
 //    CAstType*	      stat_type(vector <CToken>, CAstScope*);
