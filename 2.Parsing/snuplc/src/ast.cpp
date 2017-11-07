@@ -814,7 +814,15 @@ bool CAstBinaryOp::TypeCheck(CToken *t, string *msg) const
 
 const CType* CAstBinaryOp::GetType(void) const
 {
-  return CTypeManager::Get()->GetInt();
+  CToken temp = GetToken();
+  switch(temp.GetType()){
+    case tAnd:
+    case tOr:
+    case tRelOp:
+      return CTypeManager::Get()->GetBool();
+    default:
+       return CTypeManager::Get()->GetInt();
+  }
 }
 
 ostream& CAstBinaryOp::print(ostream &out, int indent) const
@@ -887,7 +895,9 @@ bool CAstUnaryOp::TypeCheck(CToken *t, string *msg) const
 
 const CType* CAstUnaryOp::GetType(void) const
 {
-  return CTypeManager::Get()->GetInt();
+  if(GetToken().GetType() == tNot)
+	  return CTypeManager::Get()->GetBool();
+  else return CTypeManager::Get()->GetInt();
 }
 
 ostream& CAstUnaryOp::print(ostream &out, int indent) const
@@ -1204,7 +1214,7 @@ bool CAstArrayDesignator::TypeCheck(CToken *t, string *msg) const
 
 const CType* CAstArrayDesignator::GetType(void) const
 {
-  return NULL;
+  return ((const CArrayType*)GetSymbol()->GetDataType())->GetBaseType();
 }
 
 ostream& CAstArrayDesignator::print(ostream &out, int indent) const

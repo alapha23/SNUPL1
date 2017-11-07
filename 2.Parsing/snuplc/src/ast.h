@@ -913,7 +913,7 @@ class CAstOperation : public CAstExpression {
     /// @param t token in input stream (used for error reporting purposes)
     /// @param o operation
     CAstOperation(CToken t, EOperation o);
-
+   
     /// @}
 
     /// @brief return the operation

@@ -106,15 +106,25 @@ class CParser {
     void procedureDecl(CAstScope *s);
     void functionDecl(CAstScope *s);
 
+    void varDeclSequence(CAstScope *);
+    void varDecl(CAstScope *);
+    vector <CToken> ident(CAstScope *);
+    const CType* type(CAstScope *);
+
+    void paramDeclSequence(CAstProcedure *s);
+    void paramDecl(CAstProcedure *s);
+
+
     CAstModule*       module(void);
 
 
     CAstStatement*    statSequence(CAstScope *s);
 
     CAstStatWhile*    stat_while(CAstScope *s);
-    CAstFunctionCall*     stat_call(CAstScope *s);
+    CAstStatIf*       stat_if(CAstScope *s);
+    CAstStatCall*     stat_call(CAstScope *s);
     CAstStatReturn*   stat_return(CAstScope *s);
-    CAstType*	      stat_type(vector <CToken>, CAstScope*);
+//    CAstType*	      stat_type(vector <CToken>, CAstScope*);
     CAstStatAssign*   assignment(CAstScope *s);
     CAstDesignator*   qualident(CAstScope *s);
     

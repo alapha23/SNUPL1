@@ -663,8 +663,11 @@ CAstStatement* CParser::statSequence(CAstScope *s)
 	case tIf:
 	  st = stat_if(s);
 	  break;
+	case tEnd : 
+	  return NULL;
 
         default:	  
+	  cout << t << endl;
           SetError(_scanner->Peek(), "statement expected. This is default");
       }
       assert(st != NULL);
