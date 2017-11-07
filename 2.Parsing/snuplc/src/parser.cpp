@@ -509,6 +509,7 @@ const CType* CParser::type(CAstScope *s)
     else
     {
       Consume(tRBrak);
+      SetError(_scanner->Peek(), "Array size not specified\n");
       ttype = CTypeManager::Get()->GetArray(CArrayType::OPEN, ttype);
     }
   }
@@ -663,8 +664,11 @@ CAstStatement* CParser::statSequence(CAstScope *s)
 	case tIf:
 	  st = stat_if(s);
 	  break;
+	case tEnd : 
+	  return NULL;
 
         default:	  
+	  cout << t << endl;
           SetError(_scanner->Peek(), "statement expected. This is default");
       }
       assert(st != NULL);

@@ -168,6 +168,21 @@ bool CAstScope::TypeCheck(CToken *t, string *msg) const
 {
   bool result = true;
 
+  try {
+    CAstStatement *s = _statseq;
+    while(result && (s!=NULL)){
+      result = s->TypeCheck(t, msg);
+      s = s->GetNext();
+    }
+    vector<CAstScope*>::const_iterator itr = _children.begin();
+    while(result && (itr!= _children.end())){
+      result = (*itr)->TypeCheck(t, msg);
+      itr++;
+    }  
+  }catch(...)
+  {
+    result = false;
+  }
   return result;
 }
 
@@ -379,6 +394,29 @@ CAstExpression* CAstStatAssign::GetRHS(void) const
 
 bool CAstStatAssign::TypeCheck(CToken *t, string *msg) const
 {
+  CAstDesignator *lhs = GetLHS();
+  CAstExpression *rhs = GetRHS();
+
+  if(!lhs->GetType() || !lhs->GetType()->IsScalar() || !rhs->GetType() ||!rhs->GetType()->IsScalar())
+  {
+    perror("Left or right hand side of statement cannot be scalar\n");
+    *t = lhs->GetToken();
+    return false;  
+  }
+ 
+/*  if(rhs->GetType()){
+    perror("Left hand and right hand side statement type not balanced\n");
+    *t = lhs->GetToken();
+    return false;
+  }*/
+
+  if(!rhs->GetType()->Match(lhs->GetType())){
+    perror("Left hand and right hand side statement type not balanced\n");
+    *t = lhs->GetToken();
+    return false;
+  }
+
+
   return true;
 }
 
@@ -495,6 +533,44 @@ CAstExpression* CAstStatReturn::GetExpression(void) const
 
 bool CAstStatReturn::TypeCheck(CToken *t, string *msg) const
 {
+
+  if(GetScope()->GetType()->Match((CTypeManager::Get()->GetNull()))){
+  // it should not be returning
+  	if(GetExpression() != NULL)
+	{
+	// But it returns something
+	  perror("Do not return at procedure\n");
+	  *t = GetToken();
+	  return false;
+	}
+  }else
+  // it is supposed to return something
+    if(GetExpression() == NULL)    
+    {
+    // but nothing is returned
+      perror("Function should be returning something\n");
+      *t = GetToken();
+      return false;
+    }
+
+/*
+  cout << "don" << endl;
+  if(!GetExpression()->TypeCheck(t, msg))
+  {
+    perror("Return expression type error\n");
+    *t = GetToken();
+    return false;
+  }
+*/
+// check the type
+// and check the return type
+  if(!GetScope()->GetType()->Match(GetExpression()->GetType()))
+  {
+    perror("Type mismatch in return statement\n");
+    *t = GetExpression()->GetToken();
+    return false;
+  }
+
   return true;
 }
 
@@ -577,6 +653,43 @@ CAstStatement* CAstStatIf::GetElseBody(void) const
 
 bool CAstStatIf::TypeCheck(CToken *t, string *msg) const
 {
+  CAstStatement* ifBody = GetIfBody();
+  CAstExpression *cond = GetCondition();
+  CAstStatement* elseBody = GetElseBody();
+
+  if(!cond->TypeCheck(t, msg))
+  {
+    perror("if condition type error\n");
+    *t = cond->GetToken();
+    return false;
+  }
+
+// cond type must be boolean
+  if(!cond->GetType() || !cond->GetType()->Match(CTypeManager::Get()->GetBool()))
+  {
+  perror("if condition must be a bool\n");
+  *t = cond->GetToken();
+  return false;
+  }
+
+
+  while(elseBody!=NULL)
+  {
+   if(!elseBody->TypeCheck(t, msg))
+    return false;
+    elseBody = elseBody->GetNext();   
+  }
+  while(ifBody !=NULL)
+  {
+    if(!ifBody->TypeCheck(t, msg))
+    {
+      perror("If body type errpr\n");
+      *t = ifBody->GetToken();
+      return false;
+    }
+  ifBody = ifBody->GetNext();
+  }
+
   return true;
 }
 
@@ -677,6 +790,32 @@ CAstStatement* CAstStatWhile::GetBody(void) const
 
 bool CAstStatWhile::TypeCheck(CToken *t, string *msg) const
 {
+  CAstStatement* while_body = GetBody();
+  CAstExpression* while_cond = GetCondition();
+
+  if(!while_cond->TypeCheck(t, msg))
+    return false;
+// cond check itself
+// check cond is bool
+  if(!while_cond->GetType() || !while_cond->GetType()->Match(CTypeManager::Get()->GetBool()))
+  {
+    perror("condition should be type boolean\n");
+    *t = while_cond->GetToken();
+    return false;
+  }
+
+// check the body
+//
+  while(while_body != NULL)
+  {
+    if(!while_body->TypeCheck(t, msg))
+    {
+      perror("While body type error\n");
+      *t = while_body->GetToken();
+      return false;
+    }
+    while_body = while_body->GetNext();
+  }
   return true;
 }
 
@@ -746,6 +885,12 @@ void CAstExpression::SetParenthesized(bool parenthesized)
 {
   _parenthesized = parenthesized;
 }
+/*
+bool CAstExpression::TypeCheck(t, msg)
+{
+  
+  return true;
+}*/
 
 bool CAstExpression::GetParenthesized(void) const
 {
@@ -809,6 +954,30 @@ CAstExpression* CAstBinaryOp::GetRight(void) const
 
 bool CAstBinaryOp::TypeCheck(CToken *t, string *msg) const
 {
+  CAstExpression* lhs = GetLeft();
+  CAstExpression* rhs = GetRight();
+
+// check separately
+  if(!lhs->TypeCheck(t, msg) || !rhs->TypeCheck(t, msg))
+  {
+    perror("Type error with BINARY OPeration left or right hand side\n");
+    *t = lhs->GetToken();
+    return false;
+  }
+// they should be scalar
+  if(lhs->GetType() == NULL || !lhs->GetType()->IsScalar() || rhs->GetType() == NULL || !rhs->GetType()->IsScalar())
+  {
+    perror("Binary op should have scalar on both sides\n");
+    *t = lhs->GetToken();
+    return false;
+  }
+  if(!lhs->GetType()->Match(rhs->GetType()))
+  {
+    *t = GetToken();
+    perror("Binary op dont match\n");
+    return false;
+  }
+cout << GetToken() <<"\n\n\n"<< endl;
   return true;
 }
 
@@ -890,6 +1059,19 @@ CAstExpression* CAstUnaryOp::GetOperand(void) const
 
 bool CAstUnaryOp::TypeCheck(CToken *t, string *msg) const
 {
+  if(!GetOperand())
+  {
+    perror("Operand is NULL\n");
+    *t = GetToken();
+    return false;
+  }
+  if( !GetOperand()->TypeCheck(t, msg))
+  {
+    perror("Operand type check failed\n");
+    *t = GetToken();
+    return false;
+  }
+  
   return true;
 }
 
@@ -1042,6 +1224,7 @@ CAstExpression* CAstFunctionCall::GetArg(int index) const
 
 bool CAstFunctionCall::TypeCheck(CToken *t, string *msg) const
 {
+  // number of arguments is checked in the parser  
   return true;
 }
 

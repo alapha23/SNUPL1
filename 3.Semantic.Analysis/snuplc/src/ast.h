@@ -43,6 +43,8 @@
 #include <iomanip>
 #include <map>
 #include <vector>
+#include <errno.h>
+#include <exception>
 
 #include "scanner.h"
 #include "type.h"

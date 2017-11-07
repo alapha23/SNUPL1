@@ -417,6 +417,19 @@ void CParser::paramDecl(CAstProcedure *s)
   vector<CToken> t = ident(s);
   Consume(tColon);
   const CType* var_type = type(s);
+
+// check duplication inside param
+
+  for(int i; i < t.size()-1; i++)
+  {
+    for(int j = i+1; j < t.size(); j++)
+    {
+        if(!t.at(i).GetValue().compare(t.at(j).GetValue()))
+	  SetError(_scanner->Peek(), "Parameters redefined \n");  
+    }
+  }
+
+
   for(int i=0; i < t.size(); i++)
   {  
     CAstType*  add_type = new CAstType(t.at(i), var_type);
@@ -509,6 +522,7 @@ const CType* CParser::type(CAstScope *s)
     else
     {
       Consume(tRBrak);
+      SetError(_scanner->Peek(), "Array size not specified\n");
       ttype = CTypeManager::Get()->GetArray(CArrayType::OPEN, ttype);
     }
   }
@@ -658,7 +672,9 @@ CAstStatement* CParser::statSequence(CAstScope *s)
 	    return head;
           }else 
           {
-            perror("Expected end token after return \n");
+	   while(! s->GetName().compare(_scanner->Peek().GetValue()))
+	     _scanner->Get();
+           // perror("Expected end token after return \n");
           }
 	case tIf:
 	  st = stat_if(s);
@@ -717,7 +733,10 @@ CAstStatReturn* CParser::stat_return(CAstScope *s)
   CToken t;
   CAstExpression *express = NULL;
   Consume(tReturn, &t);
+
   EToken tt = _scanner->Peek().GetType();
+  if(tt == tEnd || tt == tElse)
+    SetError(_scanner->Peek(), "Expression expected at return statement\n");
   if(tt!= tEnd && tt != tSemicolon)
     express = expression(s);
   return new CAstStatReturn(t, s, express);
@@ -740,6 +759,9 @@ CAstStatCall*  CParser::stat_call(CAstScope *s)
       Consume(tComma);
   }
   Consume(tRParens);
+
+  if( (dynamic_cast<const CSymProc*>(symbol))->GetNParams() != ffff->GetNArgs())
+    SetError(_scanner->Peek(), "Number of arguments mismatched!\n");
   return new CAstStatCall(t, ffff);
 }
 
@@ -841,6 +863,11 @@ CAstExpression* CParser::expression(CAstScope* s)
     else if (t.GetValue() == ">=") relop = opBiggerEqual;
     else SetError(t, "invalid relation.");
 
+    if(!left->GetType()->Compare(right->GetType()))
+    {
+      SetError(_scanner->Peek(), "Expression type error\n");
+    }
+    cout << "left" << left->GetType() << "  right" << right->GetType() << endl;
     return new CAstBinaryOp(t, relop, left, right);
   } else {
     return left;
