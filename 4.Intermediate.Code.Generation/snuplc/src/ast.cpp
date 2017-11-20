@@ -397,18 +397,26 @@ bool CAstStatAssign::TypeCheck(CToken *t, string *msg) const
   CAstDesignator *lhs = GetLHS();
   CAstExpression *rhs = GetRHS();
 
-  if(!lhs->GetType()->IsScalar() || !rhs->GetType()->IsScalar())
+  if(!lhs->GetType() || !lhs->GetType()->IsScalar() || !rhs->GetType() ||!rhs->GetType()->IsScalar())
   {
     perror("Left or right hand side of statement cannot be scalar\n");
     *t = lhs->GetToken();
     return false;  
   }
-  
+ 
+/*  if(rhs->GetType()){
+    perror("Left hand and right hand side statement type not balanced\n");
+    *t = lhs->GetToken();
+    return false;
+  }*/
+
   if(!rhs->GetType()->Match(lhs->GetType())){
     perror("Left hand and right hand side statement type not balanced\n");
     *t = lhs->GetToken();
     return false;
   }
+
+
   return true;
 }
 
@@ -545,14 +553,15 @@ bool CAstStatReturn::TypeCheck(CToken *t, string *msg) const
       return false;
     }
 
-
+/*
+  cout << "don" << endl;
   if(!GetExpression()->TypeCheck(t, msg))
   {
     perror("Return expression type error\n");
     *t = GetToken();
     return false;
   }
-  cout << "don" << endl;
+*/
 // check the type
 // and check the return type
   if(!GetScope()->GetType()->Match(GetExpression()->GetType()))
@@ -672,8 +681,12 @@ bool CAstStatIf::TypeCheck(CToken *t, string *msg) const
   }
   while(ifBody !=NULL)
   {
-  if(!ifBody->TypeCheck(t, msg))
-    return false;
+    if(!ifBody->TypeCheck(t, msg))
+    {
+      perror("If body type errpr\n");
+      *t = ifBody->GetToken();
+      return false;
+    }
   ifBody = ifBody->GetNext();
   }
 
@@ -872,6 +885,12 @@ void CAstExpression::SetParenthesized(bool parenthesized)
 {
   _parenthesized = parenthesized;
 }
+/*
+bool CAstExpression::TypeCheck(t, msg)
+{
+  
+  return true;
+}*/
 
 bool CAstExpression::GetParenthesized(void) const
 {
@@ -938,21 +957,27 @@ bool CAstBinaryOp::TypeCheck(CToken *t, string *msg) const
   CAstExpression* lhs = GetLeft();
   CAstExpression* rhs = GetRight();
 
+// check separately
   if(!lhs->TypeCheck(t, msg) || !rhs->TypeCheck(t, msg))
   {
-    perror("Type error with binary operation left or right hand side\n");
+    perror("Type error with BINARY OPeration left or right hand side\n");
     *t = lhs->GetToken();
     return false;
   }
-
+// they should be scalar
   if(lhs->GetType() == NULL || !lhs->GetType()->IsScalar() || rhs->GetType() == NULL || !rhs->GetType()->IsScalar())
   {
     perror("Binary op should have scalar on both sides\n");
     *t = lhs->GetToken();
     return false;
   }
-
-
+  if(!lhs->GetType()->Match(rhs->GetType()))
+  {
+    *t = GetToken();
+    perror("Binary op dont match\n");
+    return false;
+  }
+cout << GetToken() <<"\n\n\n"<< endl;
   return true;
 }
 
@@ -1034,6 +1059,19 @@ CAstExpression* CAstUnaryOp::GetOperand(void) const
 
 bool CAstUnaryOp::TypeCheck(CToken *t, string *msg) const
 {
+  if(!GetOperand())
+  {
+    perror("Operand is NULL\n");
+    *t = GetToken();
+    return false;
+  }
+  if( !GetOperand()->TypeCheck(t, msg))
+  {
+    perror("Operand type check failed\n");
+    *t = GetToken();
+    return false;
+  }
+  
   return true;
 }
 
@@ -1186,6 +1224,7 @@ CAstExpression* CAstFunctionCall::GetArg(int index) const
 
 bool CAstFunctionCall::TypeCheck(CToken *t, string *msg) const
 {
+  // number of arguments is checked in the parser  
   return true;
 }
 
