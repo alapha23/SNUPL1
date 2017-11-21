@@ -1,4 +1,6 @@
-3.Semantics/snuplc/doc/*
-2.Parsing/snuplc/doc/*
-1.Scanning/snuplc/doc/*
-
+*.swp
+test_parser
+test_scanner
+test_ir
+doc/*
+*.dot

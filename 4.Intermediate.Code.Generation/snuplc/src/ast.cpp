@@ -478,7 +478,7 @@ CTacAddr* CAstStatAssign::ToTac(CCodeBlock *cb, CTacLabel *next)
   CTacAddr *r = GetRHS()->ToTac(cb);
   CTacAddr *l = GetLHS()->ToTac(cb);
 
-  cb->AddInstr(new CTacInstr(opAssign, r, l));
+  cb->AddInstr(new CTacInstr(opAssign, l, r));
   // add assign instruction to the code block
   cb->AddInstr(new CTacInstr(opGoto, next));
 
@@ -662,6 +662,15 @@ void CAstStatReturn::toDot(ostream &out, int indent) const
 
 CTacAddr* CAstStatReturn::ToTac(CCodeBlock *cb, CTacLabel *next)
 {
+  CTacAddr *r = NULL;
+
+  // return the expression tac if it exists
+  if(GetExpression())
+    r = GetExpression()->ToTac(cb);
+
+  cb->AddInstr(new CTacInstr(opReturn, NULL, r, NULL));
+  cb->AddInstr(new CTacInstr(opGoto, next, NULL, NULL));
+
   return NULL;
 }
 
@@ -804,6 +813,43 @@ void CAstStatIf::toDot(ostream &out, int indent) const
 
 CTacAddr* CAstStatIf::ToTac(CCodeBlock *cb, CTacLabel *next)
 {
+  CTacLabel *if_t = cb->CreateLabel("if true");
+  CTacLabel *if_f = cb->CreateLabel("if false");
+  CAstStatement *if_b = GetIfBody();
+  CAstStatement *else_b = GetElseBody();
+
+  // if true, goto true
+  // goto false
+  // true:
+  //     xxxx
+  //     goto done
+  // false:
+  //     xxxx
+  //     
+  // done:
+
+  // both instructions are added to the intermediate code
+  GetCondition()->ToTac(cb, if_t, if_f);
+  cb->AddInstr(if_t);
+  while(if_b)
+  {
+    CTacLabel *n = cb->CreateLabel("Inside if body");
+    if_b->ToTac(cb, n);
+    // moves on to the next statement
+    if_b = if_b->GetNext();
+  }
+  // goto next label
+  cb->AddInstr(new CTacInstr(opGoto, next, NULL, NULL));
+
+  cb->AddInstr((if_f));
+  while(else_b)
+  {
+    CTacLabel *n = cb->CreateLabel();
+    else_b->ToTac(cb, n);
+    cb->AddInstr(n);  
+    else_b = else_b->GetNext();
+  }
+  cb->AddInstr(new CTacInstr(opGoto, next, NULL, NULL));
   return NULL;
 }
 
@@ -909,6 +955,35 @@ void CAstStatWhile::toDot(ostream &out, int indent) const
 
 CTacAddr* CAstStatWhile::ToTac(CCodeBlock *cb, CTacLabel *next)
 {
+  /*
+   * while cond:
+   *   if true goto body
+   *   goto done
+   *
+   * body:
+   *    xxx
+   *    goto whilecond
+   * done:
+   */
+  CTacLabel *condition = cb->CreateLabel("the condition of while");
+  CTacLabel *while_body = cb->CreateLabel("Body of while");
+  CAstStatement *while_b = GetBody();
+
+  cb->AddInstr(condition);
+  GetCondition()->ToTac(cb, while_body, next);
+
+  cb->AddInstr(while_body);
+  while(while_b)
+  {
+    CTacLabel *n = cb->CreateLabel();
+    while_b->ToTac(cb, n);
+    cb->AddInstr(n);
+    while_b = while_b->GetNext();
+  }
+  
+  cb->AddInstr(new CTacInstr(opGoto, condition, NULL, NULL));
+  cb->AddInstr(new CTacInstr(opGoto, next, NULL, NULL));
+
   return NULL;
 }
 
@@ -1072,12 +1147,68 @@ void CAstBinaryOp::toDot(ostream &out, int indent) const
 
 CTacAddr* CAstBinaryOp::ToTac(CCodeBlock *cb)
 {
+  EOperation op = GetOperation();
+  
+  if( op <=opDiv || op>= opAdd)
+  {
+    CAstExpression *l = GetLeft();
+    CAstExpression *r = GetRight();
+    CTacAddr *ll = l->ToTac(cb);
+    CTacAddr *rr = r->ToTac(cb);
+    CTacTemp *temp = cb->CreateTemp(CTypeManager::Get()->GetInt());
+    cb->AddInstr(new CTacInstr(op, temp, ll, rr));
+    // check: do we need to return temp here?
+    return temp;
+  }
+
+  CTacLabel *t = cb->CreateLabel("boolean true");
+  CTacLabel *f = cb->CreateLabel("boolean false");
+  CTacLabel *end = cb->CreateLabel("End label");
+  ToTac(cb, t, f);
+
+  CTacTemp *temp = cb->CreateTemp(CTypeManager::Get()->GetBool());
+  cb->AddInstr(t);
+  cb->AddInstr(new CTacInstr(opAssign, temp, new CTacConst(1), NULL));
+  cb->AddInstr(new CTacInstr(opGoto, end, NULL, NULL));
+
+  cb->AddInstr(f);
+  cb->AddInstr(new CTacInstr(opAssign, temp, new CTacConst(0), NULL));
+  // check we need new instr or just an end
+  cb->AddInstr(end);
   return NULL;
 }
 
 CTacAddr* CAstBinaryOp::ToTac(CCodeBlock *cb,
                               CTacLabel *ltrue, CTacLabel *lfalse)
 {
+  EOperation op = GetOperation();
+  CAstExpression *l = GetLeft();
+  CAstExpression *r = GetRight();
+  CTacLabel *n = cb->CreateLabel();
+
+  // need to check the logic here
+  switch(op)
+  {
+    case opEqual:
+    case opNotEqual:
+    case opLessThan:
+    case opLessEqual:
+    case opBiggerThan:
+    case opBiggerEqual:
+	cb->AddInstr(new CTacInstr(op, ltrue, l->ToTac(cb), r->ToTac(cb)));
+  	cb->AddInstr(new CTacInstr(opGoto, lfalse));
+	break;
+
+    case opAnd:
+      l->ToTac(cb, n, lfalse);
+      cb->AddInstr(n);
+      break;
+    default:
+      l->ToTac(cb, ltrue, n);
+      cb->AddInstr(n);
+      r->ToTac(cb, ltrue, lfalse);
+  }
+
   return NULL;
 }
 
@@ -1156,12 +1287,63 @@ void CAstUnaryOp::toDot(ostream &out, int indent) const
 
 CTacAddr* CAstUnaryOp::ToTac(CCodeBlock *cb)
 {
-  return NULL;
+  EOperation op = GetOperation();
+  
+  CTacTemp *re = NULL;
+
+  switch(op)
+  {
+    case opPos:
+    case opNeg:
+    {
+    // this is an integer
+      CAstConstant *num = dynamic_cast<CAstConstant *>(GetOperand());
+      if(num== NULL)
+      {
+	CTacAddr *Tac_op = GetOperand()->ToTac(cb);
+	re = cb->CreateTemp(CTypeManager::Get()->GetInt());
+	cb->AddInstr(new CTacInstr(op, re, Tac_op));
+      }
+      else
+      {
+        long long value = num->GetValue();
+	if(op == opNeg)
+	  value = -value;
+	CTacConst *Tac_num = new CTacConst(value);
+	return Tac_num;
+      }
+      break;
+    }
+    default:
+    // create true label and false label
+      CTacLabel *t = cb->CreateLabel();
+      CTacLabel *f = cb->CreateLabel();
+      CTacLabel *end = cb->CreateLabel();
+      ToTac(cb, t, f);
+
+    // return value is a bool
+      re = cb->CreateTemp(CTypeManager::Get()->GetBool());
+
+      cb->AddInstr(t);
+      cb->AddInstr(new CTacInstr(opAssign, re, new CTacConst(0), NULL));
+      cb->AddInstr(end);
+  }  
+  // check
+  return re;
 }
 
 CTacAddr* CAstUnaryOp::ToTac(CCodeBlock *cb,
-                             CTacLabel *ltrue, CTacLabel *lfalse)
+                             CTacLabel *ltrue, CTacLabel *lfalse)		
 {
+  // check
+  EOperation op = GetOperation();
+  CAstExpression *expr_operand = GetOperand();
+  if(op == opNot)
+  {
+    perror("opNot in unary operation\n");
+    exit(0);
+  }
+  expr_operand->ToTac(cb, lfalse, ltrue);
   return NULL;
 }
 
@@ -1228,7 +1410,13 @@ void CAstSpecialOp::toDot(ostream &out, int indent) const
 
 CTacAddr* CAstSpecialOp::ToTac(CCodeBlock *cb)
 {
-  return NULL;
+  CAstExpression *op = GetOperand();
+
+  CTacAddr *ptr = op->ToTac(cb);
+  CTacTemp *temp = cb->CreateTemp(CTypeManager::Get()->GetPointer(op->GetType()));
+
+  cb->AddInstr(new CTacInstr(opAddress,temp, ptr, NULL));
+  return temp;
 }
 
 
@@ -1310,12 +1498,26 @@ void CAstFunctionCall::toDot(ostream &out, int indent) const
 
 CTacAddr* CAstFunctionCall::ToTac(CCodeBlock *cb)
 {
-  return NULL;
+
+  for(int i = 0; i<GetNArgs(); i++ )
+  {
+    CTacAddr *argument = GetArg(i)->ToTac(cb);
+    CTacInstr *argu_tac = new CTacInstr(opParam, new CTacConst(1), argument, NULL);
+    cb->AddInstr(argu_tac);  
+  }
+// check
+  CTacTemp *re = cb->CreateTemp(GetType());
+  cb->AddInstr(new CTacInstr(opCall, re, new CTacName(GetSymbol()), NULL));
+  return re;
 }
 
 CTacAddr* CAstFunctionCall::ToTac(CCodeBlock *cb,
                                   CTacLabel *ltrue, CTacLabel *lfalse)
 {
+  CTacAddr *re = ToTac(cb);
+
+  cb->AddInstr(new CTacInstr(opEqual, ltrue, re, new CTacConst(1)));
+  cb->AddInstr(new CTacInstr(opGoto, lfalse, NULL, NULL));
   return NULL;
 }
 
@@ -1385,12 +1587,17 @@ void CAstDesignator::toDot(ostream &out, int indent) const
 
 CTacAddr* CAstDesignator::ToTac(CCodeBlock *cb)
 {
-  return NULL;
+  return new CTacName(GetSymbol());
 }
 
 CTacAddr* CAstDesignator::ToTac(CCodeBlock *cb,
                                 CTacLabel *ltrue, CTacLabel *lfalse)
 {
+  // check
+  CTacAddr *re = ToTac(cb);
+
+  cb->AddInstr(new CTacInstr(opEqual, ltrue, re, new CTacConst(1)));
+  cb->AddInstr(new CTacInstr(opGoto, lfalse, NULL, NULL));
   return NULL;
 }
 
@@ -1479,13 +1686,105 @@ void CAstArrayDesignator::toDot(ostream &out, int indent) const
 
 CTacAddr* CAstArrayDesignator::ToTac(CCodeBlock *cb)
 {
-  return NULL;
+  CSymtab *st = cb->GetOwner()->GetSymbolTable();
+
+  const CSymbol *dim = st->FindSymbol("DIM");
+  CAstConstant *constant = new CAstConstant(GetToken(), CTypeManager::Get()->GetInt(), 0);
+
+  const CSymbol *dofs = st->FindSymbol("DOFS");
+
+  // array identifier
+  CTacAddr *ident = new CTacName(GetSymbol());
+  CAstExpression *expr_ident = new CAstDesignator(GetToken(), GetSymbol());
+  const CArrayType *type;
+
+  if(GetSymbol()->GetDataType()->IsPointer())
+  {
+    type = dynamic_cast<const CArrayType*>((dynamic_cast<const CPointerType*>(GetSymbol()->GetDataType()))->GetBaseType());    
+  }
+  else{
+    CTacTemp *ptr = cb->CreateTemp(CTypeManager::Get()->GetPointer(GetSymbol()->GetDataType()));
+    cb->AddInstr(new CTacInstr(opAddress, ptr,ident, NULL));
+    ident = ptr;
+    
+    expr_ident = new CAstSpecialOp(GetToken(), opAddress, expr_ident, NULL);
+    type = dynamic_cast<const CArrayType*>(GetSymbol()->GetDataType());
+  }
+
+  int size = type->GetBaseType()->GetSize();
+  CTacAddr *dim_ident = NULL;
+  int i = 0;
+  for(i=0; i < type->GetNDim() - 1; i++)
+  {
+    if(!dim_ident)
+      dim_ident = GetIndex(i)->ToTac(cb);
+    else
+    {
+      CTacAddr * prev = new CTacConst(0);
+
+      if(i < GetNIndices())
+      {
+        prev = GetIndex(i)->ToTac(cb);
+      }
+      CTacAddr *next = cb->CreateTemp(CTypeManager::Get()->GetInt());
+      cb->AddInstr(new CTacInstr(opAdd, next, dim_ident, prev));
+      dim_ident = next;
+    }
+    
+    // dimension size
+    CAstFunctionCall *dim_function = new CAstFunctionCall(GetToken(), dynamic_cast<const CSymProc*>(dim));
+
+    dim_function->AddArg(expr_ident);
+    constant->SetValue(i+2);
+    dim_function->AddArg(constant);
+    CTacAddr *entry = dim_function->ToTac(cb);
+
+    CTacAddr *next = cb->CreateTemp(CTypeManager::Get()->GetInt());
+    cb->AddInstr(new CTacInstr(opMul, next, dim_ident, entry));
+    dim_ident = next;
+  }
+    if(!dim_ident)
+      dim_ident = GetIndex(i)->ToTac(cb);
+    else
+    {
+      CTacAddr * prev = new CTacConst(0);
+
+      if(i < GetNIndices())
+      {
+        prev = GetIndex(i)->ToTac(cb);
+      }
+      CTacAddr *next = cb->CreateTemp(CTypeManager::Get()->GetInt());
+      cb->AddInstr(new CTacInstr(opAdd, next, dim_ident, prev));
+      dim_ident = next;
+    }
+
+// data size
+  CTacTemp *temp = cb->CreateTemp(CTypeManager::Get()->GetInt());
+  cb->AddInstr(new CTacInstr(opMul, temp, dim_ident, new CTacConst(size)));
+  dim_ident = temp;
+  
+  // calculate array offset
+  CAstFunctionCall *dofs_function = new CAstFunctionCall(GetToken(), dynamic_cast<const CSymProc*>(dofs));
+  dofs_function->AddArg(expr_ident);
+  CTacAddr *offset = dofs_function->ToTac(cb);
+
+  temp = cb->CreateTemp(CTypeManager::Get()->GetInt());
+  cb->AddInstr(new CTacInstr(opAdd, temp, dim_ident, offset));
+
+  dim_ident = temp;
+  temp = cb->CreateTemp(CTypeManager::Get()->GetInt());
+  cb->AddInstr(new CTacInstr(opAdd, temp, ident, dim_ident));
+  // check deref
+  return new CTacReference(temp->GetSymbol(), temp->GetSymbol());
 }
 
 CTacAddr* CAstArrayDesignator::ToTac(CCodeBlock *cb,
                                      CTacLabel *ltrue, CTacLabel *lfalse)
 {
-  return NULL;
+  CTacAddr *re = ToTac(cb);
+  cb->AddInstr(new CTacInstr(opEqual, ltrue, re, new CTacConst(1)));
+  cb->AddInstr(new CTacInstr(opGoto, lfalse, NULL, NULL));
+  return re;
 }
 
 
@@ -1553,13 +1852,20 @@ string CAstConstant::dotAttr(void) const
 
 CTacAddr* CAstConstant::ToTac(CCodeBlock *cb)
 {
-  return NULL;
+  return new CTacConst(GetValue());
 }
 
 CTacAddr* CAstConstant::ToTac(CCodeBlock *cb,
                                 CTacLabel *ltrue, CTacLabel *lfalse)
 {
-  return NULL;
+ // check why long long
+  long long condition = GetValue();
+  if(condition)
+    cb->AddInstr(new CTacInstr(opGoto, ltrue, NULL, NULL));
+  else
+    cb->AddInstr(new CTacInstr(opGoto, lfalse, NULL, NULL));
+
+  return new CTacConst(GetValue());
 }
 
 
@@ -1639,13 +1945,13 @@ string CAstStringConstant::dotAttr(void) const
 
 CTacAddr* CAstStringConstant::ToTac(CCodeBlock *cb)
 {
-  return NULL;
+  return new CTacName(_sym);
 }
 
 CTacAddr* CAstStringConstant::ToTac(CCodeBlock *cb,
                                 CTacLabel *ltrue, CTacLabel *lfalse)
 {
-  return NULL;
+  return new CTacName(_sym);
 }
 
 
