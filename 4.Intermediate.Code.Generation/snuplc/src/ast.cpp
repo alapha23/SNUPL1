@@ -249,7 +249,7 @@ CTacAddr* CAstScope::ToTac(CCodeBlock *cb)
   CAstStatement *s = GetStatementSequence();
   while(s)
   {
-    CTacLabel *n = cb->CreateLabel("Statement\n");
+    CTacLabel *n = cb->CreateLabel();
     s->ToTac(cb, n);
     cb->AddInstr(n);
     // add label to the statement
@@ -480,7 +480,7 @@ CTacAddr* CAstStatAssign::ToTac(CCodeBlock *cb, CTacLabel *next)
 
   cb->AddInstr(new CTacInstr(opAssign, l, r));
   // add assign instruction to the code block
-  cb->AddInstr(new CTacInstr(opGoto, next));
+//    cb->AddInstr(new CTacInstr(opGoto, next));
 
   return NULL;
 }
@@ -536,8 +536,8 @@ CTacAddr* CAstStatCall::ToTac(CCodeBlock *cb, CTacLabel *next)
   // every argument instruction is added
   for(int i = 0; i<m ; i++)
   {
-    CTacAddr * arg = c->GetArg(i)->ToTac(cb);
-    CTacInstr *in = new CTacInstr(opParam, new CTacConst(i), arg, NULL);
+    CTacAddr * arg = c->GetArg(m-1-i)->ToTac(cb);
+    CTacInstr *in = new CTacInstr(opParam, new CTacConst(m-i-1), arg, NULL);
     cb->AddInstr(in);  
   }
 
@@ -593,15 +593,6 @@ bool CAstStatReturn::TypeCheck(CToken *t, string *msg) const
       return false;
     }
 
-/*
-  cout << "don" << endl;
-  if(!GetExpression()->TypeCheck(t, msg))
-  {
-    perror("Return expression type error\n");
-    *t = GetToken();
-    return false;
-  }
-*/
 // check the type
 // and check the return type
   if(!GetScope()->GetType()->Match(GetExpression()->GetType()))
@@ -813,8 +804,8 @@ void CAstStatIf::toDot(ostream &out, int indent) const
 
 CTacAddr* CAstStatIf::ToTac(CCodeBlock *cb, CTacLabel *next)
 {
-  CTacLabel *if_t = cb->CreateLabel("if true");
-  CTacLabel *if_f = cb->CreateLabel("if false");
+  CTacLabel *if_t = cb->CreateLabel("if_true");
+  CTacLabel *if_f = cb->CreateLabel("if_false");
   CAstStatement *if_b = GetIfBody();
   CAstStatement *else_b = GetElseBody();
 
@@ -833,7 +824,7 @@ CTacAddr* CAstStatIf::ToTac(CCodeBlock *cb, CTacLabel *next)
   cb->AddInstr(if_t);
   while(if_b)
   {
-    CTacLabel *n = cb->CreateLabel("Inside if body");
+    CTacLabel *n = cb->CreateLabel();
     if_b->ToTac(cb, n);
     // moves on to the next statement
     if_b = if_b->GetNext();
@@ -965,8 +956,8 @@ CTacAddr* CAstStatWhile::ToTac(CCodeBlock *cb, CTacLabel *next)
    *    goto whilecond
    * done:
    */
-  CTacLabel *condition = cb->CreateLabel("the condition of while");
-  CTacLabel *while_body = cb->CreateLabel("Body of while");
+  CTacLabel *condition = cb->CreateLabel("_while_cond"); 
+  CTacLabel *while_body = cb->CreateLabel("_while_body"); 
   CAstStatement *while_b = GetBody();
 
   cb->AddInstr(condition);
@@ -1092,7 +1083,6 @@ bool CAstBinaryOp::TypeCheck(CToken *t, string *msg) const
     perror("Binary op dont match\n");
     return false;
   }
-cout << GetToken() <<"\n\n\n"<< endl;
   return true;
 }
 
@@ -1161,9 +1151,9 @@ CTacAddr* CAstBinaryOp::ToTac(CCodeBlock *cb)
     return temp;
   }
 
-  CTacLabel *t = cb->CreateLabel("boolean true");
-  CTacLabel *f = cb->CreateLabel("boolean false");
-  CTacLabel *end = cb->CreateLabel("End label");
+  CTacLabel *t = cb->CreateLabel("true");
+  CTacLabel *f = cb->CreateLabel("false");
+  CTacLabel *end = cb->CreateLabel();
   ToTac(cb, t, f);
 
   CTacTemp *temp = cb->CreateTemp(CTypeManager::Get()->GetBool());
@@ -1501,7 +1491,7 @@ CTacAddr* CAstFunctionCall::ToTac(CCodeBlock *cb)
 
   for(int i = 0; i<GetNArgs(); i++ )
   {
-    CTacAddr *argument = GetArg(i)->ToTac(cb);
+    CTacAddr *argument = GetArg(GetNArgs()-1-i)->ToTac(cb);
     CTacInstr *argu_tac = new CTacInstr(opParam, new CTacConst(1), argument, NULL);
     cb->AddInstr(argu_tac);  
   }
@@ -1716,8 +1706,8 @@ CTacAddr* CAstArrayDesignator::ToTac(CCodeBlock *cb)
   int i = 0;
   for(i=0; i < type->GetNDim() - 1; i++)
   {
-    if(!dim_ident)
-      dim_ident = GetIndex(i)->ToTac(cb);
+    if(!dim_ident) 
+      dim_ident = GetIndex(i)->ToTac(cb); // how many rows we go over
     else
     {
       CTacAddr * prev = new CTacConst(0);

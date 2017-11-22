@@ -10,6 +10,8 @@ var i: integer;
 
 procedure foo(v: integer);
 begin
+  i := 2;
+  i := i+8;
   i := (1 + 2) * v
 end foo;
 
