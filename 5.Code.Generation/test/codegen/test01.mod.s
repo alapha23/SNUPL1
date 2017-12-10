@@ -20,18 +20,19 @@
 
     # scope test01
 main:
-    #      0(4  [ $t0       <int> ]
-    #      0(4  [ $t1       <int> ]
-    #      0(4  [ $t2       <int> ]
-    #      0(4  [ $t3       <int> ]
-    # stack offset 0
-    # function prologue 0
+    #    -16(4  [ $t0       <int> %ebp-16 ]
+    #    -20(4  [ $t1       <int> %ebp-20 ]
+    #    -24(4  [ $t2       <int> %ebp-24 ]
+    #    -28(4  [ $t3       <int> %ebp-28 ]
+
+    # stack offset 16
+    # function prologue 16
     pushl   %ebp                   
-    movl    %esp %ebp              
+    movl    %esp, %ebp             
     pushl   %ebx                   
     pushl   %esi                   
     pushl   %edi                   
-    subl    $0, %esp               
+    subl    $16, %esp              
     movl    $2, %eax                #   0:     assign a <- 2
     movl    %eax, a                
     movl    $5, %eax                #   1:     assign b <- 5
@@ -39,8 +40,8 @@ main:
     movl    a, %eax                 #   2:     add    t0 <- a, b
     movl    b, %ebx                
     addl    %ebx, %eax             
-    movl    %eax, 0()              
-    movl    0(), %eax               #   3:     assign c <- t0
+    movl    %eax, -16(%ebp)        
+    movl    -16(%ebp), %eax         #   3:     assign c <- t0
     movl    %eax, c                
     movl    c, %eax                 #   4:     param  0 <- c
     pushl   %eax                   
@@ -49,8 +50,8 @@ main:
     movl    a, %eax                 #   6:     mul    t1 <- a, b
     movl    b, %ebx                
     imull   %ebx                   
-    movl    %eax, 0()              
-    movl    0(), %eax               #   7:     assign c <- t1
+    movl    %eax, -20(%ebp)        
+    movl    -20(%ebp), %eax         #   7:     assign c <- t1
     movl    %eax, c                
     movl    c, %eax                 #   8:     param  0 <- c
     pushl   %eax                   
@@ -58,12 +59,12 @@ main:
     addl    $4, %esp               
     movl    b, %eax                 #  10:     neg    t2 <- b
     negl    %eax                   
-    movl    %eax, 0()              
-    movl    0(), %eax               #  11:     add    t3 <- t2, a
+    movl    %eax, -24(%ebp)        
+    movl    -24(%ebp), %eax         #  11:     add    t3 <- t2, a
     movl    a, %ebx                
     addl    %ebx, %eax             
-    movl    %eax, 0()              
-    movl    0(), %eax               #  12:     assign c <- t3
+    movl    %eax, -28(%ebp)        
+    movl    -28(%ebp), %eax         #  12:     assign c <- t3
     movl    %eax, c                
     movl    c, %eax                 #  13:     param  0 <- c
     pushl   %eax                   
@@ -72,7 +73,7 @@ main:
 
 l_test01_exit:
     # epilogue 
-    addl    $0, %esp               
+    addl    $16, %esp              
     popl    %edi                   
     popl    %esi                   
     popl    %ebx                   

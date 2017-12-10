@@ -201,19 +201,22 @@ void CBackendx86::EmitScope(CScope *scope)
   CSymtab *symtab = scope->GetSymbolTable();
 
   size_t offset =  ComputeStackOffsets(symtab, 8, -12);
+  _out << endl;
   _out << _ind << "# stack offset " << offset << endl;
   _out << _ind << "# function prologue " << offset << endl;
 
   // emit function prologue
   EmitInstruction("pushl", "%ebp");
-  EmitInstruction("movl", "%esp %ebp");
+  EmitInstruction("movl", "%esp, %ebp");
   // callee saved
   EmitInstruction("pushl", "%ebx");
   EmitInstruction("pushl", "%esi");
   EmitInstruction("pushl", "%edi");
   EmitInstruction("subl", "$"+to_string(offset)+", %esp");
 
+  if(scope->GetParent())
   EmitLocalData(scope);
+  _out<<endl;
   // forall i in instructions do
   //   EmitInstruction(i)
   CCodeBlock* codeblock = scope->GetCodeBlock();
@@ -615,7 +618,8 @@ string CBackendx86::Operand(const CTac *op)
     if(type == stGlobal || type == stProcedure)
       operand = symbol->GetName();
     else 
-      operand = to_string(symbol->GetOffset()) + "(" + symbol->GetBaseRegister() + ")";
+      // no need for braces
+      operand = to_string(symbol->GetOffset())+"(" + symbol->GetBaseRegister()+")" ;
     return operand;
   }
   return operand;
@@ -747,6 +751,11 @@ size_t CBackendx86::ComputeStackOffsets(CSymtab *symtab,
         size += pad;
         local_ofs -= pad;
       }
+      size +=4;
+      local_ofs -= 4;
+      symbol->SetBaseRegister("%ebp");
+
+      symbol->SetOffset(local_ofs);
     }
     else
     if(type->IsArray())
@@ -777,12 +786,13 @@ size_t CBackendx86::ComputeStackOffsets(CSymtab *symtab,
       // ignore anything other than parameter
       continue;
     // offset of a parameter is easy to measure
-    symbol->SetOffset(param_ofs + 4*dynamic_cast<CSymParam*>(symbol)->GetIndex());
+    int ofs = param_ofs + dynamic_cast<CSymParam*>(symbol)->GetIndex() * 4;
+    symbol->SetOffset(ofs);
     symbol->SetBaseRegister("%ebp");
   }
 
   // align size
-  int pad = local_ofs%4;
+  int pad = local_ofs % 4;
   if(pad!=0)
   {
     pad = local_ofs%4 +4;
@@ -798,7 +808,7 @@ size_t CBackendx86::ComputeStackOffsets(CSymtab *symtab,
     if(symboltype != stLocal && (symboltype != stParam))
       continue;
 
-    _out << _ind << "#" << setw(7) << std::right << symbol->GetOffset() << "(" << symbol->GetDataType()->GetSize() << setw(2) << symbol << endl;
+    _out << _ind << "#" << setw(7) << std::right << symbol->GetOffset() << "(" << symbol->GetBaseRegister() << ")" << setw(4) << std::right << symbol->GetDataType()->GetSize() << setw(2) << symbol << endl;
   }
 
 
