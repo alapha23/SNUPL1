@@ -133,7 +133,7 @@ void CBackendx86::EmitCode(void)
        << _ind << ".extern WriteLn" << endl
        << endl;
 
-  // TODO
+  // TODO: done 
   // forall s in subscopes do
   //   EmitScope(s)
   // EmitScope(program)
@@ -195,16 +195,10 @@ void CBackendx86::EmitScope(CScope *scope)
   _out << _ind << "# scope " << scope->GetName() << endl
        << label << ":" << endl;
 
-  // TODO
+  // TODO: done
   // ComputeStackOffsets(scope)
   CSymtab *symtab = scope->GetSymbolTable();
-/*  int param_ofs, local_ofs;
-  vector<CSymbol*> symbols = symtab->GetSymbols();
-  for(int i; i < symbols.size(); i++)
-  {    
-    ;
-  }
-*/  
+
   size_t offset =  ComputeStackOffsets(symtab, 8, -12);
   _out << _ind << "# stack offset " << offset << endl;
   _out << _ind << "# function prologue " << offset << endl;
@@ -324,12 +318,45 @@ void CBackendx86::EmitLocalData(CScope *scope)
 {
   assert(scope != NULL);
 
-  // TODO: InitializeLocalScope
+  // TODO: done InitializeLocalScope
   // forall arrays a belongsto local variables in scope do
   //     initialize meta-data for a on stack
+  CSymtab *symtab = scope->GetSymbolTable();
+  vector<CSymbol*> symbols = symtab->GetSymbols();
 
+  _out << dec;
 
+  for(int i; i < symbols.size(); i++)
+  {    
+    CSymbol *s = symbols.at(i);
+    const CType *type = s->GetDataType();
 
+    if(type->IsArray())
+    {
+    // get type of array
+      const CArrayType *arr = dynamic_cast<const CArrayType*>(type);
+      assert(arr != NULL);  
+      
+      int dimension = arr->GetNDim();
+      string reg = s->GetBaseRegister();
+      int offset = s->GetOffset();
+
+      string arg = Imm(dimension) + ", " + to_string(offset) + "(" + reg + ")";
+      string comment = "local array '" + s->GetName() + "':" + to_string(dimension) + "dimensions";
+      EmitInstruction("movl", arg, comment);
+
+      for(int j=0; j < dimension; j++)
+      {
+        int nElem = arr->GetNElem();
+        offset += 4;
+
+        string arg = Imm(nElem) + ", " + to_string(offset) + "(" + reg + ")";
+        string comment = "  dimension " + to_string(j + 1) + ": " + to_string(nElem) + " elements";
+        EmitInstruction("movl", arg, comment);
+        arr = dynamic_cast<const CArrayType*>(arr->GetInnerType());
+      }
+    }
+  }
 }
 
 void CBackendx86::EmitCodeBlock(CCodeBlock *cb)
@@ -355,19 +382,82 @@ void CBackendx86::EmitInstruction(CTacInstr *i)
   switch (op) {
     // binary operators
     // dst = src1 op src2
-    // TODO
+    // TODO: done
+    case opAdd:
+         Load(i->GetSrc(1), "%eax", cmt.str());
+         Load(i->GetSrc(2), "%ebx");
+         EmitInstruction("addl", "%ebx, %eax");
+         Store(i->GetDest(), 'a');
+         break;
+
+    case opSub:
+         Load(i->GetSrc(1), "%eax", cmt.str());
+         Load(i->GetSrc(2), "%ebx");
+         EmitInstruction("subl", "%ebx, %eax");
+         Store(i->GetDest(), 'a');
+         break;
+
+    case opMul:
+         Load(i->GetSrc(1), "%eax", cmt.str());
+         Load(i->GetSrc(2), "%ebx");
+         EmitInstruction("imull", "%ebx");
+         Store(i->GetDest(), 'a');
+         break;
+
+    case opDiv:
+         Load(i->GetSrc(1), "%eax", cmt.str());
+         Load(i->GetSrc(2), "%ebx");
+         EmitInstruction("cdq");
+         EmitInstruction("idivl", "%ebx");
+         Store(i->GetDest(), 'a');
+         break;
+
+    case opAnd:
+         Load(i->GetSrc(1), "%eax", cmt.str());
+         Load(i->GetSrc(2), "%ebx");
+         EmitInstruction("andl", "%eax, %ebx");
+         Store(i->GetDest(), 'a');
+         break;
+
+    case opOr:
+         Load(i->GetSrc(1), "%eax", cmt.str());
+         Load(i->GetSrc(2), "%ebx");
+         EmitInstruction("orl", "%eax, %ebx");
+         Store(i->GetDest(), 'a');
+         break;
     // unary operators
     // dst = op src1
     // TODO
+    case opPos:
+         Load(i->GetSrc(1), "%eax", cmt.str());
+         Store(i->GetDest(), 'a');
+         break;
+    case opNeg:
+         Load(i->GetSrc(1), "%eax", cmt.str());
+         EmitInstruction("negl", "%eax");
+         Store(i->GetDest(), 'a');
+         break;
+    case opNot:
+         Load(i->GetSrc(1), "%eax", cmt.str());
+         EmitInstruction("notl", "%eax");
+         Store(i->GetDest(), 'a');
+         break;
 
     // memory operations
     // dst = src1
     // TODO
-
+    case opAssign:
+         Load(i->GetSrc(1), "%eax", cmt.str());
+         Store(i->GetDest(), 'a');
+         break;
     // pointer operations
     // dst = &src1
     // TODO
     // dst = *src1
+    case opAddress:
+         EmitInstruction("leal", Operand(i->GetSrc(1)) + ", %eax", cmt.str());
+         Store(i->GetDest(), 'a');
+         break;
     case opDeref:
       // opDeref not generated for now
       EmitInstruction("# opDeref", "not implemented", cmt.str());
@@ -377,14 +467,56 @@ void CBackendx86::EmitInstruction(CTacInstr *i)
     // unconditional branching
     // goto dst
     // TODO
+    case opGoto:
+      EmitInstruction("jmp", Label(dynamic_cast<const CTacLabel*>(i->GetDest())), cmt.str());
+      break;
 
     // conditional branching
     // if src1 relOp src2 then goto dst
     // TODO
+    case opEqual:
+    case opNotEqual:
+    case opLessEqual:
+    case opLessThan:
+    case opBiggerThan:
+    case opBiggerEqual:
+      Load(i->GetSrc(1), "%eax", cmt.str());
+      Load(i->GetSrc(2), "%ebx");
+      EmitInstruction("cmpl", "%ebx, %eax");
+      EmitInstruction("j" + Condition(op), Label(dynamic_cast<const CTacLabel*>(i->GetDest())));
+      break;
+
 
     // function call-related operations
     // TODO
+   case opCall:
+    {
+      const CTacName *function = dynamic_cast<const CTacName*>(i->GetSrc(1));
+      const CSymProc *symproc = dynamic_cast<const CSymProc*>(function->GetSymbol());
+      assert(function != NULL);
+      assert(symproc != NULL);
 
+      EmitInstruction("call", symproc->GetName(), cmt.str());
+      if(symproc->GetNParams() > 0)
+        EmitInstruction("addl", "$" + to_string(4 * symproc->GetNParams()) + ", %esp");
+      if(i->GetDest())
+        Store(i->GetDest(), 'a');
+      break;
+    }
+    case opReturn:
+      if(i->GetSrc(1))
+      {
+        Load(i->GetSrc(1), "%eax", cmt.str());
+        EmitInstruction("jmp", Label("exit"), cmt.str());
+      }
+      else
+        EmitInstruction("jmp", Label("exit"), cmt.str());
+      break;
+
+    case opParam:
+      Load(i->GetSrc(1), "%eax", cmt.str());
+      EmitInstruction("pushl", "%eax");
+      break;
     // special
     case opLabel:
       _out << Label(dynamic_cast<CTacLabel*>(i)) << ":" << endl;
@@ -452,9 +584,18 @@ string CBackendx86::Operand(const CTac *op)
   string operand;
 
   // TODO
+  // param: op, a three address code
   // return a string representing op
   // hint: take special care of references (op of type CTacReference)
-
+  // *op is possibly a CTacReference, a CTacName, a CTacConst
+  const CTacReference *ref = dynamic_cast<const CTacReference*>(op);
+  switch(*op)
+  {
+    
+  
+  
+  
+  }
   return operand;
 }
 
