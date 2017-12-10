@@ -137,6 +137,13 @@ void CBackendx86::EmitCode(void)
   // forall s in subscopes do
   //   EmitScope(s)
   // EmitScope(program)
+  CScope * s = GetScope();  
+  vector<CScope*>  sub = s->GetSubscopes();
+  for(int i=0; i < sub.size(); i++)
+  {
+    EmitScope(sub.at(i));    
+  }
+  EmitScope(s);
 
   _out << _ind << "# end of text section" << endl
        << _ind << "#-----------------------------------------" << endl
@@ -190,13 +197,48 @@ void CBackendx86::EmitScope(CScope *scope)
 
   // TODO
   // ComputeStackOffsets(scope)
-  //
+  CSymtab *symtab = scope->GetSymbolTable();
+/*  int param_ofs, local_ofs;
+  vector<CSymbol*> symbols = symtab->GetSymbols();
+  for(int i; i < symbols.size(); i++)
+  {    
+    ;
+  }
+*/  
+  size_t offset =  ComputeStackOffsets(symtab, 8, -12);
+  _out << _ind << "# stack offset " << offset << endl;
+  _out << _ind << "# function prologue " << offset << endl;
+
   // emit function prologue
-  //
+  EmitInstruction("pushl", "%ebp");
+  EmitInstruction("movl", "%esp %ebp");
+  // callee saved
+  EmitInstruction("pushl", "%ebx");
+  EmitInstruction("pushl", "%esi");
+  EmitInstruction("pushl", "%edi");
+  EmitInstruction("subl", "$"+to_string(offset)+", %esp");
+
+  EmitLocalData(scope);
   // forall i in instructions do
   //   EmitInstruction(i)
-  //
+  CCodeBlock* codeblock = scope->GetCodeBlock();
+  list<CTacInstr*> instr = codeblock->GetInstr();
+  for(list<CTacInstr*>::iterator it = instr.begin(); it != instr.end(); it++)
+  {
+    EmitInstruction(*it);
+  }
+  _out << endl;
+
   // emit function epilogue
+  _out << Label("exit") << ":" << endl
+       << _ind << "# epilogue " << endl;
+
+  EmitInstruction("addl", "$" + to_string(offset) + ", %esp");
+  EmitInstruction("popl", "%edi");
+  EmitInstruction("popl", "%esi");
+  EmitInstruction("popl", "%ebx");
+  EmitInstruction("popl", "%ebp");
+  EmitInstruction("ret");
 
   _out << endl;
 }
@@ -282,7 +324,12 @@ void CBackendx86::EmitLocalData(CScope *scope)
 {
   assert(scope != NULL);
 
-  // TODO TODO!
+  // TODO: InitializeLocalScope
+  // forall arrays a belongsto local variables in scope do
+  //     initialize meta-data for a on stack
+
+
+
 }
 
 void CBackendx86::EmitCodeBlock(CCodeBlock *cb)

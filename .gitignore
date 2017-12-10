@@ -4,3 +4,4 @@ test_scanner
 test_ir
 doc/*
 *.dot
+*.html

@@ -83,9 +83,5 @@ digraph AST {
   node51 -> node54 [style=dotted];
   node0 -> node44;
   node57 [label="p/f strcpy",shape=box];
-  node63 [label="return",shape=box];
-  node62 [label="1",shape=ellipse];
-  node63->node62;
-  node57 -> node63 [style=dotted];
   node0 -> node57;
 }
