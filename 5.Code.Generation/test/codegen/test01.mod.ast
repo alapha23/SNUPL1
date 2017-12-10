@@ -1,0 +1,65 @@
+../test/codegen/test01.mod:
+    CAstScope: 'test01'
+      symbol table:
+        [[
+          [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>           ]
+          [ *DOFS(<ptr(4) to <NULL>>) --> <int>           ]
+          [ *ReadInt() --> <int>           ]
+          [ *WriteChar(<char>) --> <NULL>           ]
+          [ *WriteInt(<int>) --> <NULL>           ]
+          [ *WriteLn() --> <NULL>           ]
+          [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>           ]
+          [ @a        <int>           ]
+          [ @b        <int>           ]
+          [ @c        <int>           ]
+          [ main     <NULL>           ]
+        ]]
+      statement list:
+        := <int>
+          [ @a        <int> ] <int>
+          2 <int>
+        := <int>
+          [ @b        <int> ] <int>
+          5 <int>
+        := <int>
+          [ @c        <int> ] <int>
+          add <int>
+            [ @a        <int> ] <int>
+            [ @b        <int> ] <int>
+        call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+          [ @c        <int> ] <int>
+        := <int>
+          [ @c        <int> ] <int>
+          mul <int>
+            [ @a        <int> ] <int>
+            [ @b        <int> ] <int>
+        call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+          [ @c        <int> ] <int>
+        := <int>
+          [ @c        <int> ] <int>
+          add <int>
+            neg <int>
+              [ @b        <int> ] <int>
+            [ @a        <int> ] <int>
+        call [ *WriteInt(<int>) --> <NULL> ] <NULL>
+          [ @c        <int> ] <int>
+      nested scopes:
+        empty.
+    
+
+
+  symbol table:
+    [[
+      [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>       ]
+      [ *DOFS(<ptr(4) to <NULL>>) --> <int>       ]
+      [ *ReadInt() --> <int>       ]
+      [ *WriteChar(<char>) --> <NULL>       ]
+      [ *WriteInt(<int>) --> <NULL>       ]
+      [ *WriteLn() --> <NULL>       ]
+      [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>       ]
+      [ @a        <int>       ]
+      [ @b        <int>       ]
+      [ @c        <int>       ]
+      [ main     <NULL>       ]
+    ]]
+

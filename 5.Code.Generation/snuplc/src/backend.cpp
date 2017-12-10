@@ -137,13 +137,14 @@ void CBackendx86::EmitCode(void)
   // forall s in subscopes do
   //   EmitScope(s)
   // EmitScope(program)
-  CScope * s = GetScope();  
-  vector<CScope*>  sub = s->GetSubscopes();
+//  CScope * s = GetScope();  
+  const vector<CScope*> & sub = _m->GetSubscopes();
   for(int i=0; i < sub.size(); i++)
   {
     EmitScope(sub.at(i));    
   }
-  EmitScope(s);
+  SetScope(_m);
+  EmitScope(_m);
 
   _out << _ind << "# end of text section" << endl
        << _ind << "#-----------------------------------------" << endl
@@ -583,18 +584,39 @@ string CBackendx86::Operand(const CTac *op)
 {
   string operand;
 
-  // TODO
+  // TODO: done
   // param: op, a three address code
   // return a string representing op
   // hint: take special care of references (op of type CTacReference)
+
   // *op is possibly a CTacReference, a CTacName, a CTacConst
   const CTacReference *ref = dynamic_cast<const CTacReference*>(op);
-  switch(*op)
+  const CTacName *name = dynamic_cast<const CTacName*>(op);
+  const CTacConst *tacconst = dynamic_cast<const CTacConst *>(op);
+  if(ref!=NULL)
   {
-    
-  
-  
-  
+    const CSymbol *symbol = ref->GetSymbol();
+    EmitInstruction("movl", to_string(symbol->GetOffset())+ "(" + symbol->GetBaseRegister() + "), %edi");
+    operand = "(%edi)";
+    return operand;
+  }
+
+  if(tacconst !=NULL)
+  {
+    operand = "$" + to_string(tacconst->GetValue());  
+    return operand;
+  }
+
+
+  if(name !=NULL)
+  {
+    const CSymbol *symbol = name->GetSymbol();
+    ESymbolType type = symbol->GetSymbolType();
+    if(type == stGlobal || type == stProcedure)
+      operand = symbol->GetName();
+    else 
+      operand = to_string(symbol->GetOffset()) + "(" + symbol->GetBaseRegister() + ")";
+    return operand;
   }
   return operand;
 }
@@ -642,33 +664,143 @@ int CBackendx86::OperandSize(CTac *t) const
 {
   int size = 4;
 
-  // TODO
+  // TODO: done
   // compute the size for operand t of type CTacName
   // Hint: you need to take special care of references (incl. references to pointers!)
   //       and arrays. Compare your output to that of the reference implementation
   //       if you are not sure.
+  CTacName *name = dynamic_cast<CTacName*>(t);
+  CTacReference *ref = dynamic_cast<CTacReference*>(t);
 
+  if(name != NULL)
+  {
+    size = name->GetSymbol()->GetDataType()->GetDataSize();
+    return size;
+  }
+
+  if(ref != NULL)
+  {
+    const CSymbol *deref = ref->GetDerefSymbol();
+    const CType *type = deref->GetDataType();
+    if( type->IsPointer())
+    {
+      type = dynamic_cast<const CPointerType*>(type)->GetBaseType();
+      const CType *base = dynamic_cast<const CArrayType*>(type)->GetBaseType();
+      size = base->GetDataSize();
+    }else if(type->IsArray())
+    {
+      const CType *base = dynamic_cast<const CArrayType*>(type)->GetBaseType();
+      size = base->GetDataSize();
+    }else
+    {
+      size = type->GetDataSize();
+    }
+  }
   return size;
 }
 
 size_t CBackendx86::ComputeStackOffsets(CSymtab *symtab,
                                         int param_ofs,int local_ofs)
 {
+  // we set param_ofs =8, local_ofs=-12 in EmitScope
+  // param_ofs is the offset to parameters from base pointer(ebp) after epilogue, 
+  // local_ofs is offset to local vars  from base pointer(ebp) after epilogue
+  int size = 0;
+  // this is the total size of the stack frame
   assert(symtab != NULL);
   vector<CSymbol*> slist = symtab->GetSymbols();
 
-  // TODO
+  // TODO: done
+  // symbol in the table
+  CSymbol *symbol;
+  // data type
+  const CType *type;
+
   // foreach local symbol l in slist do
   //   compute aligned offset on stack and store in symbol l
   //   set base register to %ebp
-  //
-  // foreach parameter p in slist do
+  for(int i=0; i < slist.size(); i++)
+  {
+    symbol = slist.at(i);
+    if(symbol->GetSymbolType() != stLocal)
+      // global symbols are not handled here
+      continue;
+    type = symbol->GetDataType();
+
+    
+    if(type->IsChar() || type->IsBoolean())
+      // both size = 1
+    {
+      size++;
+      local_ofs--;
+      // for each symbol, its offset must be set
+      symbol->SetOffset(local_ofs);
+      symbol->SetBaseRegister("%ebp");
+    }
+    else
+    // In this machine pointer size is the same as an int
+    if(type->IsInt() || type->IsPointer())
+    {
+      if(local_ofs % 4)
+      {
+        int pad = 4 + local_ofs % 4;
+        size += pad;
+        local_ofs -= pad;
+      }
+    }
+    else
+    if(type->IsArray())
+    {
+      int pad = (local_ofs - type->GetSize()) % 4;
+      if(pad)
+      {
+        pad = local_ofs % 4 + 4;
+        size += pad;
+        local_ofs -= pad;
+      }
+      local_ofs -= type->GetSize();  
+      size += type->GetSize();
+      symbol->SetOffset(local_ofs);
+      symbol->SetBaseRegister("%ebp");
+   }
+
+  }
+
+ // foreach parameter p in slist do
   //   compute offset on stack and store in symbol p
   //   set base register to %ebp
-  //
+  for(int i=0; i < slist.size(); i++)
+  {
+    symbol = slist.at(i);
+
+    if(symbol->GetSymbolType() != stParam)
+      // ignore anything other than parameter
+      continue;
+    // offset of a parameter is easy to measure
+    symbol->SetOffset(param_ofs + 4*dynamic_cast<CSymParam*>(symbol)->GetIndex());
+    symbol->SetBaseRegister("%ebp");
+  }
+
   // align size
-  //
+  int pad = local_ofs%4;
+  if(pad!=0)
+  {
+    pad = local_ofs%4 +4;
+    size += pad;
+    local_ofs -= pad;
+  }
+
   // dump stack frame to assembly file
+  for(int i=0; i < slist.size(); i++)
+  {
+    symbol = slist.at(i);
+    ESymbolType symboltype = symbol->GetSymbolType();
+    if(symboltype != stLocal && (symboltype != stParam))
+      continue;
+
+    _out << _ind << "#" << setw(7) << std::right << symbol->GetOffset() << "(" << symbol->GetDataType()->GetSize() << setw(2) << symbol << endl;
+  }
+
 
   return size;
 }

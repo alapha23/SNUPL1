@@ -30,7 +30,7 @@ LIB_SCANNER=$(patsubst %.cpp,$(LIB_DIR)/%.o,$(SCANNER))
 OBJ_PARSER=$(patsubst %.cpp,$(OBJ_DIR)/%.o,$(PARSER))
 OBJ_IR=$(patsubst %.cpp,$(OBJ_DIR)/%.o,$(IR) $(PARSER))
 OBJ_SNUPLC=$(patsubst %.cpp,$(OBJ_DIR)/%.o, \
-	   				$(BACKEND) $(IR) $(PARSER) $(SCANNER))
+	   				$(BACKEND) $(IR) $(PARSER))
 
 .PHONY: clean doc
 
@@ -48,7 +48,7 @@ test_parser: $(OBJ_DIR)/test_parser.o $(OBJ_PARSER)
 test_ir: $(OBJ_DIR)/test_ir.o $(OBJ_IR)
 	$(CC) $(CCFLAGS) -o $@ $(OBJ_DIR)/test_ir.o $(LIB_SCANNER) $(OBJ_IR)
 snuplc: $(OBJ_DIR)/snuplc.o $(OBJ_SNUPLC)
-	$(CC) $(CCFLAGS) -o $@ $(OBJ_DIR)/snuplc.o $(OBJ_SNUPLC)
+	$(CC) $(CCFLAGS) -o $@ $(OBJ_DIR)/snuplc.o $(LIB_SCANNER) $(OBJ_SNUPLC)
 doc:
 	doxygen
 
