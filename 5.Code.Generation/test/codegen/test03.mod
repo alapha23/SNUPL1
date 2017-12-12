@@ -27,7 +27,7 @@ begin
   else WriteInt(0)
   end;
 
-  c := !(a || b);
+  c := a || b;
   if (c) then WriteInt(1)
   else WriteInt(0)
   end

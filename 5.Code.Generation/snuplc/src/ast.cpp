@@ -804,11 +804,6 @@ void CAstStatIf::toDot(ostream &out, int indent) const
 
 CTacAddr* CAstStatIf::ToTac(CCodeBlock *cb, CTacLabel *next)
 {
-  CTacLabel *if_t = cb->CreateLabel("if_true");
-  CTacLabel *if_f = cb->CreateLabel("if_false");
-  CAstStatement *if_b = GetIfBody();
-  CAstStatement *else_b = GetElseBody();
-
   // if true, goto true
   // goto false
   // true:
@@ -816,9 +811,11 @@ CTacAddr* CAstStatIf::ToTac(CCodeBlock *cb, CTacLabel *next)
   //     goto done
   // false:
   //     xxxx
-  //     
   // done:
-
+  CTacLabel *if_t = cb->CreateLabel("if_true");
+  CTacLabel *if_f = cb->CreateLabel("if_false");
+  CAstStatement *if_b = GetIfBody();
+  CAstStatement *else_b = GetElseBody();
   // both instructions are added to the intermediate code
   GetCondition()->ToTac(cb, if_t, if_f);
   cb->AddInstr(if_t);
@@ -826,6 +823,7 @@ CTacAddr* CAstStatIf::ToTac(CCodeBlock *cb, CTacLabel *next)
   {
     CTacLabel *n = cb->CreateLabel();
     if_b->ToTac(cb, n);
+    cb->AddInstr(n);
     // moves on to the next statement
     if_b = if_b->GetNext();
   }
@@ -1139,18 +1137,20 @@ CTacAddr* CAstBinaryOp::ToTac(CCodeBlock *cb)
 {
   EOperation op = GetOperation();
   
-  if( op <=opDiv || op>= opAdd)
+  if( (op <=opDiv) || ( op>= opAdd))
   {
     CAstExpression *l = GetLeft();
     CAstExpression *r = GetRight();
     CTacAddr *ll = l->ToTac(cb);
     CTacAddr *rr = r->ToTac(cb);
+    // instruction return type is an integer
     CTacTemp *temp = cb->CreateTemp(CTypeManager::Get()->GetInt());
     cb->AddInstr(new CTacInstr(op, temp, ll, rr));
-    // check: do we need to return temp here?
+    //  we need to return temp here?
     return temp;
   }
 
+  // it is a boolean
   CTacLabel *t = cb->CreateLabel("true");
   CTacLabel *f = cb->CreateLabel("false");
   CTacLabel *end = cb->CreateLabel();
@@ -1165,7 +1165,7 @@ CTacAddr* CAstBinaryOp::ToTac(CCodeBlock *cb)
   cb->AddInstr(new CTacInstr(opAssign, temp, new CTacConst(0), NULL));
   // check we need new instr or just an end
   cb->AddInstr(end);
-  return NULL;
+  return temp;
 }
 
 CTacAddr* CAstBinaryOp::ToTac(CCodeBlock *cb,
@@ -1192,6 +1192,7 @@ CTacAddr* CAstBinaryOp::ToTac(CCodeBlock *cb,
     case opAnd:
       l->ToTac(cb, n, lfalse);
       cb->AddInstr(n);
+      r->ToTac(cb, ltrue, lfalse);
       break;
     default:
       l->ToTac(cb, ltrue, n);
@@ -1290,17 +1291,17 @@ CTacAddr* CAstUnaryOp::ToTac(CCodeBlock *cb)
       CAstConstant *num = dynamic_cast<CAstConstant *>(GetOperand());
       if(num== NULL)
       {
-	CTacAddr *Tac_op = GetOperand()->ToTac(cb);
-	re = cb->CreateTemp(CTypeManager::Get()->GetInt());
-	cb->AddInstr(new CTacInstr(op, re, Tac_op));
+        CTacAddr *Tac_op = GetOperand()->ToTac(cb);
+        re = cb->CreateTemp(CTypeManager::Get()->GetInt());
+        cb->AddInstr(new CTacInstr(op, re, Tac_op));
       }
       else
       {
         long long value = num->GetValue();
-	if(op == opNeg)
-	  value = -value;
-	CTacConst *Tac_num = new CTacConst(value);
-	return Tac_num;
+        if(op == opNeg)
+        value = -value;
+        CTacConst *Tac_num = new CTacConst(value);
+        return Tac_num;
       }
       break;
     }
@@ -1316,6 +1317,10 @@ CTacAddr* CAstUnaryOp::ToTac(CCodeBlock *cb)
 
       cb->AddInstr(t);
       cb->AddInstr(new CTacInstr(opAssign, re, new CTacConst(0), NULL));
+      cb->AddInstr(new CTacInstr(opGoto, end));
+
+      cb->AddInstr(f);
+      cb->AddInstr(new CTacInstr(opAssign, re, new CTacConst(0), NULL));
       cb->AddInstr(end);
   }  
   // check
@@ -1325,10 +1330,10 @@ CTacAddr* CAstUnaryOp::ToTac(CCodeBlock *cb)
 CTacAddr* CAstUnaryOp::ToTac(CCodeBlock *cb,
                              CTacLabel *ltrue, CTacLabel *lfalse)		
 {
-  // check
+  // check unary op
   EOperation op = GetOperation();
   CAstExpression *expr_operand = GetOperand();
-  if(op == opNot)
+  if(op != opNot)
   {
     perror("opNot in unary operation\n");
     exit(0);
