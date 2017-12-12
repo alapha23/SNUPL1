@@ -90,7 +90,7 @@ l_test04_8:
     movl    %eax, -60(%ebp)        
     movzbl  -13(%ebp), %eax         #  20:     assign @t6 <- t0
     movl    -60(%ebp), %edi        
-    mov    %al, (%edi)           
+    movl    %eax, (%edi)           
     movl    i, %eax                 #  21:     add    t7 <- i, 1
     movl    $1, %ebx               
     addl    %ebx, %eax             

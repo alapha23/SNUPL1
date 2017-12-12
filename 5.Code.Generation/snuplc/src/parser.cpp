@@ -150,9 +150,9 @@ void CParser::InitSymbolTable(CSymtab *s)
   s->AddSymbol(myfun);
 
   // main;
-  CSymbol* mymain;
-  mymain = new CSymbol("main", stReserved, tm->GetNull());
-  s->AddSymbol(mymain);
+//  CSymbol* mymain;
+//  mymain = new CSymbol("main", stReserved, tm->GetNull());
+//  s->AddSymbol(mymain);
 }
 
 
