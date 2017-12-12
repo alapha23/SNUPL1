@@ -11,21 +11,14 @@
 
 module test04;
 
-var a : boolean[10];
+var a : integer;
     i : integer;
 
 begin
   i := 0;
   while (i < 10) do
-    a[i] := i > 2;
+    a := i ;
+    WriteInt(a);
     i := i+1
-  end;
-
-   i := 0;
-   while (i < 10) do
-    if (a[i]) then WriteInt(1)
-    else WriteInt(0)
-    end;
-   i := i+1
   end
 end test04.

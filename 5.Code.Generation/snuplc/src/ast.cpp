@@ -1136,8 +1136,10 @@ void CAstBinaryOp::toDot(ostream &out, int indent) const
 CTacAddr* CAstBinaryOp::ToTac(CCodeBlock *cb)
 {
   EOperation op = GetOperation();
+ 
   
-  if( (op <=opDiv) || ( op>= opAdd))
+//  if( (op <=opDiv) || ( op>= opAdd))
+  if(op == opDiv || op == opAdd || op == opSub || op==opMul)
   {
     CAstExpression *l = GetLeft();
     CAstExpression *r = GetRight();
@@ -1279,7 +1281,7 @@ void CAstUnaryOp::toDot(ostream &out, int indent) const
 CTacAddr* CAstUnaryOp::ToTac(CCodeBlock *cb)
 {
   EOperation op = GetOperation();
-  
+ 
   CTacTemp *re = NULL;
 
   switch(op)
@@ -1405,12 +1407,14 @@ void CAstSpecialOp::toDot(ostream &out, int indent) const
 
 CTacAddr* CAstSpecialOp::ToTac(CCodeBlock *cb)
 {
+
   CAstExpression *op = GetOperand();
 
   CTacAddr *ptr = op->ToTac(cb);
   CTacTemp *temp = cb->CreateTemp(CTypeManager::Get()->GetPointer(op->GetType()));
 
   cb->AddInstr(new CTacInstr(opAddress,temp, ptr, NULL));
+
   return temp;
 }
 
@@ -1681,6 +1685,8 @@ void CAstArrayDesignator::toDot(ostream &out, int indent) const
 
 CTacAddr* CAstArrayDesignator::ToTac(CCodeBlock *cb)
 {
+
+
   CSymtab *st = cb->GetOwner()->GetSymbolTable();
 
   const CSymbol *dim = st->FindSymbol("DIM");
@@ -1779,6 +1785,7 @@ CTacAddr* CAstArrayDesignator::ToTac(CCodeBlock *cb,
   CTacAddr *re = ToTac(cb);
   cb->AddInstr(new CTacInstr(opEqual, ltrue, re, new CTacConst(1)));
   cb->AddInstr(new CTacInstr(opGoto, lfalse, NULL, NULL));
+
   return re;
 }
 
@@ -1847,6 +1854,7 @@ string CAstConstant::dotAttr(void) const
 
 CTacAddr* CAstConstant::ToTac(CCodeBlock *cb)
 {
+
   return new CTacConst(GetValue());
 }
 

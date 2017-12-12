@@ -6,7 +6,7 @@
 #// 2016/04/01 Bernhard Egger support for strings
 #//
 #// @section license_section License
-#// Copyright (c) 2012-2016, Bernhard Egger
+#// Copyright (c) 2016-2017, Computer Systems and Platforms Laboratory, SNU
 #// All rights reserved.
 #//
 #// Redistribution and use in source and binary forms,  with or without modifi-

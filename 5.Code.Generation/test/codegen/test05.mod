@@ -10,7 +10,7 @@ module test05;
 
 var a : integer[10];
 
-procedure test(a: integer[]);
+procedure test(a: integer[10]);
 var i: integer;
 begin
   a[0] := 1;
@@ -21,11 +21,11 @@ begin
     i := i+1
   end;
 
-  i := 0;
-  while (i < 10) do
-    WriteInt(a[i]);
-    i := i+1
-  end
+  i := 0
+//  while (i < 10) do
+//    WriteInt(a[i]);
+//    i := i+1
+//  end
 end test;
 
 begin

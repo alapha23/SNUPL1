@@ -703,6 +703,103 @@ int CBackendx86::OperandSize(CTac *t) const
   return size;
 }
 
+
+
+
+size_t CBackendx86::ComputeStackOffsets(CSymtab *symtab,
+                                        int param_ofs,int local_ofs)
+{
+  assert(symtab != NULL);
+  vector<CSymbol*> slist = symtab->GetSymbols();
+
+  size_t size = 0;
+
+  /* foreach local symbol l in slist do
+   *   compute aligned offset on stack and store in symbol l
+   *   set base register to %ebp
+   */
+  for (const auto &l : slist) {
+    if (l->GetSymbolType() != stLocal)
+      continue;
+
+    const CType* datatype = l->GetDataType();
+    if (datatype->IsInt() || datatype->IsPointer()) {
+      if (local_ofs % 4) {
+        int padding = 4 + local_ofs % 4; /* local_ofs < 0 */
+        size += padding;
+        local_ofs += -padding;
+      }
+
+      size += 4;
+      local_ofs += -4;
+      l->SetOffset(local_ofs);
+      l->SetBaseRegister("%ebp");
+    }
+    else if (datatype->IsChar() || datatype->IsBoolean()) {
+      size += 1;
+      local_ofs += -1;
+      l->SetOffset(local_ofs);
+      l->SetBaseRegister("%ebp");
+    }
+    else if (datatype->IsArray()) {
+      if ((local_ofs - datatype->GetSize()) % 4) {
+        int padding = 4 + (local_ofs - datatype->GetSize()) % 4;
+        size += padding;
+        local_ofs += -padding;
+      }
+
+      size += datatype->GetSize();
+      local_ofs += -datatype->GetSize();
+      l->SetOffset(local_ofs);
+      l->SetBaseRegister("%ebp");
+    }
+  }
+
+  /* foreach parameter p in slist do
+   *   compute offset on stack and store in symbol p
+   *   set base register to %ebp
+   */
+  for (const auto &p : slist) {
+    if (p->GetSymbolType() != stParam)
+      continue;
+
+    /* parameter doesn't require alignment rule.
+     * its offset is always (start_param_ofs + 4 * index)
+     */
+    int offset = param_ofs + 4 * dynamic_cast<CSymParam*>(p)->GetIndex();
+    p->SetOffset(offset);
+    p->SetBaseRegister("%ebp");
+  }
+
+  /* align size */
+  if (local_ofs % 4) {
+    int padding = 4 + local_ofs % 4;
+    size += padding;
+    local_ofs += -padding;
+  }
+
+  /* dump stack frame to assembly file */
+  for (const auto &s : slist) {
+    ESymbolType stype = s->GetSymbolType();
+    if (stype != stLocal && stype != stParam)
+      continue;
+
+    _out << _ind << "#" << setw(7) << std::right << s->GetOffset() << "(" << s->GetBaseRegister() << ")"
+         << setw(4) << std::right << s->GetDataType()->GetSize() << setw(2) << s << endl;
+  }
+
+  return size;
+}
+
+
+
+
+
+
+
+
+
+/*
 size_t CBackendx86::ComputeStackOffsets(CSymtab *symtab,
                                         int param_ofs,int local_ofs)
 {
@@ -772,16 +869,13 @@ size_t CBackendx86::ComputeStackOffsets(CSymtab *symtab,
       symbol->SetOffset(local_ofs);
       symbol->SetBaseRegister("%ebp");
    }
-
   }
-
  // foreach parameter p in slist do
   //   compute offset on stack and store in symbol p
   //   set base register to %ebp
   for(int i=0; i < slist.size(); i++)
   {
     symbol = slist.at(i);
-
     if(symbol->GetSymbolType() != stParam)
       // ignore anything other than parameter
       continue;
@@ -790,7 +884,6 @@ size_t CBackendx86::ComputeStackOffsets(CSymtab *symtab,
     symbol->SetOffset(ofs);
     symbol->SetBaseRegister("%ebp");
   }
-
   // align size
   int pad = local_ofs % 4;
   if(pad!=0)
@@ -799,7 +892,6 @@ size_t CBackendx86::ComputeStackOffsets(CSymtab *symtab,
     size += pad;
     local_ofs -= pad;
   }
-
   // dump stack frame to assembly file
   for(int i=0; i < slist.size(); i++)
   {
@@ -810,7 +902,10 @@ size_t CBackendx86::ComputeStackOffsets(CSymtab *symtab,
 
     _out << _ind << "#" << setw(7) << std::right << symbol->GetOffset() << "(" << symbol->GetBaseRegister() << ")" << setw(4) << std::right << symbol->GetDataType()->GetSize() << setw(2) << symbol << endl;
   }
-
-
   return size;
 }
+
+
+*/
+
+

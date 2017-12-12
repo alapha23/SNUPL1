@@ -10,7 +10,7 @@ module test06;
 
 var a : boolean[10];
 
-procedure test(a: boolean[]);
+procedure test(a: boolean[10]);
 var i: integer;
 begin
   i := 0;
