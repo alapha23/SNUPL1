@@ -6,7 +6,7 @@
 /// 2014/11/04 Bernhard Egger print dot command instead of running it
 ///
 /// @section license_section License
-/// Copyright (c) 2012-2016, Bernhard Egger
+/// Copyright (c) 2012-2017, Computer Systems and Platforms Laboratory, SNU
 /// All rights reserved.
 ///
 /// Redistribution and use in source and binary forms,  with or without modifi-
@@ -50,17 +50,18 @@ int main(int argc, char *argv[])
 
     cout << "parsing '" << argv[i] << "'..." << endl;
     CAstNode *n = p->Parse();
-
+//    if (n == NULL)
+//	printf("n is null\n");
     if (p->HasError()) {
       const CToken *error = p->GetErrorToken();
       cout << "parse error : at " << error->GetLineNumber() << ":"
-           << error->GetCharPosition() << " : "
+           << error->GetCharPosition() << "\nError Messsage: "
            << p->GetErrorMessage() << endl;
     } else {
       CAstModule *m = dynamic_cast<CAstModule*>(n);
       assert(m != NULL);
 
-      cout << "successfully parsed." << endl
+      cout << "successfully parsed.\n" << endl
            << "  AST:" << endl;
       m->print(cout, 4);
       cout << endl << endl;

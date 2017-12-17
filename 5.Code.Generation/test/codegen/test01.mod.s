@@ -20,10 +20,10 @@
 
     # scope test01
 main:
-    #    -16(4  [ $t0       <int> %ebp-16 ]
-    #    -20(4  [ $t1       <int> %ebp-20 ]
-    #    -24(4  [ $t2       <int> %ebp-24 ]
-    #    -28(4  [ $t3       <int> %ebp-28 ]
+    #    -16(%ebp)   4  [ $t0       <int> %ebp-16 ]
+    #    -20(%ebp)   4  [ $t1       <int> %ebp-20 ]
+    #    -24(%ebp)   4  [ $t2       <int> %ebp-24 ]
+    #    -28(%ebp)   4  [ $t3       <int> %ebp-28 ]
 
     # stack offset 16
     # function prologue 16
@@ -33,6 +33,7 @@ main:
     pushl   %esi                   
     pushl   %edi                   
     subl    $16, %esp              
+
     movl    $2, %eax                #   0:     assign a <- 2
     movl    %eax, a                
     movl    $5, %eax                #   1:     assign b <- 5

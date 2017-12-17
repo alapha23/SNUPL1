@@ -6,9 +6,10 @@
 /// 2013/05/22 Bernhard Egger reimplemented TAC generation
 /// 2016/03/12 Bernhard Egger adapted to SnuPL/1
 /// 2016/04/08 Bernhard Egger assignment 2: AST for SnuPL/-1
+/// 2017/09/23 Bernhard Egger assignment 2: minor bugfixes
 ///
 /// @section license_section License
-/// Copyright (c) 2012-2016 Bernhard Egger
+/// Copyright (c) 2012-2017, Computer Systems and Platforms Laboratory, SNU
 /// All rights reserved.
 ///
 /// Redistribution and use in source and binary forms,  with or without modifi-
@@ -42,6 +43,8 @@
 #include <iomanip>
 #include <map>
 #include <vector>
+#include <errno.h>
+#include <exception>
 
 #include "scanner.h"
 #include "type.h"
@@ -52,6 +55,7 @@ using namespace std;
 class CAstStatement;
 class CAstExpression;
 class CAstFunctionCall;
+class CAstProcedure;
 class CAstConstant;
 class CAstDesignator;
 
@@ -432,7 +436,7 @@ class CAstStatement : public CAstNode {
     /// @name transformation into TAC
     /// @{
 
-    virtual CTacAddr* ToTac(CCodeBlock *cb, CTacLabel *next) = 0;
+    virtual CTacAddr* ToTac(CCodeBlock *cb, CTacLabel *next);
 
     /// @}
 
@@ -518,7 +522,7 @@ class CAstStatAssign : public CAstStatement {
 
 
   private:
-    CAstDesignator *_lhs;           ///< LHS (designator)
+    CAstDesignator   *_lhs;           ///< LHS (designator)
     CAstExpression *_rhs;           ///< RHS (expression)
 };
 
@@ -870,6 +874,20 @@ class CAstExpression : public CAstNode {
     /// @}
 
 
+    /// @name property manipulation
+    /// @{
+
+    /// @brief set the parenthesized flag
+    /// @param parenthesized flag indicating if expression was parenthesized
+    void SetParenthesized(bool parenthesized);
+
+    /// @brief check whether this expression had been parenthesized
+    /// @retval bool true if expression was parenthesized, false otherwise
+    bool GetParenthesized(void) const;
+
+    /// @}
+
+
     /// @name transformation into TAC
     /// @{
 
@@ -877,6 +895,9 @@ class CAstExpression : public CAstNode {
     virtual CTacAddr* ToTac(CCodeBlock *cb, CTacLabel *ltrue,CTacLabel *lfalse);
 
     /// @}
+
+  private:
+    bool       _parenthesized;      ///< expression was parenthesized
 };
 
 
@@ -894,7 +915,7 @@ class CAstOperation : public CAstExpression {
     /// @param t token in input stream (used for error reporting purposes)
     /// @param o operation
     CAstOperation(CToken t, EOperation o);
-
+   
     /// @}
 
     /// @brief return the operation
@@ -1060,7 +1081,7 @@ class CAstUnaryOp : public CAstOperation {
     /// @}
 
 
-  private:
+  protected:
     CAstExpression *_operand;       ///< operand
 };
 

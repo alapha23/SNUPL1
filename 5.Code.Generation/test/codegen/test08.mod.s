@@ -63,7 +63,7 @@ test:
     movl    %eax, -72(%ebp)        
     leal    -60(%ebp), %eax         #   2:     &()    t2 <- a
     movl    %eax, -116(%ebp)       
-    movl    -116(%ebp), %eax        #   3:     param  1 <- t2
+    movl    -116(%ebp), %eax        #   3:     param  0 <- t2
     pushl   %eax                   
     call    DOFS                    #   4:     call   t3 <- DOFS
     addl    $4, %esp               

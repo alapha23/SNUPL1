@@ -20,25 +20,28 @@
 
     # scope test07
 main:
+    #    -16(%ebp)   4  [ $t0       <ptr(4) to <array 14 of <char>>> %ebp-16 ]
 
-    # stack offset 0
-    # function prologue 0
+    # stack offset 4
+    # function prologue 4
     pushl   %ebp                   
     movl    %esp, %ebp             
     pushl   %ebx                   
     pushl   %esi                   
     pushl   %edi                   
-    subl    $0, %esp               
+    subl    $4, %esp               
 
-    movl    _str_1, %eax            #   0:     param  0 <- _str_1
+    leal    _str_1, %eax            #   0:     &()    t0 <- _str_1
+    movl    %eax, -16(%ebp)        
+    movl    -16(%ebp), %eax         #   1:     param  0 <- t0
     pushl   %eax                   
-    call    WriteStr                #   1:     call   WriteStr
+    call    WriteStr                #   2:     call   WriteStr
     addl    $4, %esp               
-    call    WriteLn                 #   2:     call   WriteLn
+    call    WriteLn                 #   3:     call   WriteLn
 
 l_test07_exit:
     # epilogue 
-    addl    $0, %esp               
+    addl    $4, %esp               
     popl    %edi                   
     popl    %esi                   
     popl    %ebx                   

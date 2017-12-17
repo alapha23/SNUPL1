@@ -4,11 +4,11 @@
 /// @section changelog Change Log
 /// 2012/09/14 Bernhard Egger created
 /// 2013/03/07 Bernhard Egger adapted to SnuPL/0
-/// 2016/03/11 Bernhard Egger adapted to SnuPL/1
-/// 2017/09/22 Bernhard Egger fixed implementation of strings and characters
+/// 2014/09/10 Bernhard Egger assignment 1: scans SnuPL/-1
+/// 2016/03/13 Bernhard Egger assignment 1: adapted to modified SnuPL/-1 syntax
 ///
 /// @section license_section License
-/// Copyright (c) 2012-2017, Computer Systems and Platforms Laboratory, SNU
+/// Copyright (c) 2012-2016, Bernhard Egger
 /// All rights reserved.
 ///
 /// Redistribution and use in source and binary forms,  with or without modifi-
@@ -33,8 +33,8 @@
 /// DAMAGE.
 //------------------------------------------------------------------------------
 
-#ifndef __SnuPL_SCANNER_H__
-#define __SnuPL_SCANNER_H__
+#ifndef __SnuPL1_SCANNER_H__
+#define __SnuPL1_SCANNER_H__
 
 #include <istream>
 #include <ostream>
@@ -49,44 +49,40 @@ using namespace std;
 /// each member of this enumeration represents a token in SnuPL/1
 ///
 enum EToken {
-  tIdent=0,                         ///< ident
-  tNumber,                          ///< number
-  tBoolConst,                       ///< boolean constant
-  tCharConst,                       ///< character constant
-  tString,                          ///< string constant
+  kModule = 0,                      ///< module
+  kBegin,                           ///< begin
+  kEnd,                             ///< end
+  kType,                            ///< boolean or char or integer
+  kBool,                            ///< true or false
+  kIf,                              ///< if
+  kThen,                            ///< then
+  kElse,                            ///< else
+  kWhile,                           ///< while
+  kDo,                              ///< do
+  kReturn,                          ///< return
+  kVar,                             ///< var
+  kProc,                            ///< procedure
+  kFunc,                            ///< function
+
+  tIdent,                           ///< an identifier
+  tNumber,                          ///< a number
+  tChar,                            ///< a character
+  tString,                          ///< a string
   tPlusMinus,                       ///< '+' or '-'
   tMulDiv,                          ///< '*' or '/'
-  tOr,                              ///< '||'
-  tAnd,                             ///< '&&'
-  tNot,                             ///< '!'
+  tAndOr,                           ///< '&&' or '||'
+  tNot,                             ///< a not operator
   tRelOp,                           ///< relational operator
   tAssign,                          ///< assignment operator
-  tComma,                           ///< a comma
   tSemicolon,                       ///< a semicolon
   tColon,                           ///< a colon
+  tComma,                           ///< a comma
   tDot,                             ///< a dot
-  tLParens,                         ///< a left parenthesis
-  tRParens,                         ///< a right parenthesis
   tLBrak,                           ///< a left bracket
   tRBrak,                           ///< a right bracket
+  tLParen,                          ///< a left paren
+  tRParen,                          ///< a right paren
 
-  tModule,                          ///< 'module'
-  tProcedure,                       ///< 'procedure'
-  tFunction,                        ///< 'function'
-  tVarDecl,                         ///< 'var'
-  tInteger,                         ///< 'integer'
-  tBoolean,                         ///< 'boolean'
-  tChar,                            ///< 'char'
-  tBegin,                           ///< 'begin'
-  tEnd,                             ///< 'end'
-  tIf,                              ///< 'if'
-  tThen,                            ///< 'then'
-  tElse,                            ///< 'else'
-  tWhile,                           ///< 'while'
-  tDo,                              ///< 'do'
-  tReturn,                          ///< 'return'
-
-  tComment,                         ///< comment ('// .... \n')
   tEOF,                             ///< end of file
   tIOError,                         ///< I/O error
   tUndefined,                       ///< undefined
@@ -151,7 +147,7 @@ class CToken {
     /// @retval token value
     string GetValue(void) const { return _value; };
     /// @}
-    
+
     /// @name stream attributes
     /// @{
 
@@ -167,8 +163,11 @@ class CToken {
 
     /// @}
 
-    /// @name string escape/unescaping (static methods)
-    /// @{
+
+    /// @brief print the token to an output stream
+    ///
+    /// @param out output stream
+    ostream&  print(ostream &out) const;
 
     /// @brief escape special characters in a string
     ///
@@ -178,15 +177,9 @@ class CToken {
 
     /// @brief unescape special characters in a string
     ///
-    /// @param text escapted string
+    /// @param text escaped string
     /// @retval unescaped string
     static string unescape(const string text);
-    /// @}
-
-    /// @brief print the token to an output stream
-    ///
-    /// @param out output stream
-    ostream&  print(ostream &out) const;
 
   private:
     EToken _type;                   ///< token type
@@ -201,14 +194,14 @@ class CToken {
 /// @brief CToken output operator
 ///
 /// @param out output stream
-/// @param t reference to CToken
+/// @param d reference to CToken
 /// @retval output stream
 ostream& operator<<(ostream &out, const CToken &t);
 
 /// @brief CToken output operator
 ///
 /// @param out output stream
-/// @param t reference to CToken
+/// @param d reference to CToken
 /// @retval output stream
 ostream& operator<<(ostream &out, const CToken *t);
 
@@ -267,15 +260,6 @@ class CScanner {
     int GetCharPosition() const { return _char; };
 
   private:
-    /// @brief result type for the GetCharacter() method
-    enum ECharacter {
-      cOkay =0,                     ///< character parsed
-      cInvChar,                     ///< invalid character
-      cInvEnc,                      ///< invalid escape sequence
-      cEOF,                         ///< input stream EoF
-      cIOError,                     ///< input stream error
-    };
-
     /// @brief initialize list of reserved keywords
     void InitKeywords(void);
 
@@ -283,7 +267,7 @@ class CScanner {
     void NextToken(void);
 
     /// @brief store the current position of the input stream internally
-    void RecordStreamPosition(void);
+    void RecordStreamPosition();
 
     /// @brief return the previously recorded input stream position
     ///
@@ -307,15 +291,10 @@ class CScanner {
     /// @retval CToken instance
     CToken* Scan(void);
 
-    /// @brief peek at the next character in the input stream (without removing it)
-    ///
-    /// @retval next character in the input stream
-    unsigned char PeekChar(void);
-
     /// @brief return the next character from the input stream
     ///
     /// @retval next character in the input stream
-    unsigned char GetChar(void);
+    char GetChar(void);
 
     /// @brief return the next 'n' characters from the input stream
     ///
@@ -323,40 +302,66 @@ class CScanner {
     /// @retval string containing the characters read
     string GetChar(int n);
 
+    /// @brief check whether a character is a white character or comment
+    ///
+    /// @retval true character is white space or comment
+    /// @retval false character is not white space or comment
+    bool OnRemove(void);
+
+    /// @brief delete one line from the input stream
+    void DeleteLine(void);
+
     /// @brief check if a character is a white character
     ///
     /// @param c character
     /// @retval true character is white space
     /// @retval false character is not white space
-    bool IsWhite(unsigned char c) const;
+    bool IsWhite(char c) const;
 
-    /// @brief check if a character is an alphabetic character (a-z, A-Z)
+    /// @brief check if two characters are representing comment line
     ///
     /// @param c character
-    /// @retval true character is alphabetic
-    /// @retval false character is not alphabetic
-    bool IsAlpha(unsigned char c) const;
+    /// @retval true characters are comment
+    /// @retval false characters are not comment
+    bool IsComment(char c);
 
-    /// @brief check if a character is an numeric character (0-9)
+    /// @brief scan istream until meet character '\'' and make char token
+    ///
+    /// @param token token type reference
+    /// @param tokval token attribute reference
+    void ScanChar(EToken& token, string& tokval);
+
+    /// @brief scan istream until meet character '\"' and make string token
+    ///
+    /// @param token token type reference
+    /// @param tokval token attribute reference
+    void ScanString(EToken& token, string& tokval);
+    
+    /// @brief trim quotation mark from string
+    ///
+    /// @param tokval string with quotation mark
+    void TrimQuotation(string &tokval);
+
+    /// @brief check if a character is printable ASCII character
     ///
     /// @param c character
-    /// @retval true character is numeric
-    /// @retval false character is not numeric
-    bool IsNum(unsigned char c) const;
-
-    /// @brief check if a character is a valid ID character
+    /// @retval true character is a printable ASCII character
+    /// @retval false character is not a printable ASCII character
+    bool IsAsciiChar(char c) const;
+    
+    /// @brief check if a character is a letter
     ///
     /// @param c character
-    /// @retval true character is valid as an ID character
-    /// @retval false character is not valid in an ID
-    bool IsIDChar(unsigned char c) const;
-
-    /// @brief parse one (possibly escaped) character of a string/character constant
+    /// @retval true character is a letter
+    /// @retval false character is not a digit
+    bool IsLetter(char c) const;
+    
+    /// @brief check if a character is a digit
     ///
-    /// @param &c parsed character. Only valid if return value is cOkay
-    /// @param mode mode. Must be tString or tCharConst
-    /// @retval ECharacter status of character parse
-    ECharacter GetCharacter(unsigned char &c, EToken mode);
+    /// @param c character
+    /// @retval true character is a digit
+    /// @retval false character is not a digit
+    bool IsDigit(char c) const;
 
     /// @}
 
@@ -374,4 +379,4 @@ class CScanner {
 };
 
 
-#endif // __SnuPL_SCANNER_H__
+#endif // __SnuPL0_SCANNER_H__

@@ -161,7 +161,7 @@ CAstModule* CParser::module(void)
   CToken t;
 
   // module -> "module" ident ";" ...
-  Consume(kModule, &t);
+  Consume(tModule, &t);
   CToken tModuleIdent = _scanner->Get();
   if (tModuleIdent.GetType() != tIdent)
     SetError(tModuleIdent, "module identifier expected");
@@ -176,15 +176,15 @@ CAstModule* CParser::module(void)
   // module -> ... { subroutineDecl } ...
   CAstProcedure *sub = NULL;
   EToken tt = _scanner->Peek().GetType();
-  while (tt != kBegin) {
+  while (tt != tBegin) {
     switch (tt) {
       // subroutineDecl -> procedureDecl ...
-      case kProc:
+      case tProcedure:
         sub = procedureDecl(m);
         break;
 
       // subroutineDecl -> functionDecl ...
-      case kFunc:
+      case tFunction:
         sub = functionDecl(m);
         break;
 
@@ -210,10 +210,10 @@ CAstModule* CParser::module(void)
   }
 
   // module -> ... "begin" statSequence "end" ...
-  Consume(kBegin);
+  Consume(tBegin);
   CAstStatement *statseq = statSequence(m);
   m->SetStatementSequence(statseq);
-  Consume(kEnd);
+  Consume(tEnd);
 
   // module -> ... ident "."
   CToken tModuleIdentClose = _scanner->Get();
@@ -236,8 +236,8 @@ void CParser::varDeclaration(CAstScope *s)
 
   // varDeclaration -> "var" ...
   EToken tt = _scanner->Peek().GetType();
-  if (tt == kVar) {
-    Consume(kVar);
+  if (tt == tVarDecl) {
+    Consume(tVarDecl);
 
     // varDeclaration -> ... varDeclSequence ...
     vector<string> allVars;
@@ -263,7 +263,7 @@ void CParser::varDeclaration(CAstScope *s)
       // varDeclSequence -> ... ";" ...
       Consume(tSemicolon);
       tt = _scanner->Peek().GetType();
-    } while (tt != kProc && tt != kFunc && tt != kBegin);
+    } while (tt != tProcedure && tt != tFunction && tt != tBegin);
   }
 }
 
@@ -335,7 +335,7 @@ CAstProcedure* CParser::procedureDecl(CAstScope *s)
   CToken t;
 
   // procedureDecl -> "procedure" ...
-  Consume(kProc, &t);
+  Consume(tProcedure, &t);
 
   // procedureDecl -> ... ident ...
   CToken e = _scanner->Get();
@@ -352,7 +352,7 @@ CAstProcedure* CParser::procedureDecl(CAstScope *s)
 
   e = _scanner->Peek();
   switch (e.GetType()) {
-    case tLParen:
+    case tLParens:
       formalParam(paramNames, paramTypes);
       break;
     case tSemicolon:
@@ -383,7 +383,7 @@ CAstProcedure* CParser::functionDecl(CAstScope *s)
   CToken t;
 
   // functionDecl -> "function" ...
-  Consume(kFunc, &t);
+  Consume(tFunction, &t);
 
   // functionDecl -> ... ident ...
   CToken e = _scanner->Get();
@@ -401,7 +401,7 @@ CAstProcedure* CParser::functionDecl(CAstScope *s)
 
   e = _scanner->Peek();
   switch (e.GetType()) {
-    case tLParen:
+    case tLParens:
       formalParam(paramNames, paramTypes);
       break;
     case tColon:
@@ -435,7 +435,7 @@ void CParser::formalParam
   //
 
   // formalParam -> "(" ...
-  Consume(tLParen);
+  Consume(tLParens);
 
   // formalParam -> ... [ varDeclSequence ] ...
   // varDeclSequence -> varDecl { ";" varDecl }
@@ -456,14 +456,14 @@ void CParser::formalParam
       }
 
       e = _scanner->Peek();
-      if (e.GetType() == tRParen)
+      if (e.GetType() == tRParens)
         break;
       else Consume(tSemicolon);
     } while (!_abort);
   }
 
   // formalParam -> ... ")";
-  Consume(tRParen);
+  Consume(tRParens);
 }
 
 void CParser::AddParameters
@@ -488,9 +488,9 @@ void CParser::subroutineBody(CAstScope *s)
   // subroutineBody ::= varDeclaration "begin" statSequence "end".
   //
   varDeclaration(s);
-  Consume(kBegin);
+  Consume(tBegin);
   CAstStatement *statseq = statSequence(s);
-  Consume(kEnd);
+  Consume(tEnd);
 
   s->SetStatementSequence(statseq);
 }
@@ -506,7 +506,7 @@ CAstStatement* CParser::statSequence(CAstScope *s)
   CAstStatement *tail = NULL;
 
   CToken tt = _scanner->Peek();
-  while (!_abort && tt.GetType() != kEnd && tt.GetType() != kElse) {
+  while (!_abort && tt.GetType() != tEnd && tt.GetType() != tElse) {
     CAstStatement *st = NULL;
 
     // stateSequence -> ... statement ...
@@ -526,17 +526,17 @@ CAstStatement* CParser::statSequence(CAstScope *s)
         break;
 
       // statement -> ifStatement
-      case kIf:
+      case tIf:
         st = ifStatement(s);
         break;
 
       // statement -> whileStatement
-      case kWhile:
+      case tWhile:
         st = whileStatement(s);
         break;
 
       // statement -> returnStatement
-      case kReturn:
+      case tReturn:
         st = returnStatement(s);
         break;
 
@@ -553,7 +553,7 @@ CAstStatement* CParser::statSequence(CAstScope *s)
     tail = st;
 
     tt = _scanner->Peek();
-    if (tt.GetType() == kEnd || tt.GetType() == kElse) break;
+    if (tt.GetType() == tEnd || tt.GetType() == tElse) break;
 
     // stateSequence -> ... ";" ...
     Consume(tSemicolon);
@@ -612,9 +612,9 @@ CAstFunctionCall* CParser::functionCall(CAstScope *s)
     new CAstFunctionCall(t, dynamic_cast<const CSymProc*>(symbol));
 
   // subroutineCall -> ... "(" ...
-  Consume(tLParen);
+  Consume(tLParens);
 
-  while (_scanner->Peek().GetType() != tRParen) {
+  while (_scanner->Peek().GetType() != tRParens) {
     // subroutineCall -> ... expression ...
     func->AddArg(addressExpression(s));
 
@@ -624,7 +624,7 @@ CAstFunctionCall* CParser::functionCall(CAstScope *s)
   }
 
   // subroutineCall -> ... ")"
-  Consume(tRParen);
+  Consume(tRParens);
 
   return func;
 }
@@ -638,20 +638,20 @@ CAstStatIf* CParser::ifStatement(CAstScope *s)
   CToken t;
 
   // ifStatement -> "if" "(" expression ")" "then" stateSequence ...
-  Consume(kIf, &t);
-  Consume(tLParen);
+  Consume(tIf, &t);
+  Consume(tLParens);
   CAstExpression *cond = expression(s);
-  Consume(tRParen);
-  Consume(kThen);
+  Consume(tRParens);
+  Consume(tThen);
   CAstStatement *ifBody = statSequence(s);
 
   // ifStatement -> ... [ "else" stateSequence ] "end"
   CAstStatement *elseBody = NULL;
-  if (_scanner->Peek().GetType() == kElse) {
-    Consume(kElse);
+  if (_scanner->Peek().GetType() == tElse) {
+    Consume(tElse);
     elseBody = statSequence(s);
   }
-  Consume(kEnd);
+  Consume(tEnd);
 
   return new CAstStatIf(t, cond, ifBody, elseBody);
 }
@@ -663,13 +663,13 @@ CAstStatWhile* CParser::whileStatement(CAstScope *s)
   //
   CToken t;
 
-  Consume(kWhile, &t);
-  Consume(tLParen);
+  Consume(tWhile, &t);
+  Consume(tLParens);
   CAstExpression *cond = expression(s);
-  Consume(tRParen);
-  Consume(kDo);
+  Consume(tRParens);
+  Consume(tDo);
   CAstStatement *body = statSequence(s);
-  Consume(kEnd);
+  Consume(tEnd);
 
   return new CAstStatWhile(t, cond, body);
 }
@@ -683,11 +683,11 @@ CAstStatReturn* CParser::returnStatement(CAstScope *s)
   CAstExpression *expr = NULL;
 
   // returnStatement -> "return" ...
-  Consume(kReturn, &t);
+  Consume(tReturn, &t);
 
   // returnStatement -> ... expression
   EToken tt = _scanner->Peek().GetType();
-  if (tt != kEnd && tt != tSemicolon && tt != kElse)
+  if (tt != tEnd && tt != tSemicolon && tt != tElse)
     expr = expression(s);
 
   return new CAstStatReturn(t, s, expr);
@@ -766,7 +766,7 @@ CAstExpression* CParser::simpleexpr(CAstScope *s)
     // termOp -> "+" | "-" | "||"
     EOperation eop;
     if (tt.GetValue() == "||") {
-      Consume(tAndOr, &tt);
+      Consume(tOr, &tt);
       eop = opOr;
     }
     else if (tt.GetType() == tPlusMinus) {
@@ -797,7 +797,7 @@ CAstExpression* CParser::term(CAstScope *s)
     // factOp -> "*" | "/" | "&&"
     EOperation eop;
     if (t.GetValue() == "&&") {
-      Consume(tAndOr, &t);
+      Consume(tAnd, &t);
       eop = opAnd;
     }
     else if (t.GetType() == tMulDiv) {
@@ -832,7 +832,7 @@ CAstExpression* CParser::factor(CAstScope *s)
       break;
 
     // factor -> boolean
-    case kBool:
+    case tBoolean:
       n = boolean();
       break;
 
@@ -847,10 +847,10 @@ CAstExpression* CParser::factor(CAstScope *s)
       break;
 
     // factor -> "(" expression ")"
-    case tLParen:
-      Consume(tLParen);
+    case tLParens:
+      Consume(tLParens);
       n = expression(s);
-      Consume(tRParen);
+      Consume(tRParens);
       break;
 
     // factor -> qualident | subroutineCall
@@ -898,15 +898,16 @@ CAstType* CParser::type(bool isParam)
 
   // varDecl -> ... type
   // functionDecl -> ... type ...
-  Consume(kType, &t);
+  
+  Consume(_scanner->Peek().GetType(), &t);
 
   // type -> basetype
   // basetype -> "boolean" | "char" | "integer"
-  if (t.GetValue() == "boolean")
+  if (t.GetType() == tBoolean)
     ttype = CTypeManager::Get()->GetBool();
-  else if (t.GetValue() == "char")
+  else if (t.GetType() == tChar)
     ttype = CTypeManager::Get()->GetChar();
-  else if (t.GetValue() == "integer")
+  else if (t.GetType() == tInteger)
     ttype = CTypeManager::Get()->GetInt();
   else
     SetError(t, "invalid base type: " + t.GetValue());
@@ -928,8 +929,6 @@ CAstType* CParser::type(bool isParam)
       SetError(t, "expected 'tNumber', got 'tRBrak'");
     else
       index.push_back(CArrayType::OPEN);
-
-
     // type -> ... "]"
     Consume(tRBrak);
   }
@@ -1030,7 +1029,7 @@ CAstConstant* CParser::boolean(void)
   //
   CToken t;
 
-  Consume(kBool, &t);
+  Consume(tBoolConst, &t);
   long long b = (t.GetValue() == "false") ? 0 : 1;
 
   return new CAstConstant(t, CTypeManager::Get()->GetBool(), b);
