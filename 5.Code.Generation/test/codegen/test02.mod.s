@@ -50,6 +50,11 @@ main:
     pushl   %esi                   
     pushl   %edi                   
     subl    $84, %esp              
+    cld                            
+    xorl    %eax, %eax             
+    movl    $21, %ecx              
+    mov     %esp, %edi             
+    rep     stosl                  
 
     leal    a, %eax                 #   0:     &()    t0 <- a
     movl    %eax, -16(%ebp)        

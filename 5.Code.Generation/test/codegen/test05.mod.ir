@@ -1,0 +1,124 @@
+parsing '../test/codegen/test05.mod'...
+converting to TAC...
+[[ module: test05
+  [[ type manager
+    base types:
+      <NULL>
+      <int>
+      <char>
+      <bool>
+      <ptr(4) to <NULL>>
+    pointer types:
+      <ptr(4) to <NULL>>
+      <ptr(4) to <array of <char>>>
+      <ptr(4) to <array 10 of <int>>>
+    array types:
+      <array of <char>>
+      <array 10 of <int>>
+  ]]
+  [[
+    [ *DIM(<ptr(4) to <NULL>>,<int>) --> <int>     ]
+    [ *DOFS(<ptr(4) to <NULL>>) --> <int>     ]
+    [ *ReadInt() --> <int>     ]
+    [ *WriteChar(<char>) --> <NULL>     ]
+    [ *WriteInt(<int>) --> <NULL>     ]
+    [ *WriteLn() --> <NULL>     ]
+    [ *WriteStr(<ptr(4) to <array of <char>>>) --> <NULL>     ]
+    [ @a        <array 10 of <int>>     ]
+    [ $t0       <ptr(4) to <array 10 of <int>>>     ]
+    [ *test(<ptr(4) to <array 10 of <int>>>) --> <NULL>     ]
+  ]]
+  [[ test05
+      0:     &()    t0 <- a
+      1:     param  0 <- t0
+      2:     call   test
+  ]]
+
+  [[ procedure: test
+    [[
+      [ %a        <ptr(4) to <array 10 of <int>>>       ]
+      [ $i        <int>       ]
+      [ $t1       <int>       ]
+      [ $t10      <int>       ]
+      [ $t11      <int>       ]
+      [ $t12      <int>       ]
+      [ $t13      <int>       ]
+      [ $t14      <int>       ]
+      [ $t15      <int>       ]
+      [ $t16      <int>       ]
+      [ $t17      <int>       ]
+      [ $t18      <int>       ]
+      [ $t19      <int>       ]
+      [ $t2       <int>       ]
+      [ $t20      <int>       ]
+      [ $t21      <int>       ]
+      [ $t22      <int>       ]
+      [ $t23      <int>       ]
+      [ $t3       <int>       ]
+      [ $t4       <int>       ]
+      [ $t5       <int>       ]
+      [ $t6       <int>       ]
+      [ $t7       <int>       ]
+      [ $t8       <int>       ]
+      [ $t9       <int>       ]
+    ]]
+    [[ test
+        0:     mul    t1 <- 0, 4
+        1:     param  0 <- a
+        2:     call   t2 <- DOFS
+        3:     add    t3 <- t1, t2
+        4:     add    t4 <- a, t3
+        5:     assign @t4 <- 1
+        6:     mul    t5 <- 1, 4
+        7:     param  0 <- a
+        8:     call   t6 <- DOFS
+        9:     add    t7 <- t5, t6
+       10:     add    t8 <- a, t7
+       11:     assign @t8 <- 12
+       12:     mul    t9 <- 2, 4
+       13:     param  0 <- a
+       14:     call   t10 <- DOFS
+       15:     add    t11 <- t9, t10
+       16:     add    t12 <- a, t11
+       17:     assign @t12 <- 1123
+       18:     assign i <- 1
+       19: 5_while_cond:
+       20:     if     i < 10 goto 6_while_body
+       21:     goto   4
+       22: 6_while_body:
+       23:     sub    t13 <- 10, i
+       24:     mul    t14 <- i, 4
+       25:     param  0 <- a
+       26:     call   t15 <- DOFS
+       27:     add    t16 <- t14, t15
+       28:     add    t17 <- a, t16
+       29:     assign @t17 <- t13
+       30:     add    t18 <- i, 1
+       31:     assign i <- t18
+       32:     goto   5_while_cond
+       33: 4:
+       34:     assign i <- 0
+       35: 12_while_cond:
+       36:     if     i < 10 goto 13_while_body
+       37:     goto   11
+       38: 13_while_body:
+       39:     mul    t19 <- i, 4
+       40:     param  0 <- a
+       41:     call   t20 <- DOFS
+       42:     add    t21 <- t19, t20
+       43:     add    t22 <- a, t21
+       44:     param  0 <- @t22
+       45:     call   WriteInt
+       46:     add    t23 <- i, 1
+       47:     assign i <- t23
+       48:     goto   12_while_cond
+       49: 11:
+    ]]
+  ]]
+]]
+
+run the following command to convert the .dot file into a PDF:
+  dot -Tpdf -o../test/codegen/test05.mod.pdf ../test/codegen/test05.mod.dot
+
+
+Done.

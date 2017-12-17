@@ -33,6 +33,11 @@ main:
     pushl   %esi                   
     pushl   %edi                   
     subl    $16, %esp              
+    cld                            
+    xorl    %eax, %eax             
+    movl    $4, %ecx               
+    mov     %esp, %edi             
+    rep     stosl                  
 
     movl    $2, %eax                #   0:     assign a <- 2
     movl    %eax, a                

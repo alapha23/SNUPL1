@@ -141,6 +141,7 @@ void CBackendx86::EmitCode(void)
   const vector<CScope*> & sub = _m->GetSubscopes();
   for(int i=0; i < sub.size(); i++)
   {
+    SetScope(sub.at(i));
     EmitScope(sub.at(i));    
   }
   SetScope(_m);
@@ -587,10 +588,6 @@ void CBackendx86::Store(CTac *dst, char src_base, string comment)
     case 4: mod = "l"; src += "e" + string(1, src_base) + "x"; break;
   }
 
-  cout << *dst;
-  printf("  %d: size:%d, mod= ", ++count , OperandSize(dst));
-  cout << mod << endl;
-  fflush(stdout);
  
   // emit the store instruction
   EmitInstruction(mnm + mod, src + ", " + Operand(dst), comment);
@@ -703,7 +700,6 @@ int CBackendx86::OperandSize(CTac *t) const
     {
       size = type->GetDataSize();
     }
-    cout << "refsize: " << size << endl;
     return size;
   }
  

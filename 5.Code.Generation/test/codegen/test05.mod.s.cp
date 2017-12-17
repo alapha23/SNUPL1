@@ -20,6 +20,7 @@
 
     # scope test
 test:
+    # stack offsets:
     #      8(%ebp)   4  [ %a        <ptr(4) to <array 10 of <int>>> %ebp+8 ]
     #    -16(%ebp)   4  [ $i        <int> %ebp-16 ]
     #    -20(%ebp)   4  [ $t1       <int> %ebp-20 ]
@@ -46,20 +47,21 @@ test:
     #   -104(%ebp)   4  [ $t8       <int> %ebp-104 ]
     #   -108(%ebp)   4  [ $t9       <int> %ebp-108 ]
 
-    # stack offset 96
-    # function prologue 96
+    # prologue
     pushl   %ebp                   
     movl    %esp, %ebp             
-    pushl   %ebx                   
+    pushl   %ebx                    # save callee saved registers
     pushl   %esi                   
     pushl   %edi                   
-    subl    $96, %esp              
-    cld                            
+    subl    $96, %esp               # make room for locals
+
+    cld                             # memset local stack area to 0
     xorl    %eax, %eax             
     movl    $24, %ecx              
     mov     %esp, %edi             
     rep     stosl                  
 
+    # function body
     movl    $0, %eax                #   0:     mul    t1 <- 0, 4
     movl    $4, %ebx               
     imull   %ebx                   
@@ -202,8 +204,8 @@ l_test_13_while_body:
 l_test_11:
 
 l_test_exit:
-    # epilogue 
-    addl    $96, %esp              
+    # epilogue
+    addl    $96, %esp               # remove locals
     popl    %edi                   
     popl    %esi                   
     popl    %ebx                   
@@ -212,22 +214,21 @@ l_test_exit:
 
     # scope test05
 main:
+    # stack offsets:
     #    -16(%ebp)   4  [ $t0       <ptr(4) to <array 10 of <int>>> %ebp-16 ]
 
-    # stack offset 4
-    # function prologue 4
+    # prologue
     pushl   %ebp                   
     movl    %esp, %ebp             
-    pushl   %ebx                   
+    pushl   %ebx                    # save callee saved registers
     pushl   %esi                   
     pushl   %edi                   
-    subl    $4, %esp               
-    cld                            
-    xorl    %eax, %eax             
-    movl    $1, %ecx               
-    mov     %esp, %edi             
-    rep     stosl                  
+    subl    $4, %esp                # make room for locals
 
+    xorl    %eax, %eax              # memset local stack area to 0
+    movl    %eax, 0(%esp)          
+
+    # function body
     leal    a, %eax                 #   0:     &()    t0 <- a
     movl    %eax, -16(%ebp)        
     movl    -16(%ebp), %eax         #   1:     param  0 <- t0
@@ -236,8 +237,8 @@ main:
     addl    $4, %esp               
 
 l_test05_exit:
-    # epilogue 
-    addl    $4, %esp               
+    # epilogue
+    addl    $4, %esp                # remove locals
     popl    %edi                   
     popl    %esi                   
     popl    %ebx                   

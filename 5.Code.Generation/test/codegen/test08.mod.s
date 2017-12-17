@@ -86,3 +86,143 @@ test:
     movl    %eax, (%edi)           
     movl    $1, %eax                #   8:     assign i <- 1
     movl    %eax, -64(%ebp)        
+l_test_3_while_cond:
+    movl    -64(%ebp), %eax         #  10:     if     i < 10 goto 4_while_body
+    movl    $10, %ebx              
+    cmpl    %ebx, %eax             
+    jl      l_test_4_while_body    
+    jmp     l_test_2                #  11:     goto   2
+l_test_4_while_body:
+    movl    $10, %eax               #  13:     sub    t6 <- 10, i
+    movl    -64(%ebp), %ebx        
+    subl    %ebx, %eax             
+    movl    %eax, -136(%ebp)       
+    leal    -60(%ebp), %eax         #  14:     &()    t7 <- a
+    movl    %eax, -140(%ebp)       
+    movl    -64(%ebp), %eax         #  15:     mul    t8 <- i, 4
+    movl    $4, %ebx               
+    imull   %ebx                   
+    movl    %eax, -144(%ebp)       
+    leal    -60(%ebp), %eax         #  16:     &()    t9 <- a
+    movl    %eax, -148(%ebp)       
+    movl    -148(%ebp), %eax        #  17:     param  0 <- t9
+    pushl   %eax                   
+    call    DOFS                    #  18:     call   t10 <- DOFS
+    addl    $4, %esp               
+    movl    %eax, -76(%ebp)        
+    movl    -144(%ebp), %eax        #  19:     add    t11 <- t8, t10
+    movl    -76(%ebp), %ebx        
+    addl    %ebx, %eax             
+    movl    %eax, -80(%ebp)        
+    movl    -140(%ebp), %eax        #  20:     add    t12 <- t7, t11
+    movl    -80(%ebp), %ebx        
+    addl    %ebx, %eax             
+    movl    %eax, -84(%ebp)        
+    movl    -136(%ebp), %eax        #  21:     assign @t12 <- t6
+    movl    -84(%ebp), %edi        
+    movl    %eax, (%edi)           
+    movl    -64(%ebp), %eax         #  22:     add    t13 <- i, 1
+    movl    $1, %ebx               
+    addl    %ebx, %eax             
+    movl    %eax, -88(%ebp)        
+    movl    -88(%ebp), %eax         #  23:     assign i <- t13
+    movl    %eax, -64(%ebp)        
+    jmp     l_test_3_while_cond     #  24:     goto   3_while_cond
+l_test_2:
+    movl    $0, %eax                #  26:     assign i <- 0
+    movl    %eax, -64(%ebp)        
+l_test_10_while_cond:
+    movl    -64(%ebp), %eax         #  28:     if     i < 10 goto 11_while_body
+    movl    $10, %ebx              
+    cmpl    %ebx, %eax             
+    jl      l_test_11_while_body   
+    jmp     l_test_9                #  29:     goto   9
+l_test_11_while_body:
+    leal    -60(%ebp), %eax         #  31:     &()    t14 <- a
+    movl    %eax, -92(%ebp)        
+    movl    -64(%ebp), %eax         #  32:     mul    t15 <- i, 4
+    movl    $4, %ebx               
+    imull   %ebx                   
+    movl    %eax, -96(%ebp)        
+    leal    -60(%ebp), %eax         #  33:     &()    t16 <- a
+    movl    %eax, -100(%ebp)       
+    movl    -100(%ebp), %eax        #  34:     param  0 <- t16
+    pushl   %eax                   
+    call    DOFS                    #  35:     call   t17 <- DOFS
+    addl    $4, %esp               
+    movl    %eax, -104(%ebp)       
+    movl    -96(%ebp), %eax         #  36:     add    t18 <- t15, t17
+    movl    -104(%ebp), %ebx       
+    addl    %ebx, %eax             
+    movl    %eax, -108(%ebp)       
+    movl    -92(%ebp), %eax         #  37:     add    t19 <- t14, t18
+    movl    -108(%ebp), %ebx       
+    addl    %ebx, %eax             
+    movl    %eax, -112(%ebp)       
+    movl    -112(%ebp), %edi       
+    movl    (%edi), %eax            #  38:     param  0 <- @t19
+    pushl   %eax                   
+    call    WriteInt                #  39:     call   WriteInt
+    addl    $4, %esp               
+    movl    -64(%ebp), %eax         #  40:     add    t20 <- i, 1
+    movl    $1, %ebx               
+    addl    %ebx, %eax             
+    movl    %eax, -120(%ebp)       
+    movl    -120(%ebp), %eax        #  41:     assign i <- t20
+    movl    %eax, -64(%ebp)        
+    jmp     l_test_10_while_cond    #  42:     goto   10_while_cond
+l_test_9:
+
+l_test_exit:
+    # epilogue 
+    addl    $136, %esp             
+    popl    %edi                   
+    popl    %esi                   
+    popl    %ebx                   
+    popl    %ebp                   
+    ret                            
+
+    # scope test08
+main:
+
+    # stack offset 0
+    # function prologue 0
+    pushl   %ebp                   
+    movl    %esp, %ebp             
+    pushl   %ebx                   
+    pushl   %esi                   
+    pushl   %edi                   
+    subl    $0, %esp               
+    cld                            
+    xorl    %eax, %eax             
+    movl    $0, %ecx               
+    mov     %esp, %edi             
+    rep     stosl                  
+
+    call    test                    #   0:     call   test
+
+l_test08_exit:
+    # epilogue 
+    addl    $0, %esp               
+    popl    %edi                   
+    popl    %esi                   
+    popl    %ebx                   
+    popl    %ebp                   
+    ret                            
+
+    # end of text section
+    #-----------------------------------------
+
+    #-----------------------------------------
+    # global data section
+    #
+    .data
+    .align 4
+
+
+
+    # end of global data section
+    #-----------------------------------------
+
+    .end
+##################################################

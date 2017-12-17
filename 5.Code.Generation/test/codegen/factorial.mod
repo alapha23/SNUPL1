@@ -21,7 +21,7 @@ begin
   end
 end fact;
 
-function ReadNumber(str: char[20]): integer;
+function ReadNumber(str: char[]): integer;
 var i: integer;
 begin
   WriteStr(str);

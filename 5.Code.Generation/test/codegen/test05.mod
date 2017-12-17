@@ -14,6 +14,9 @@ procedure test(a: integer[10]);
 var i: integer;
 begin
   a[0] := 1;
+  a[1] := 12;
+  a[2] := 1123;
+
 
   i := 1;
   while (i < 10) do
@@ -21,7 +24,7 @@ begin
     i := i+1
   end;
 
-  i := 0
+  i := 0;
   while (i < 10) do
     WriteInt(a[i]);
     i := i+1
