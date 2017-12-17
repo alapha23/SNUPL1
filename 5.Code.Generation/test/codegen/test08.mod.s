@@ -52,6 +52,11 @@ test:
     pushl   %esi                   
     pushl   %edi                   
     subl    $136, %esp             
+    cld                            
+    xorl    %eax, %eax             
+    movl    $34, %ecx              
+    mov     %esp, %edi             
+    rep     stosl                  
     movl    $1, -60(%ebp)           # local array 'a':1dimensions
     movl    $10, -56(%ebp)          #   dimension 1: 10 elements
 

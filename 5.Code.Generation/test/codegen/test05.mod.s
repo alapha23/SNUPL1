@@ -22,8 +22,8 @@
 test:
     #      8(%ebp)   4  [ %a        <ptr(4) to <array 10 of <int>>> %ebp+8 ]
     #    -16(%ebp)   4  [ $i        <int> %ebp-16 ]
-    #    -20(%ebp)   4  [ $t1       <int> %ebp-20 ]
-    #    -24(%ebp)   4  [ $t10      <int> %ebp-24 ]
+    #    -20(%ebp)   4  [ $t0       <int> %ebp-20 ]
+    #    -24(%ebp)   4  [ $t1       <int> %ebp-24 ]
     #    -28(%ebp)   4  [ $t2       <int> %ebp-28 ]
     #    -32(%ebp)   4  [ $t3       <int> %ebp-32 ]
     #    -36(%ebp)   4  [ $t4       <int> %ebp-36 ]
@@ -41,26 +41,31 @@ test:
     pushl   %esi                   
     pushl   %edi                   
     subl    $44, %esp              
+    cld                            
+    xorl    %eax, %eax             
+    movl    $11, %ecx              
+    mov     %esp, %edi             
+    rep     stosl                  
 
-    movl    $0, %eax                #   0:     mul    t1 <- 0, 4
+    movl    $0, %eax                #   0:     mul    t0 <- 0, 4
     movl    $4, %ebx               
     imull   %ebx                   
     movl    %eax, -20(%ebp)        
     movl    8(%ebp), %eax           #   1:     param  0 <- a
     pushl   %eax                   
-    call    DOFS                    #   2:     call   t2 <- DOFS
+    call    DOFS                    #   2:     call   t1 <- DOFS
     addl    $4, %esp               
+    movl    %eax, -24(%ebp)        
+    movl    -20(%ebp), %eax         #   3:     add    t2 <- t0, t1
+    movl    -24(%ebp), %ebx        
+    addl    %ebx, %eax             
     movl    %eax, -28(%ebp)        
-    movl    -20(%ebp), %eax         #   3:     add    t3 <- t1, t2
+    movl    8(%ebp), %eax           #   4:     add    t3 <- a, t2
     movl    -28(%ebp), %ebx        
     addl    %ebx, %eax             
     movl    %eax, -32(%ebp)        
-    movl    8(%ebp), %eax           #   4:     add    t4 <- a, t3
-    movl    -32(%ebp), %ebx        
-    addl    %ebx, %eax             
-    movl    %eax, -36(%ebp)        
-    movl    $1, %eax                #   5:     assign @t4 <- 1
-    movl    -36(%ebp), %edi        
+    movl    $1, %eax                #   5:     assign @t3 <- 1
+    movl    -32(%ebp), %edi        
     movl    %eax, (%edi)           
     movl    $1, %eax                #   6:     assign i <- 1
     movl    %eax, -16(%ebp)        

@@ -22,9 +22,9 @@
 test:
     #      8(%ebp)   4  [ %a        <ptr(4) to <array 10 of <bool>>> %ebp+8 ]
     #    -16(%ebp)   4  [ $i        <int> %ebp-16 ]
-    #    -17(%ebp)   1  [ $t1       <bool> %ebp-17 ]
-    #    -24(%ebp)   4  [ $t10      <int> %ebp-24 ]
-    #    -28(%ebp)   4  [ $t11      <int> %ebp-28 ]
+    #    -17(%ebp)   1  [ $t0       <bool> %ebp-17 ]
+    #    -24(%ebp)   4  [ $t1       <int> %ebp-24 ]
+    #    -28(%ebp)   4  [ $t10      <int> %ebp-28 ]
     #    -32(%ebp)   4  [ $t2       <int> %ebp-32 ]
     #    -36(%ebp)   4  [ $t3       <int> %ebp-36 ]
     #    -40(%ebp)   4  [ $t4       <int> %ebp-40 ]
@@ -42,6 +42,11 @@ test:
     pushl   %esi                   
     pushl   %edi                   
     subl    $48, %esp              
+    cld                            
+    xorl    %eax, %eax             
+    movl    $12, %ecx              
+    mov     %esp, %edi             
+    rep     stosl                  
 
     movl    $0, %eax                #   0:     assign i <- 0
     movl    %eax, -16(%ebp)        

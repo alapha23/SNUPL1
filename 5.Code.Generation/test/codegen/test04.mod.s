@@ -44,6 +44,11 @@ main:
     pushl   %esi                   
     pushl   %edi                   
     subl    $60, %esp              
+    cld                            
+    xorl    %eax, %eax             
+    movl    $15, %ecx              
+    mov     %esp, %edi             
+    rep     stosl                  
 
     movl    $0, %eax                #   0:     assign i <- 0
     movl    %eax, i                
@@ -90,7 +95,7 @@ l_test04_8:
     movl    %eax, -60(%ebp)        
     movzbl  -13(%ebp), %eax         #  20:     assign @t6 <- t0
     movl    -60(%ebp), %edi        
-    movl    %eax, (%edi)           
+    movb    %al, (%edi)            
     movl    i, %eax                 #  21:     add    t7 <- i, 1
     movl    $1, %ebx               
     addl    %ebx, %eax             
@@ -130,7 +135,7 @@ l_test04_14_while_body:
     addl    %ebx, %eax             
     movl    %eax, -36(%ebp)        
     movl    -36(%ebp), %edi        
-    movl    (%edi), %eax            #  37:     if     @t13 = 1 goto 17_if_true
+    movzbl  (%edi), %eax            #  37:     if     @t13 = 1 goto 17_if_true
     movl    $1, %ebx               
     cmpl    %ebx, %eax             
     je      l_test04_17_if_true    

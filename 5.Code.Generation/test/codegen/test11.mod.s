@@ -26,22 +26,27 @@ foo:
     #    -25(%ebp)   1  [ $d        <char> %ebp-25 ]
     #    -32(%ebp)   4  [ $e        <int> %ebp-32 ]
     #    -33(%ebp)   1  [ $f        <bool> %ebp-33 ]
-    #    -88(%ebp)  48  [ $g        <array 10 of <int>> %ebp-88 ]
-    #    -89(%ebp)   1  [ $h        <bool> %ebp-89 ]
-    #   -104(%ebp)  15  [ $i        <array 7 of <char>> %ebp-104 ]
-    #   -108(%ebp)   4  [ $j        <int> %ebp-108 ]
+    #    -84(%ebp)  48  [ $g        <array 10 of <int>> %ebp-84 ]
+    #    -85(%ebp)   1  [ $h        <bool> %ebp-85 ]
+    #   -100(%ebp)  15  [ $i        <array 7 of <char>> %ebp-100 ]
+    #   -104(%ebp)   4  [ $j        <int> %ebp-104 ]
 
-    # stack offset 96
-    # function prologue 96
+    # stack offset 92
+    # function prologue 92
     pushl   %ebp                   
     movl    %esp, %ebp             
     pushl   %ebx                   
     pushl   %esi                   
     pushl   %edi                   
-    subl    $96, %esp              
-    movl    $1, -88(%ebp)           # local array 'g':1dimensions
-    movl    $10, -84(%ebp)          #   dimension 1: 10 elements
-    movl    $1, -104(%ebp)          # local array 'i':1dimensions
-    movl    $7, -100(%ebp)          #   dimension 1: 7 elements
+    subl    $92, %esp              
+    cld                            
+    xorl    %eax, %eax             
+    movl    $23, %ecx              
+    mov     %esp, %edi             
+    rep     stosl                  
+    movl    $1, -84(%ebp)           # local array 'g':1dimensions
+    movl    $10, -80(%ebp)          #   dimension 1: 10 elements
+    movl    $1, -100(%ebp)          # local array 'i':1dimensions
+    movl    $7, -96(%ebp)           #   dimension 1: 7 elements
 
 

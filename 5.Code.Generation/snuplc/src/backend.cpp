@@ -214,6 +214,12 @@ void CBackendx86::EmitScope(CScope *scope)
   EmitInstruction("pushl", "%edi");
   EmitInstruction("subl", "$"+to_string(offset)+", %esp");
 
+  EmitInstruction("cld");
+  EmitInstruction("xorl", "%eax, %eax");
+  EmitInstruction("movl", "$"+to_string(offset/4)+ ", %ecx");
+  EmitInstruction("mov", "%esp, %edi");
+  EmitInstruction("rep", "stosl");
+
   if(scope->GetParent())
   EmitLocalData(scope);
   _out<<endl;
@@ -330,7 +336,7 @@ void CBackendx86::EmitLocalData(CScope *scope)
 
   _out << dec;
 
-  for(int i; i < symbols.size(); i++)
+  for(int i = 0; i < symbols.size(); i++)
   {    
     CSymbol *s = symbols.at(i);
     const CType *type = s->GetDataType();
@@ -546,6 +552,8 @@ void CBackendx86::EmitInstruction(string mnemonic, string args, string comment)
   _out << endl;
 }
 
+int count = 0;
+
 void CBackendx86::Load(CTacAddr *src, string dst, string comment)
 {
   assert(src != NULL);
@@ -559,10 +567,10 @@ void CBackendx86::Load(CTacAddr *src, string dst, string comment)
     case 2: mod = "zwl"; break;
     case 4: mod = "l"; break;
   }
-
-  // emit the load instruction
+ // emit the load instruction
   EmitInstruction(mnm + mod, Operand(src) + ", " + dst, comment);
 }
+
 
 void CBackendx86::Store(CTac *dst, char src_base, string comment)
 {
@@ -579,6 +587,11 @@ void CBackendx86::Store(CTac *dst, char src_base, string comment)
     case 4: mod = "l"; src += "e" + string(1, src_base) + "x"; break;
   }
 
+  cout << *dst;
+  printf("  %d: size:%d, mod= ", ++count , OperandSize(dst));
+  cout << mod << endl;
+  fflush(stdout);
+ 
   // emit the store instruction
   EmitInstruction(mnm + mod, src + ", " + Operand(dst), comment);
 }
@@ -667,26 +680,17 @@ string CBackendx86::Condition(EOperation cond) const
 int CBackendx86::OperandSize(CTac *t) const
 {
   int size = 4;
-
-  // TODO: done
   // compute the size for operand t of type CTacName
   // Hint: you need to take special care of references (incl. references to pointers!)
   //       and arrays. Compare your output to that of the reference implementation
-  //       if you are not sure.
   CTacName *name = dynamic_cast<CTacName*>(t);
   CTacReference *ref = dynamic_cast<CTacReference*>(t);
-
-  if(name != NULL)
-  {
-    size = name->GetSymbol()->GetDataType()->GetDataSize();
-    return size;
-  }
 
   if(ref != NULL)
   {
     const CSymbol *deref = ref->GetDerefSymbol();
     const CType *type = deref->GetDataType();
-    if( type->IsPointer())
+    if(type->IsPointer())
     {
       type = dynamic_cast<const CPointerType*>(type)->GetBaseType();
       const CType *base = dynamic_cast<const CArrayType*>(type)->GetBaseType();
@@ -699,8 +703,17 @@ int CBackendx86::OperandSize(CTac *t) const
     {
       size = type->GetDataSize();
     }
+    cout << "refsize: " << size << endl;
+    return size;
   }
-  return size;
+ 
+  if(name != NULL)
+  {
+    size = name->GetSymbol()->GetDataType()->GetDataSize();
+    return size;
+  }
+
+ return size;
 }
 
 

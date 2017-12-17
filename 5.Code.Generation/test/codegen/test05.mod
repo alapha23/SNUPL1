@@ -22,10 +22,10 @@ begin
   end;
 
   i := 0
-//  while (i < 10) do
-//    WriteInt(a[i]);
-//    i := i+1
-//  end
+  while (i < 10) do
+    WriteInt(a[i]);
+    i := i+1
+  end
 end test;
 
 begin
