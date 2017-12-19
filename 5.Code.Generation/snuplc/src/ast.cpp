@@ -2101,7 +2101,7 @@ CTacAddr* CAstArrayDesignator::ToTac(CCodeBlock *cb)
     DIM__VAL->SetValue(i + 2);
     DIM__FUN->AddArg(DIM__VAL);
     CTacAddr *entrySize = DIM__FUN->ToTac(cb);
-
+  fflush(stdout);
     // multiply dimention size
     CTacAddr *next = cb->CreateTemp(CTypeManager::Get()->GetInt());
     cb->AddInstr(new CTacInstr(opMul, next, idx, entrySize));
@@ -2133,12 +2133,12 @@ CTacAddr* CAstArrayDesignator::ToTac(CCodeBlock *cb)
 CTacAddr* CAstArrayDesignator::ToTac(CCodeBlock *cb,
                                      CTacLabel *ltrue, CTacLabel *lfalse)
 {
-  CTacAddr *ret = ToTac(cb);
-
-  cb->AddInstr(new CTacInstr(opEqual, ltrue, ret, new CTacConst(1)));
+  CTacAddr *retarr = ToTac(cb);
+  fflush(stdout);
+  cb->AddInstr(new CTacInstr(opEqual, ltrue, retarr, new CTacConst(1)));
   cb->AddInstr(new CTacInstr(opGoto, lfalse, NULL, NULL));
 
-  return ret;
+  return retarr;
 }
 
 
@@ -2181,7 +2181,7 @@ bool CAstConstant::TypeCheck(CToken *t, string *msg) const
     if (msg) *msg = "invalid constant type.";
     return false;
   }
-
+  fflush(stdout);
   // type check fails if the value is 2147483648
   // note that this failure can be ignored by CAstUnaryOp,
   // especially the node is unary("-", constant(2147483648))
@@ -2236,9 +2236,9 @@ CTacAddr* CAstConstant::ToTac(CCodeBlock *cb)
 CTacAddr* CAstConstant::ToTac(CCodeBlock *cb,
                                 CTacLabel *ltrue, CTacLabel *lfalse)
 {
-  long long cond = GetValue();
-
-  if (cond)
+  long long condition = GetValue();
+  fflush(stdout);  fflush(stdout);
+  if (condition)
     cb->AddInstr(new CTacInstr(opGoto, ltrue, NULL, NULL));
   else
     cb->AddInstr(new CTacInstr(opGoto, lfalse, NULL, NULL));
@@ -2288,6 +2288,7 @@ bool CAstStringConstant::TypeCheck(CToken *t, string *msg) const
     return false;
   }
 
+  fflush(stdout);
   return true;
 }
 
