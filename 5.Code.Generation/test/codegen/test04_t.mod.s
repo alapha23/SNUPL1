@@ -38,13 +38,13 @@ main:
 
     movl    $0, %eax                #   0:     assign i <- 0
     movl    %eax, i                
-l_test04_2_while_cond:
-    movl    i, %eax                 #   2:     if     i < 10 goto 3_while_body
+l_test04_3_while_cond:
+    movl    i, %eax                 #   2:     if     i < 10 goto 2_while_body
     movl    $10, %ebx              
     cmpl    %ebx, %eax             
-    jl      l_test04_3_while_body  
+    jl      l_test04_2_while_body  
     jmp     l_test04_1              #   3:     goto   1
-l_test04_3_while_body:
+l_test04_2_while_body:
     movl    i, %eax                 #   5:     assign a <- i
     movl    %eax, a                
     movl    a, %eax                 #   6:     param  0 <- a
@@ -57,7 +57,7 @@ l_test04_3_while_body:
     movl    %eax, -16(%ebp)        
     movl    -16(%ebp), %eax         #   9:     assign i <- t0
     movl    %eax, i                
-    jmp     l_test04_2_while_cond   #  10:     goto   2_while_cond
+    jmp     l_test04_3_while_cond   #  10:     goto   3_while_cond
 l_test04_1:
 
 l_test04_exit:

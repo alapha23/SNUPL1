@@ -39,12 +39,12 @@ sum_rec:
     mov     %esp, %edi             
     rep     stosl                  
 
-    movl    8(%ebp), %eax           #   0:     if     n > 0 goto 1_if_true
+    movl    8(%ebp), %eax           #   0:     if     n > 0 goto 2_if_true
     movl    $0, %ebx               
     cmpl    %ebx, %eax             
-    jg      l_sum_rec_1_if_true    
-    jmp     l_sum_rec_2_if_false    #   1:     goto   2_if_false
-l_sum_rec_1_if_true:
+    jg      l_sum_rec_2_if_true    
+    jmp     l_sum_rec_1_if_false    #   1:     goto   1_if_false
+l_sum_rec_2_if_true:
     movl    8(%ebp), %eax           #   3:     sub    t11 <- n, 1
     movl    $1, %ebx               
     subl    %ebx, %eax             
@@ -61,7 +61,7 @@ l_sum_rec_1_if_true:
     movl    -24(%ebp), %eax         #   7:     return t13
     jmp     l_sum_rec_exit          #   7:     return t13
     jmp     l_sum_rec_0             #   8:     goto   0
-l_sum_rec_2_if_false:
+l_sum_rec_1_if_false:
     movl    $0, %eax                #  10:     return 0
     jmp     l_sum_rec_exit          #  10:     return 0
 l_sum_rec_0:
@@ -101,13 +101,13 @@ sum_iter:
     movl    %eax, -20(%ebp)        
     movl    $0, %eax                #   1:     assign i <- 0
     movl    %eax, -16(%ebp)        
-l_sum_iter_3_while_cond:
-    movl    -16(%ebp), %eax         #   3:     if     i <= n goto 4_while_body
+l_sum_iter_4_while_cond:
+    movl    -16(%ebp), %eax         #   3:     if     i <= n goto 3_while_body
     movl    8(%ebp), %ebx          
     cmpl    %ebx, %eax             
-    jle     l_sum_iter_4_while_body
+    jle     l_sum_iter_3_while_body
     jmp     l_sum_iter_2            #   4:     goto   2
-l_sum_iter_4_while_body:
+l_sum_iter_3_while_body:
     movl    -20(%ebp), %eax         #   6:     add    t11 <- sum, i
     movl    -16(%ebp), %ebx        
     addl    %ebx, %eax             
@@ -120,7 +120,7 @@ l_sum_iter_4_while_body:
     movl    %eax, -28(%ebp)        
     movl    -28(%ebp), %eax         #   9:     assign i <- t12
     movl    %eax, -16(%ebp)        
-    jmp     l_sum_iter_3_while_cond #  10:     goto   3_while_cond
+    jmp     l_sum_iter_4_while_cond #  10:     goto   4_while_cond
 l_sum_iter_2:
     movl    -20(%ebp), %eax         #  12:     return sum
     jmp     l_sum_iter_exit         #  12:     return sum
@@ -263,13 +263,13 @@ main:
     movl    %eax, -28(%ebp)        
     movl    -28(%ebp), %eax         #   6:     assign i <- t2
     movl    %eax, i                
-l_test10_3_while_cond:
-    movl    i, %eax                 #   8:     if     i > 0 goto 4_while_body
+l_test10_4_while_cond:
+    movl    i, %eax                 #   8:     if     i > 0 goto 3_while_body
     movl    $0, %ebx               
     cmpl    %ebx, %eax             
-    jg      l_test10_4_while_body  
+    jg      l_test10_3_while_body  
     jmp     l_test10_2              #   9:     goto   2
-l_test10_4_while_body:
+l_test10_3_while_body:
     leal    _str_36, %eax           #  11:     &()    t3 <- _str_36
     movl    %eax, -32(%ebp)        
     movl    -32(%ebp), %eax         #  12:     param  0 <- t3
@@ -327,7 +327,7 @@ l_test10_4_while_body:
     movl    %eax, -24(%ebp)        
     movl    -24(%ebp), %eax         #  38:     assign i <- t10
     movl    %eax, i                
-    jmp     l_test10_3_while_cond   #  39:     goto   3_while_cond
+    jmp     l_test10_4_while_cond   #  39:     goto   4_while_cond
 l_test10_2:
 
 l_test10_exit:

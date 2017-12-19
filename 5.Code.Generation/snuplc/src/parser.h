@@ -95,152 +95,60 @@ class CParser {
     /// @name methods for recursive-descent parsing
     /// @{
    
-    /// @brief build up AST moudle scope
-    /// @retval CAstModule which is created by module
     CAstModule*           module(void);
 
-    /// @brief create and add symbols which are declared variables
-    /// @param s AST scope node that variables are declared
-    void                  varDeclaration(CAstScope *s);
+    void                  varDeclaration(CAstScope *scope);
 
-    /// @brief store all variable's information to create/add symbols to symbol table
-    /// @param vars the set of variable's name (which is appeared) is stored 'vars'
-    /// @param ttype the variable's type is stored 'ttype'
-    /// @param allVars already declared variables in this scope.
-    ///        cannot be NULL. so use empty vector if necessary
-    void                  varDecl(vector<string> &vars, CAstType* &ttype, vector<string> &allVars);
+    void                  varDecl(vector<string> &a, CAstType* &ttype, vector<string> &b);
 
-    /// @brief store all parameter's information to create/add symbols to symbol table
-    /// @param vars the set of parameter's name (which is appeared) is stored 'vars'
-    /// @param ttype the parameter's type is stored 'ttype'
-    /// @param allVars already declared variables in this scope.
-    ///        cannot be NULL. so use empty vector if necessary
-    void                  varDeclParam(vector<string> &vars, CAstType* &ttype, vector<string> &allVars);
+    void                  varDeclParam(vector<string> &a, CAstType* &ttype, vector<string> &b);
 
-    /// @brief store all variable's information to create/add symbols to symbol table
-    /// @param vars the set of variable's name (which is appeared) is stored 'vars'
-    /// @param allVars already declared variables in this scope.
-    ///        cannot be NULL. so use empty vector if necessary
-    void                  varDeclInternal(vector<string> &vars, vector<string> &allVars);
+    CAstProcedure*        procedureDecl(CAstScope *scope);
 
-    /// @brief build up AST procedure scope by procedure declaration
-    /// @param s AST scope node which is parent of this procedure scope
-    /// @retval CAstProcedure which is created by procedure
-    CAstProcedure*        procedureDecl(CAstScope *s);
+    CAstProcedure*        functionDecl(CAstScope *scope);
 
-    /// @brief build up AST procedure scope function declaration
-    /// @param s AST scope node which is parent of this function scope
-    /// @retval CAstProcedure which is created by function
-    CAstProcedure*        functionDecl(CAstScope *s);
+    void                  parameter_org(vector<string> &paramNames, vector<CAstType*> &paramTypes);
 
-    /// @brief store all parameter's information to create/add symbols to symbol table
-    /// @param paramNames all parameter's name are stored 'paramNames'
-    /// @param paramTypes all parameter's name are stored 'paramTypes'.
-    ///        paramTypes are one-to-one correspondence with paramNames (equal index)
-    void                  formalParam(vector<string> &paramNames, vector<CAstType*> &paramTypes);
+    void                  plusparameter(CAstScope *scope, CSymProc *symbol, vector<string> &paramNames, vector<CAstType*> &paramTypes);
 
-    /// @brief create all parameter's symbol and add symbol to parameter and symbol table
-    /// @param s AST scope node which parameters are owned
-    /// @param symbol Procedure symbol which represents this procedure
-    /// @param paramNames all parameter's name which is acquired from 'formalParam'
-    /// @param paramTypes all parameter's type which is acquired from 'formalParam'
-    void                  AddParameters(CAstScope *s, CSymProc *symbol, vector<string> &paramNames, vector<CAstType*> &paramTypes);
 
-    /// @brief build up subroutine's body and set this to subroutine's statement sequence
-    /// @param s AST scope node which owns this subroutine body
-    void                  subroutineBody(CAstScope *s);
+    CAstStatement*        statSequence(CAstScope *scope);
 
-    /// @brief build up AST statement node by statement sequence
-    /// @param s AST scope node which owns this statement sequence
-    /// @retval CAstStatement which represents this statement sequence
-    CAstStatement*        statSequence(CAstScope *s);
+    CAstStatAssign*       assignment(CAstScope *scope);
 
-    /// @brief build up AST assignment statement node by assignment statement
-    /// @param s AST scope node which owns this assignment
-    /// @retval CAstStatAssign which represents this assignment statement
-    CAstStatAssign*       assignment(CAstScope *s);
+    CAstStatCall*         subroutineCall(CAstScope *scope);
 
-    /// @brief build up AST procedure call statement node by subroutine call (from statement)
-    /// @param s AST scope node which owns this subroutine call (from statement)
-    /// @retval CAstStatCall which represents this subroutine call statement (from statement)
-    CAstStatCall*         subroutineCall(CAstScope *s);
+    CAstFunctionCall*     functionCall(CAstScope *scope);
 
-    /// @brief build up AST function call node by function call (from factor)
-    /// @param s AST scope node which owns this function call (from factor)
-    /// @retval CAstFunctionCall which represents this function call (from factor)
-    CAstFunctionCall*     functionCall(CAstScope *s);
+    CAstStatIf*           ifStatement(CAstScope *scope);
 
-    /// @brief build up AST if-else statement node by if-else statement
-    /// @param s AST scope node which owns this if-else statement
-    /// @retval CAstStatIf which represents this if-else statement
-    CAstStatIf*           ifStatement(CAstScope *s);
+    CAstStatWhile*        whileStatement(CAstScope *scope);
 
-    /// @brief build up AST while statement node by while statement
-    /// @param s AST scope node which owns this while statement
-    /// @retval CAstStatWhile which represents this while statement
-    CAstStatWhile*        whileStatement(CAstScope *s);
+    CAstStatReturn*       returnStatement(CAstScope *scope);
 
-    /// @brief build up AST return statement node by return statement
-    /// @param s AST scope node which owns this return statement
-    /// @retval CAstStatReturn which represents this return statement
-    CAstStatReturn*       returnStatement(CAstScope *s);
+    CAstExpression*       expression(CAstScope *scope);
 
-    /// @brief build up AST expression node by expression
-    /// @param s AST scope node which owns this expression
-    /// @retval CAstExpression which represents this expression
-    CAstExpression*       expression(CAstScope *s);
+    CAstExpression*       addressExpression(CAstScope *scope);
 
-    /// @brief build up AST expression node by expression to address type casting
-    /// @param s AST scope node which owns this expression -> address type casting
-    /// @retval CAstExpression which represents this expression -> address type casting
-    CAstExpression*       addressExpression(CAstScope *s);
+    CAstExpression*       simpleexpr(CAstScope *scope);
 
-    /// @brief build up AST expression node by simple expression
-    /// @param s AST scope node which owns this simple expression
-    /// @retval CAstExpression which represents this simple expression
-    CAstExpression*       simpleexpr(CAstScope *s);
+    CAstExpression*       term(CAstScope *scope);
 
-    /// @brief build up AST expression node by term
-    /// @param s AST scope node which owns this term
-    /// @retval CAstExpression which represents this term
-    CAstExpression*       term(CAstScope *s);
+    CAstExpression*       factor(CAstScope *scope);
 
-    /// @brief build up AST expression node by factor
-    /// @param s AST scope node which owns this factor
-    /// @retval CAstExpression which represents this factor
-    CAstExpression*       factor(CAstScope *s);
-
-    /// @brief build up AST type node by given type
-    /// @param isParam decide between variables and parameters
-    /// @retval CAstType which represents this type value
     CAstType*             type(bool isParam);
 
-    /// @brief build up AST designator node by qualident
-    /// @param s AST scope node which owns this qualident
-    /// @retval CAstDesignator which represents this qualident
-    CAstDesignator*       qualident(CAstScope *s);
+    CAstDesignator*       qualident(CAstScope *scope);
 
-    /// @brief build up AST designator node by ident
-    /// @param s AST scope node which owns this designator
-    /// @retval CAstDesignator which represents this ident
-    CAstDesignator*       ident(CAstScope *s);
+    CAstDesignator*       ident(CAstScope *scope);
 
-    /// @brief build up AST constant operand node by given number
-    /// @retval CAstConstant which represents this number
-    CAstConstant*         number(void);
+    CAstConstant*         mynumfunction(void);
 
-    /// @brief build up AST constant operand node by given boolean
-    /// @retval CAstConstant which represents this boolean value
-    CAstConstant*         boolean(void);
+    CAstConstant*         myboolfunction(void);
 
-    /// @brief build up AST constant operand node by given character
-    /// @retval CAstConstant which represents this character value
-    CAstConstant*         character(void);
+    CAstConstant*         mycharfunction(void);
 
-    /// @brief build up AST string constant operand node by given string
-    /// @param s AST scope node which owns this string constant
-    /// @retval CAstStringConstant which represents this string
-    CAstStringConstant*   stringConst(CAstScope *s);
+    CAstStringConstant*   stringConst(CAstScope *scope);
 
     /// @}
 

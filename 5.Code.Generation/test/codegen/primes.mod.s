@@ -110,16 +110,16 @@ CalcPrimes:
     movl    %eax, -196(%ebp)       
     movl    -196(%ebp), %eax        #  11:     assign N <- t8
     movl    %eax, -16(%ebp)        
-    movl    -16(%ebp), %eax         #  12:     if     N < 1 goto 5_if_true
+    movl    -16(%ebp), %eax         #  12:     if     N < 1 goto 6_if_true
     movl    $1, %ebx               
     cmpl    %ebx, %eax             
-    jl      l_CalcPrimes_5_if_true 
-    jmp     l_CalcPrimes_6_if_false #  13:     goto   6_if_false
-l_CalcPrimes_5_if_true:
+    jl      l_CalcPrimes_6_if_true 
+    jmp     l_CalcPrimes_5_if_false #  13:     goto   5_if_false
+l_CalcPrimes_6_if_true:
     movl    $0, %eax                #  15:     return 0
     jmp     l_CalcPrimes_exit       #  15:     return 0
     jmp     l_CalcPrimes_4          #  16:     goto   4
-l_CalcPrimes_6_if_false:
+l_CalcPrimes_5_if_false:
 l_CalcPrimes_4:
     movl    $0, %eax                #  19:     mul    t9 <- 0, 4
     movl    $4, %ebx               
@@ -167,30 +167,30 @@ l_CalcPrimes_4:
     movl    %eax, -32(%ebp)        
     movl    $3, %eax                #  33:     assign v <- 3
     movl    %eax, -204(%ebp)       
-l_CalcPrimes_15_while_cond:
-    movl    -204(%ebp), %eax        #  35:     if     v <= n goto 16_while_body
+l_CalcPrimes_16_while_cond:
+    movl    -204(%ebp), %eax        #  35:     if     v <= n goto 15_while_body
     movl    12(%ebp), %ebx         
     cmpl    %ebx, %eax             
-    jle     l_CalcPrimes_16_while_body
+    jle     l_CalcPrimes_15_while_body
     jmp     l_CalcPrimes_14         #  36:     goto   14
-l_CalcPrimes_16_while_body:
+l_CalcPrimes_15_while_body:
     movl    $1, %eax                #  38:     assign isprime <- 1
     movb    %al, -21(%ebp)         
     movl    $1, %eax                #  39:     assign i <- 1
     movl    %eax, -20(%ebp)        
-l_CalcPrimes_21_while_cond:
+l_CalcPrimes_22_while_cond:
     movzbl  -21(%ebp), %eax         #  41:     if     isprime = 1 goto 23
     movl    $1, %ebx               
     cmpl    %ebx, %eax             
     je      l_CalcPrimes_23        
     jmp     l_CalcPrimes_20         #  42:     goto   20
 l_CalcPrimes_23:
-    movl    -20(%ebp), %eax         #  44:     if     i <= psqrt goto 22_while_body
+    movl    -20(%ebp), %eax         #  44:     if     i <= psqrt goto 21_while_body
     movl    -32(%ebp), %ebx        
     cmpl    %ebx, %eax             
-    jle     l_CalcPrimes_22_while_body
+    jle     l_CalcPrimes_21_while_body
     jmp     l_CalcPrimes_20         #  45:     goto   20
-l_CalcPrimes_22_while_body:
+l_CalcPrimes_21_while_body:
     movl    -20(%ebp), %eax         #  47:     mul    t17 <- i, 4
     movl    $4, %ebx               
     imull   %ebx                   
@@ -236,16 +236,16 @@ l_CalcPrimes_22_while_body:
     movl    (%edi), %ebx           
     imull   %ebx                   
     movl    %eax, -100(%ebp)       
-    movl    -100(%ebp), %eax        #  59:     if     t26 = v goto 26_if_true
+    movl    -100(%ebp), %eax        #  59:     if     t26 = v goto 27_if_true
     movl    -204(%ebp), %ebx       
     cmpl    %ebx, %eax             
-    je      l_CalcPrimes_26_if_true
-    jmp     l_CalcPrimes_27_if_false #  60:     goto   27_if_false
-l_CalcPrimes_26_if_true:
+    je      l_CalcPrimes_27_if_true
+    jmp     l_CalcPrimes_26_if_false #  60:     goto   26_if_false
+l_CalcPrimes_27_if_true:
     movl    $0, %eax                #  62:     assign isprime <- 0
     movb    %al, -21(%ebp)         
     jmp     l_CalcPrimes_25         #  63:     goto   25
-l_CalcPrimes_27_if_false:
+l_CalcPrimes_26_if_false:
 l_CalcPrimes_25:
     movl    -20(%ebp), %eax         #  66:     add    t27 <- i, 1
     movl    $1, %ebx               
@@ -253,14 +253,14 @@ l_CalcPrimes_25:
     movl    %eax, -104(%ebp)       
     movl    -104(%ebp), %eax        #  67:     assign i <- t27
     movl    %eax, -20(%ebp)        
-    jmp     l_CalcPrimes_21_while_cond #  68:     goto   21_while_cond
+    jmp     l_CalcPrimes_22_while_cond #  68:     goto   22_while_cond
 l_CalcPrimes_20:
-    movzbl  -21(%ebp), %eax         #  70:     if     isprime = 1 goto 32_if_true
+    movzbl  -21(%ebp), %eax         #  70:     if     isprime = 1 goto 33_if_true
     movl    $1, %ebx               
     cmpl    %ebx, %eax             
-    je      l_CalcPrimes_32_if_true
-    jmp     l_CalcPrimes_33_if_false #  71:     goto   33_if_false
-l_CalcPrimes_32_if_true:
+    je      l_CalcPrimes_33_if_true
+    jmp     l_CalcPrimes_32_if_false #  71:     goto   32_if_false
+l_CalcPrimes_33_if_true:
     movl    -28(%ebp), %eax         #  73:     mul    t28 <- pidx, 4
     movl    $4, %ebx               
     imull   %ebx                   
@@ -287,12 +287,12 @@ l_CalcPrimes_32_if_true:
     movl    %eax, -124(%ebp)       
     movl    -124(%ebp), %eax        #  80:     assign pidx <- t32
     movl    %eax, -28(%ebp)        
-    movl    -28(%ebp), %eax         #  81:     if     pidx = N goto 38_if_true
+    movl    -28(%ebp), %eax         #  81:     if     pidx = N goto 39_if_true
     movl    -16(%ebp), %ebx        
     cmpl    %ebx, %eax             
-    je      l_CalcPrimes_38_if_true
-    jmp     l_CalcPrimes_39_if_false #  82:     goto   39_if_false
-l_CalcPrimes_38_if_true:
+    je      l_CalcPrimes_39_if_true
+    jmp     l_CalcPrimes_38_if_false #  82:     goto   38_if_false
+l_CalcPrimes_39_if_true:
     leal    _str_25, %eax           #  84:     &()    t33 <- _str_25
     movl    %eax, -128(%ebp)       
     movl    -128(%ebp), %eax        #  85:     param  0 <- t33
@@ -302,10 +302,10 @@ l_CalcPrimes_38_if_true:
     movl    $0, %eax                #  87:     assign n <- 0
     movl    %eax, 12(%ebp)         
     jmp     l_CalcPrimes_37         #  88:     goto   37
-l_CalcPrimes_39_if_false:
+l_CalcPrimes_38_if_false:
 l_CalcPrimes_37:
     jmp     l_CalcPrimes_31         #  91:     goto   31
-l_CalcPrimes_33_if_false:
+l_CalcPrimes_32_if_false:
 l_CalcPrimes_31:
     movl    -204(%ebp), %eax        #  94:     add    t34 <- v, 2
     movl    $2, %ebx               
@@ -353,24 +353,24 @@ l_CalcPrimes_31:
     movl    (%edi), %ebx           
     imull   %ebx                   
     movl    %eax, -168(%ebp)       
-    movl    -204(%ebp), %eax        # 107:     if     v > t43 goto 45_if_true
+    movl    -204(%ebp), %eax        # 107:     if     v > t43 goto 46_if_true
     movl    -168(%ebp), %ebx       
     cmpl    %ebx, %eax             
-    jg      l_CalcPrimes_45_if_true
-    jmp     l_CalcPrimes_46_if_false # 108:     goto   46_if_false
-l_CalcPrimes_45_if_true:
+    jg      l_CalcPrimes_46_if_true
+    jmp     l_CalcPrimes_45_if_false # 108:     goto   45_if_false
+l_CalcPrimes_46_if_true:
     movl    -32(%ebp), %eax         # 110:     add    t44 <- psqrt, 1
     movl    $1, %ebx               
     addl    %ebx, %eax             
     movl    %eax, -172(%ebp)       
     movl    -172(%ebp), %eax        # 111:     assign psqrt <- t44
     movl    %eax, -32(%ebp)        
-    movl    -32(%ebp), %eax         # 112:     if     psqrt >= pidx goto 50_if_true
+    movl    -32(%ebp), %eax         # 112:     if     psqrt >= pidx goto 51_if_true
     movl    -28(%ebp), %ebx        
     cmpl    %ebx, %eax             
-    jge     l_CalcPrimes_50_if_true
-    jmp     l_CalcPrimes_51_if_false # 113:     goto   51_if_false
-l_CalcPrimes_50_if_true:
+    jge     l_CalcPrimes_51_if_true
+    jmp     l_CalcPrimes_50_if_false # 113:     goto   50_if_false
+l_CalcPrimes_51_if_true:
     leal    _str_26, %eax           # 115:     &()    t45 <- _str_26
     movl    %eax, -176(%ebp)       
     movl    -176(%ebp), %eax        # 116:     param  0 <- t45
@@ -380,12 +380,12 @@ l_CalcPrimes_50_if_true:
     movl    $0, %eax                # 118:     assign n <- 0
     movl    %eax, 12(%ebp)         
     jmp     l_CalcPrimes_49         # 119:     goto   49
-l_CalcPrimes_51_if_false:
+l_CalcPrimes_50_if_false:
 l_CalcPrimes_49:
     jmp     l_CalcPrimes_44         # 122:     goto   44
-l_CalcPrimes_46_if_false:
+l_CalcPrimes_45_if_false:
 l_CalcPrimes_44:
-    jmp     l_CalcPrimes_15_while_cond # 125:     goto   15_while_cond
+    jmp     l_CalcPrimes_16_while_cond # 125:     goto   16_while_cond
 l_CalcPrimes_14:
     leal    _str_27, %eax           # 127:     &()    t46 <- _str_27
     movl    %eax, -180(%ebp)       
@@ -459,13 +459,13 @@ PrintPrimes:
     call    WriteLn                 #   5:     call   WriteLn
     movl    $0, %eax                #   6:     assign i <- 0
     movl    %eax, -16(%ebp)        
-l_PrintPrimes_5_while_cond:
-    movl    -16(%ebp), %eax         #   8:     if     i < pn goto 6_while_body
+l_PrintPrimes_6_while_cond:
+    movl    -16(%ebp), %eax         #   8:     if     i < pn goto 5_while_body
     movl    16(%ebp), %ebx         
     cmpl    %ebx, %eax             
-    jl      l_PrintPrimes_6_while_body
+    jl      l_PrintPrimes_5_while_body
     jmp     l_PrintPrimes_4         #   9:     goto   4
-l_PrintPrimes_6_while_body:
+l_PrintPrimes_5_while_body:
     leal    _str_30, %eax           #  11:     &()    t7 <- _str_30
     movl    %eax, -44(%ebp)        
     movl    -44(%ebp), %eax         #  12:     param  0 <- t7
@@ -509,17 +509,17 @@ l_PrintPrimes_6_while_body:
     movl    $8, %ebx               
     imull   %ebx                   
     movl    %eax, -36(%ebp)        
-    movl    -36(%ebp), %eax         #  25:     if     t14 = i goto 12_if_true
+    movl    -36(%ebp), %eax         #  25:     if     t14 = i goto 13_if_true
     movl    -16(%ebp), %ebx        
     cmpl    %ebx, %eax             
-    je      l_PrintPrimes_12_if_true
-    jmp     l_PrintPrimes_13_if_false #  26:     goto   13_if_false
-l_PrintPrimes_12_if_true:
+    je      l_PrintPrimes_13_if_true
+    jmp     l_PrintPrimes_12_if_false #  26:     goto   12_if_false
+l_PrintPrimes_13_if_true:
     call    WriteLn                 #  28:     call   WriteLn
     jmp     l_PrintPrimes_11        #  29:     goto   11
-l_PrintPrimes_13_if_false:
+l_PrintPrimes_12_if_false:
 l_PrintPrimes_11:
-    jmp     l_PrintPrimes_5_while_cond #  32:     goto   5_while_cond
+    jmp     l_PrintPrimes_6_while_cond #  32:     goto   6_while_cond
 l_PrintPrimes_4:
     call    WriteLn                 #  34:     call   WriteLn
 

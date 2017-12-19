@@ -1,0 +1,1150 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+AddArg	./ast.cpp	/^void CAstFunctionCall::AddArg(CAstExpression *arg)$/;"	f	class:CAstFunctionCall	typeref:typename:void
+AddArg	./myast/ast.cpp	/^void CAstFunctionCall::AddArg(CAstExpression *arg)$/;"	f	class:CAstFunctionCall	typeref:typename:void
+AddChild	./ast.cpp	/^void CAstScope::AddChild(CAstScope *child)$/;"	f	class:CAstScope	typeref:typename:void
+AddChild	./myast/ast.cpp	/^void CAstScope::AddChild(CAstScope *child)$/;"	f	class:CAstScope	typeref:typename:void
+AddIndex	./ast.cpp	/^void CAstArrayDesignator::AddIndex(CAstExpression *idx)$/;"	f	class:CAstArrayDesignator	typeref:typename:void
+AddIndex	./myast/ast.cpp	/^void CAstArrayDesignator::AddIndex(CAstExpression *idx)$/;"	f	class:CAstArrayDesignator	typeref:typename:void
+AddInstr	./ir.cpp	/^CTacInstr* CCodeBlock::AddInstr(CTacInstr *instr)$/;"	f	class:CCodeBlock	typeref:typename:CTacInstr *
+AddParam	./symtab.cpp	/^void CSymProc::AddParam(CSymParam *param)$/;"	f	class:CSymProc	typeref:typename:void
+AddParameters	./parser.cpp	/^void CParser::AddParameters$/;"	f	class:CParser	typeref:typename:void
+AddParameters_e	./myparser/parser.cpp	/^void CParser::AddParameters_e  (CAstScope *s, CSymProc *symbol, vector<string> &paramNames, vect/;"	f	class:CParser	typeref:typename:void
+AddReference	./ir.cpp	/^int CTacLabel::AddReference(int ofs)$/;"	f	class:CTacLabel	typeref:typename:int
+AddSymbol	./symtab.cpp	/^bool CSymtab::AddSymbol(CSymbol *s)$/;"	f	class:CSymtab	typeref:typename:bool
+CArrayType	./mytype/type.cpp	/^CArrayType::CArrayType(int nelem, const CType *innertype)$/;"	f	class:CArrayType
+CArrayType	./mytype/type.h	/^class CArrayType : public CType {$/;"	c
+CArrayType	./type.cpp	/^CArrayType::CArrayType(int nelem, const CType *innertype)$/;"	f	class:CArrayType
+CArrayType	./type.h	/^class CArrayType : public CType {$/;"	c
+CAstArrayDesignator	./ast.cpp	/^CAstArrayDesignator::CAstArrayDesignator(CToken t, const CSymbol *symbol)$/;"	f	class:CAstArrayDesignator
+CAstArrayDesignator	./ast.h	/^class CAstArrayDesignator : public CAstDesignator {$/;"	c
+CAstArrayDesignator	./myast/ast.cpp	/^CAstArrayDesignator::CAstArrayDesignator(CToken t, const CSymbol *symbol)$/;"	f	class:CAstArrayDesignator
+CAstArrayDesignator	./myast/ast.h	/^class CAstArrayDesignator : public CAstDesignator {$/;"	c
+CAstBinaryOp	./ast.cpp	/^CAstBinaryOp::CAstBinaryOp(CToken t, EOperation oper,$/;"	f	class:CAstBinaryOp
+CAstBinaryOp	./ast.h	/^class CAstBinaryOp : public CAstOperation {$/;"	c
+CAstBinaryOp	./myast/ast.cpp	/^CAstBinaryOp::CAstBinaryOp(CToken t, EOperation oper,$/;"	f	class:CAstBinaryOp
+CAstBinaryOp	./myast/ast.h	/^class CAstBinaryOp : public CAstOperation {$/;"	c
+CAstConstant	./ast.cpp	/^CAstConstant::CAstConstant(CToken t, const CType *type, long long value)$/;"	f	class:CAstConstant
+CAstConstant	./ast.h	/^class CAstConstant : public CAstOperand {$/;"	c
+CAstConstant	./myast/ast.cpp	/^CAstConstant::CAstConstant(CToken t, const CType *type, long long value)$/;"	f	class:CAstConstant
+CAstConstant	./myast/ast.h	/^class CAstConstant : public CAstOperand {$/;"	c
+CAstDesignator	./ast.cpp	/^CAstDesignator::CAstDesignator(CToken t, const CSymbol *symbol)$/;"	f	class:CAstDesignator
+CAstDesignator	./ast.h	/^class CAstDesignator : public CAstOperand {$/;"	c
+CAstDesignator	./myast/ast.cpp	/^CAstDesignator::CAstDesignator(CToken t, const CSymbol *symbol)$/;"	f	class:CAstDesignator
+CAstDesignator	./myast/ast.h	/^class CAstDesignator : public CAstOperand {$/;"	c
+CAstExpression	./ast.cpp	/^CAstExpression::CAstExpression(CToken t)$/;"	f	class:CAstExpression
+CAstExpression	./ast.h	/^class CAstExpression : public CAstNode {$/;"	c
+CAstExpression	./myast/ast.cpp	/^CAstExpression::CAstExpression(CToken t)$/;"	f	class:CAstExpression
+CAstExpression	./myast/ast.h	/^class CAstExpression : public CAstNode {$/;"	c
+CAstFunctionCall	./ast.cpp	/^CAstFunctionCall::CAstFunctionCall(CToken t, const CSymProc *symbol)$/;"	f	class:CAstFunctionCall
+CAstFunctionCall	./ast.h	/^class CAstFunctionCall : public CAstExpression {$/;"	c
+CAstFunctionCall	./myast/ast.cpp	/^CAstFunctionCall::CAstFunctionCall(CToken t, const CSymProc *symbol)$/;"	f	class:CAstFunctionCall
+CAstFunctionCall	./myast/ast.h	/^class CAstFunctionCall : public CAstExpression {$/;"	c
+CAstModule	./ast.cpp	/^CAstModule::CAstModule(CToken t, const string name)$/;"	f	class:CAstModule
+CAstModule	./ast.h	/^class CAstModule : public CAstScope {$/;"	c
+CAstModule	./myast/ast.cpp	/^CAstModule::CAstModule(CToken t, const string name)$/;"	f	class:CAstModule
+CAstModule	./myast/ast.h	/^class CAstModule : public CAstScope {$/;"	c
+CAstNode	./ast.cpp	/^CAstNode::CAstNode(CToken token)$/;"	f	class:CAstNode
+CAstNode	./ast.h	/^class CAstNode {$/;"	c
+CAstNode	./myast/ast.cpp	/^CAstNode::CAstNode(CToken token)$/;"	f	class:CAstNode
+CAstNode	./myast/ast.h	/^class CAstNode {$/;"	c
+CAstOperand	./ast.cpp	/^CAstOperand::CAstOperand(CToken t)$/;"	f	class:CAstOperand
+CAstOperand	./ast.h	/^class CAstOperand : public CAstExpression {$/;"	c
+CAstOperand	./myast/ast.cpp	/^CAstOperand::CAstOperand(CToken t)$/;"	f	class:CAstOperand
+CAstOperand	./myast/ast.h	/^class CAstOperand : public CAstExpression {$/;"	c
+CAstOperation	./ast.cpp	/^CAstOperation::CAstOperation(CToken t, EOperation oper)$/;"	f	class:CAstOperation
+CAstOperation	./ast.h	/^class CAstOperation : public CAstExpression {$/;"	c
+CAstOperation	./myast/ast.cpp	/^CAstOperation::CAstOperation(CToken t, EOperation oper)$/;"	f	class:CAstOperation
+CAstOperation	./myast/ast.h	/^class CAstOperation : public CAstExpression {$/;"	c
+CAstProcedure	./ast.cpp	/^CAstProcedure::CAstProcedure(CToken t, const string name,$/;"	f	class:CAstProcedure
+CAstProcedure	./ast.h	/^class CAstProcedure : public CAstScope {$/;"	c
+CAstProcedure	./myast/ast.cpp	/^CAstProcedure::CAstProcedure(CToken t, const string name,$/;"	f	class:CAstProcedure
+CAstProcedure	./myast/ast.h	/^class CAstProcedure : public CAstScope {$/;"	c
+CAstScope	./ast.cpp	/^CAstScope::CAstScope(CToken t, const string name, CAstScope *parent)$/;"	f	class:CAstScope
+CAstScope	./ast.h	/^class CAstScope : public CAstNode {$/;"	c
+CAstScope	./myast/ast.cpp	/^CAstScope::CAstScope(CToken t, const string name, CAstScope *parent)$/;"	f	class:CAstScope
+CAstScope	./myast/ast.h	/^class CAstScope : public CAstNode {$/;"	c
+CAstSpecialOp	./ast.cpp	/^CAstSpecialOp::CAstSpecialOp(CToken t, EOperation oper, CAstExpression *e,$/;"	f	class:CAstSpecialOp
+CAstSpecialOp	./ast.h	/^class CAstSpecialOp : public CAstOperation {$/;"	c
+CAstSpecialOp	./myast/ast.cpp	/^CAstSpecialOp::CAstSpecialOp(CToken t, EOperation oper, CAstExpression *e,$/;"	f	class:CAstSpecialOp
+CAstSpecialOp	./myast/ast.h	/^class CAstSpecialOp : public CAstOperation {$/;"	c
+CAstStatAssign	./ast.cpp	/^CAstStatAssign::CAstStatAssign(CToken t,$/;"	f	class:CAstStatAssign
+CAstStatAssign	./ast.h	/^class CAstStatAssign : public CAstStatement {$/;"	c
+CAstStatAssign	./myast/ast.cpp	/^CAstStatAssign::CAstStatAssign(CToken t,$/;"	f	class:CAstStatAssign
+CAstStatAssign	./myast/ast.h	/^class CAstStatAssign : public CAstStatement {$/;"	c
+CAstStatCall	./ast.cpp	/^CAstStatCall::CAstStatCall(CToken t, CAstFunctionCall *call)$/;"	f	class:CAstStatCall
+CAstStatCall	./ast.h	/^class CAstStatCall : public CAstStatement {$/;"	c
+CAstStatCall	./myast/ast.cpp	/^CAstStatCall::CAstStatCall(CToken t, CAstFunctionCall *call)$/;"	f	class:CAstStatCall
+CAstStatCall	./myast/ast.h	/^class CAstStatCall : public CAstStatement {$/;"	c
+CAstStatIf	./ast.cpp	/^CAstStatIf::CAstStatIf(CToken t, CAstExpression *cond,$/;"	f	class:CAstStatIf
+CAstStatIf	./ast.h	/^class CAstStatIf : public CAstStatement {$/;"	c
+CAstStatIf	./myast/ast.cpp	/^CAstStatIf::CAstStatIf(CToken t, CAstExpression *cond,$/;"	f	class:CAstStatIf
+CAstStatIf	./myast/ast.h	/^class CAstStatIf : public CAstStatement {$/;"	c
+CAstStatReturn	./ast.cpp	/^CAstStatReturn::CAstStatReturn(CToken t, CAstScope *scope, CAstExpression *expr)$/;"	f	class:CAstStatReturn
+CAstStatReturn	./ast.h	/^class CAstStatReturn : public CAstStatement {$/;"	c
+CAstStatReturn	./myast/ast.cpp	/^CAstStatReturn::CAstStatReturn(CToken t, CAstScope *scope, CAstExpression *expr)$/;"	f	class:CAstStatReturn
+CAstStatReturn	./myast/ast.h	/^class CAstStatReturn : public CAstStatement {$/;"	c
+CAstStatWhile	./ast.cpp	/^CAstStatWhile::CAstStatWhile(CToken t,$/;"	f	class:CAstStatWhile
+CAstStatWhile	./ast.h	/^class CAstStatWhile : public CAstStatement {$/;"	c
+CAstStatWhile	./myast/ast.cpp	/^CAstStatWhile::CAstStatWhile(CToken t,$/;"	f	class:CAstStatWhile
+CAstStatWhile	./myast/ast.h	/^class CAstStatWhile : public CAstStatement {$/;"	c
+CAstStatement	./ast.cpp	/^CAstStatement::CAstStatement(CToken token)$/;"	f	class:CAstStatement
+CAstStatement	./ast.h	/^class CAstStatement : public CAstNode {$/;"	c
+CAstStatement	./myast/ast.cpp	/^CAstStatement::CAstStatement(CToken token)$/;"	f	class:CAstStatement
+CAstStatement	./myast/ast.h	/^class CAstStatement : public CAstNode {$/;"	c
+CAstStringConstant	./ast.cpp	/^CAstStringConstant::CAstStringConstant(CToken t, const string value,$/;"	f	class:CAstStringConstant
+CAstStringConstant	./ast.h	/^class CAstStringConstant : public CAstOperand {$/;"	c
+CAstStringConstant	./myast/ast.cpp	/^CAstStringConstant::CAstStringConstant(CToken t, const string value,$/;"	f	class:CAstStringConstant
+CAstStringConstant	./myast/ast.h	/^class CAstStringConstant : public CAstOperand {$/;"	c
+CAstType	./ast.cpp	/^CAstType::CAstType(CToken t, const CType *type)$/;"	f	class:CAstType
+CAstType	./ast.h	/^class CAstType : public CAstNode {$/;"	c
+CAstType	./myast/ast.cpp	/^CAstType::CAstType(CToken t, const CType *type)$/;"	f	class:CAstType
+CAstType	./myast/ast.h	/^class CAstType : public CAstNode {$/;"	c
+CAstUnaryOp	./ast.cpp	/^CAstUnaryOp::CAstUnaryOp(CToken t, EOperation oper, CAstExpression *e)$/;"	f	class:CAstUnaryOp
+CAstUnaryOp	./ast.h	/^class CAstUnaryOp : public CAstOperation {$/;"	c
+CAstUnaryOp	./myast/ast.cpp	/^CAstUnaryOp::CAstUnaryOp(CToken t, EOperation oper, CAstExpression *e)$/;"	f	class:CAstUnaryOp
+CAstUnaryOp	./myast/ast.h	/^class CAstUnaryOp : public CAstOperation {$/;"	c
+CBackend	./backend.cpp	/^CBackend::CBackend(ostream &out)$/;"	f	class:CBackend
+CBackend	./backend.h	/^class CBackend {$/;"	c
+CBackendx86	./backend.cpp	/^CBackendx86::CBackendx86(ostream &out)$/;"	f	class:CBackendx86
+CBackendx86	./backend.h	/^class CBackendx86 : public CBackend {$/;"	c
+CBoolType	./mytype/type.cpp	/^CBoolType::CBoolType(void)$/;"	f	class:CBoolType
+CBoolType	./mytype/type.h	/^class CBoolType : public CScalarType {$/;"	c
+CBoolType	./type.cpp	/^CBoolType::CBoolType(void)$/;"	f	class:CBoolType
+CBoolType	./type.h	/^class CBoolType : public CScalarType {$/;"	c
+CCharType	./mytype/type.cpp	/^CCharType::CCharType(void)$/;"	f	class:CCharType
+CCharType	./mytype/type.h	/^class CCharType : public CScalarType {$/;"	c
+CCharType	./type.cpp	/^CCharType::CCharType(void)$/;"	f	class:CCharType
+CCharType	./type.h	/^class CCharType : public CScalarType {$/;"	c
+CCodeBlock	./ir.cpp	/^CCodeBlock::CCodeBlock(CScope *owner)$/;"	f	class:CCodeBlock
+CCodeBlock	./ir.h	/^class CCodeBlock {$/;"	c
+CDataInitString	./data.cpp	/^CDataInitString::CDataInitString(const string data)$/;"	f	class:CDataInitString
+CDataInitString	./data.h	/^class CDataInitString : public CDataInitializer {$/;"	c
+CDataInitString	./mydata/data.cpp	/^CDataInitString::CDataInitString(const string data)$/;"	f	class:CDataInitString
+CDataInitString	./mydata/data.h	/^class CDataInitString : public CDataInitializer {$/;"	c
+CDataInitializer	./data.cpp	/^CDataInitializer::CDataInitializer(void)$/;"	f	class:CDataInitializer
+CDataInitializer	./data.h	/^class CDataInitializer {$/;"	c
+CDataInitializer	./mydata/data.cpp	/^CDataInitializer::CDataInitializer(void)$/;"	f	class:CDataInitializer
+CDataInitializer	./mydata/data.h	/^class CDataInitializer {$/;"	c
+CIntType	./mytype/type.cpp	/^CIntType::CIntType(void)$/;"	f	class:CIntType
+CIntType	./mytype/type.h	/^class CIntType : public CScalarType {$/;"	c
+CIntType	./type.cpp	/^CIntType::CIntType(void)$/;"	f	class:CIntType
+CIntType	./type.h	/^class CIntType : public CScalarType {$/;"	c
+CModule	./ir.cpp	/^CModule::CModule(CAstNode *ast)$/;"	f	class:CModule
+CModule	./ir.h	/^class CModule : public CScope {$/;"	c
+CNullType	./mytype/type.cpp	/^CNullType::CNullType(void)$/;"	f	class:CNullType
+CNullType	./mytype/type.h	/^class CNullType : public CScalarType {$/;"	c
+CNullType	./type.cpp	/^CNullType::CNullType(void)$/;"	f	class:CNullType
+CNullType	./type.h	/^class CNullType : public CScalarType {$/;"	c
+CParser	./myparser/parser.cpp	/^CParser::CParser(CScanner *scanner)$/;"	f	class:CParser
+CParser	./myparser/parser.h	/^class CParser {$/;"	c
+CParser	./parser.cpp	/^CParser::CParser(CScanner *scanner)$/;"	f	class:CParser
+CParser	./parser.h	/^class CParser {$/;"	c
+CPointerType	./mytype/type.cpp	/^CPointerType::CPointerType(const CType *basetype)$/;"	f	class:CPointerType
+CPointerType	./mytype/type.h	/^class CPointerType : public CScalarType {$/;"	c
+CPointerType	./type.cpp	/^CPointerType::CPointerType(const CType *basetype)$/;"	f	class:CPointerType
+CPointerType	./type.h	/^class CPointerType : public CScalarType {$/;"	c
+CProcedure	./ir.cpp	/^CProcedure::CProcedure(CAstNode *ast, CScope *parent)$/;"	f	class:CProcedure
+CProcedure	./ir.h	/^class CProcedure : public CScope {$/;"	c
+CScalarType	./mytype/type.h	/^class CScalarType : public CType {$/;"	c
+CScalarType	./type.h	/^class CScalarType : public CType {$/;"	c
+CScanner	./scanner.cpp	/^CScanner::CScanner(istream *in)$/;"	f	class:CScanner
+CScanner	./scanner.cpp	/^CScanner::CScanner(string in)$/;"	f	class:CScanner
+CScanner	./scanner.h	/^class CScanner {$/;"	c
+CScope	./ir.cpp	/^CScope::CScope(CAstNode *ast, CScope *parent)$/;"	f	class:CScope
+CScope	./ir.h	/^class CScope {$/;"	c
+CSymGlobal	./symtab.cpp	/^CSymGlobal::CSymGlobal(const string name, const CType *type)$/;"	f	class:CSymGlobal
+CSymGlobal	./symtab.h	/^class CSymGlobal : public CSymbol {$/;"	c
+CSymLocal	./symtab.cpp	/^CSymLocal::CSymLocal(const string name, ESymbolType stype, const CType *type)$/;"	f	class:CSymLocal
+CSymLocal	./symtab.cpp	/^CSymLocal::CSymLocal(const string name, const CType *type)$/;"	f	class:CSymLocal
+CSymLocal	./symtab.h	/^class CSymLocal : public CSymbol {$/;"	c
+CSymParam	./symtab.cpp	/^CSymParam::CSymParam(int index, const string name, const CType *type)$/;"	f	class:CSymParam
+CSymParam	./symtab.h	/^class CSymParam : public CSymLocal {$/;"	c
+CSymProc	./symtab.cpp	/^CSymProc::CSymProc(const string name, const CType *return_type)$/;"	f	class:CSymProc
+CSymProc	./symtab.h	/^class CSymProc : public CSymbol {$/;"	c
+CSymbol	./symtab.cpp	/^CSymbol::CSymbol(const string name, ESymbolType stype, const CType *dtype)$/;"	f	class:CSymbol
+CSymbol	./symtab.h	/^class CSymbol {$/;"	c
+CSymtab	./symtab.cpp	/^CSymtab::CSymtab(CSymtab *parent)$/;"	f	class:CSymtab
+CSymtab	./symtab.cpp	/^CSymtab::CSymtab(void)$/;"	f	class:CSymtab
+CSymtab	./symtab.h	/^class CSymtab {$/;"	c
+CTac	./ir.cpp	/^CTac::CTac(void)$/;"	f	class:CTac
+CTac	./ir.h	/^class CTac {$/;"	c
+CTacAddr	./ir.cpp	/^CTacAddr::CTacAddr(void)$/;"	f	class:CTacAddr
+CTacAddr	./ir.h	/^class CTacAddr : public CTac {$/;"	c
+CTacConst	./ir.cpp	/^CTacConst::CTacConst(int value)$/;"	f	class:CTacConst
+CTacConst	./ir.h	/^class CTacConst : public CTacAddr {$/;"	c
+CTacInstr	./ir.cpp	/^CTacInstr::CTacInstr(EOperation op, CTac *dst, CTacAddr *src1, CTacAddr *src2)$/;"	f	class:CTacInstr
+CTacInstr	./ir.cpp	/^CTacInstr::CTacInstr(string name)$/;"	f	class:CTacInstr
+CTacInstr	./ir.h	/^class CTacInstr : public CTac {$/;"	c
+CTacLabel	./ir.cpp	/^CTacLabel::CTacLabel(const string label)$/;"	f	class:CTacLabel
+CTacLabel	./ir.h	/^class CTacLabel : public CTacInstr {$/;"	c
+CTacName	./ir.cpp	/^CTacName::CTacName(const CSymbol *symbol)$/;"	f	class:CTacName
+CTacName	./ir.h	/^class CTacName : public CTacAddr {$/;"	c
+CTacReference	./ir.cpp	/^CTacReference::CTacReference(const CSymbol *symbol, const CSymbol *deref)$/;"	f	class:CTacReference
+CTacReference	./ir.h	/^class CTacReference: public CTacName {$/;"	c
+CTacTemp	./ir.cpp	/^CTacTemp::CTacTemp(const CSymbol *symbol)$/;"	f	class:CTacTemp
+CTacTemp	./ir.h	/^class CTacTemp: public CTacName {$/;"	c
+CToken	./scanner.cpp	/^CToken::CToken()$/;"	f	class:CToken
+CToken	./scanner.cpp	/^CToken::CToken(const CToken &token)$/;"	f	class:CToken
+CToken	./scanner.cpp	/^CToken::CToken(const CToken *token)$/;"	f	class:CToken
+CToken	./scanner.cpp	/^CToken::CToken(int line, int charpos, EToken type, const string value)$/;"	f	class:CToken
+CToken	./scanner.h	/^class CToken {$/;"	c
+CType	./mytype/type.cpp	/^CType::CType(void)$/;"	f	class:CType
+CType	./mytype/type.h	/^class CType {$/;"	c
+CType	./type.cpp	/^CType::CType(void)$/;"	f	class:CType
+CType	./type.h	/^class CType {$/;"	c
+CTypeManager	./mytype/type.cpp	/^CTypeManager::CTypeManager(void)$/;"	f	class:CTypeManager
+CTypeManager	./mytype/type.h	/^class CTypeManager {$/;"	c
+CTypeManager	./type.cpp	/^CTypeManager::CTypeManager(void)$/;"	f	class:CTypeManager
+CTypeManager	./type.h	/^class CTypeManager {$/;"	c
+CleanupControlFlow	./ir.cpp	/^void CCodeBlock::CleanupControlFlow(void)$/;"	f	class:CCodeBlock	typeref:typename:void
+Compare	./mytype/type.cpp	/^bool CArrayType::Compare(const CType *t) const$/;"	f	class:CArrayType	typeref:typename:bool
+Compare	./mytype/type.cpp	/^bool CPointerType::Compare(const CType *t) const$/;"	f	class:CPointerType	typeref:typename:bool
+Compare	./mytype/type.cpp	/^bool CType::Compare(const CType *t) const$/;"	f	class:CType	typeref:typename:bool
+Compare	./type.cpp	/^bool CArrayType::Compare(const CType *t) const$/;"	f	class:CArrayType	typeref:typename:bool
+Compare	./type.cpp	/^bool CPointerType::Compare(const CType *t) const$/;"	f	class:CPointerType	typeref:typename:bool
+Compare	./type.cpp	/^bool CType::Compare(const CType *t) const$/;"	f	class:CType	typeref:typename:bool
+ComputeStackOffsets	./backend.cpp	/^size_t CBackendx86::ComputeStackOffsets(CSymtab *symtab,$/;"	f	class:CBackendx86	typeref:typename:size_t
+Condition	./backend.cpp	/^string CBackendx86::Condition(EOperation cond) const$/;"	f	class:CBackendx86	typeref:typename:string
+Consume	./myparser/parser.cpp	/^bool CParser::Consume(EToken type, CToken *token)$/;"	f	class:CParser	typeref:typename:bool
+Consume	./parser.cpp	/^bool CParser::Consume(EToken type, CToken *token)$/;"	f	class:CParser	typeref:typename:bool
+CreateLabel	./ir.cpp	/^CTacLabel* CCodeBlock::CreateLabel(const char *hint)$/;"	f	class:CCodeBlock	typeref:typename:CTacLabel *
+CreateLabel	./ir.cpp	/^CTacLabel* CScope::CreateLabel(const char *hint)$/;"	f	class:CScope	typeref:typename:CTacLabel *
+CreateTemp	./ir.cpp	/^CTacTemp* CCodeBlock::CreateTemp(const CType *type)$/;"	f	class:CCodeBlock	typeref:typename:CTacTemp *
+CreateTemp	./ir.cpp	/^CTacTemp* CScope::CreateTemp(const CType *type)$/;"	f	class:CScope	typeref:typename:CTacTemp *
+CreateVar	./ast.cpp	/^CSymbol* CAstModule::CreateVar(const string ident, const CType *type)$/;"	f	class:CAstModule	typeref:typename:CSymbol *
+CreateVar	./ast.cpp	/^CSymbol* CAstProcedure::CreateVar(const string ident, const CType *type)$/;"	f	class:CAstProcedure	typeref:typename:CSymbol *
+CreateVar	./myast/ast.cpp	/^CSymbol* CAstModule::CreateVar(const string ident, const CType *type)$/;"	f	class:CAstModule	typeref:typename:CSymbol *
+CreateVar	./myast/ast.cpp	/^CSymbol* CAstProcedure::CreateVar(const string ident, const CType *type)$/;"	f	class:CAstProcedure	typeref:typename:CSymbol *
+DeleteLine	./scanner.cpp	/^void CScanner::DeleteLine()$/;"	f	class:CScanner	typeref:typename:void
+DumpAST	./snuplc.cpp	/^void DumpAST(string file, CAstModule *ast)$/;"	f	typeref:typename:void
+DumpTAC	./snuplc.cpp	/^void DumpTAC(string file, CModule *m)$/;"	f	typeref:typename:void
+EOperation	./ir.h	/^enum EOperation {$/;"	g
+EOperationName	./ir.cpp	/^char EOperationName[][OPERATION_STRLEN] = {$/;"	v	typeref:typename:char[][]
+EScope	./symtab.h	/^enum EScope {$/;"	g
+ESymbolType	./symtab.h	/^enum ESymbolType {$/;"	g
+EToken	./scanner.h	/^enum EToken {$/;"	g
+ETokenName	./scanner.cpp	/^char ETokenName[][TOKEN_STRLEN] = {$/;"	v	typeref:typename:char[][]
+ETokenStr	./scanner.cpp	/^char ETokenStr[][TOKEN_STRLEN] = {$/;"	v	typeref:typename:char[][]
+Emit	./backend.cpp	/^bool CBackend::Emit(CModule *m)$/;"	f	class:CBackend	typeref:typename:bool
+EmitCode	./backend.cpp	/^void CBackend::EmitCode(void)$/;"	f	class:CBackend	typeref:typename:void
+EmitCode	./backend.cpp	/^void CBackendx86::EmitCode(void)$/;"	f	class:CBackendx86	typeref:typename:void
+EmitCodeBlock	./backend.cpp	/^void CBackendx86::EmitCodeBlock(CCodeBlock *cb)$/;"	f	class:CBackendx86	typeref:typename:void
+EmitData	./backend.cpp	/^void CBackend::EmitData(void)$/;"	f	class:CBackend	typeref:typename:void
+EmitData	./backend.cpp	/^void CBackendx86::EmitData(void)$/;"	f	class:CBackendx86	typeref:typename:void
+EmitFooter	./backend.cpp	/^void CBackend::EmitFooter(void)$/;"	f	class:CBackend	typeref:typename:void
+EmitFooter	./backend.cpp	/^void CBackendx86::EmitFooter(void)$/;"	f	class:CBackendx86	typeref:typename:void
+EmitGlobalData	./backend.cpp	/^void CBackendx86::EmitGlobalData(CScope *scope)$/;"	f	class:CBackendx86	typeref:typename:void
+EmitHeader	./backend.cpp	/^void CBackend::EmitHeader(void)$/;"	f	class:CBackend	typeref:typename:void
+EmitHeader	./backend.cpp	/^void CBackendx86::EmitHeader(void)$/;"	f	class:CBackendx86	typeref:typename:void
+EmitInstruction	./backend.cpp	/^void CBackendx86::EmitInstruction(CTacInstr *i)$/;"	f	class:CBackendx86	typeref:typename:void
+EmitInstruction	./backend.cpp	/^void CBackendx86::EmitInstruction(string mnemonic, string args, string comment)$/;"	f	class:CBackendx86	typeref:typename:void
+EmitLocalData	./backend.cpp	/^void CBackendx86::EmitLocalData(CScope *scope)$/;"	f	class:CBackendx86	typeref:typename:void
+EmitScope	./backend.cpp	/^void CBackendx86::EmitScope(CScope *scope)$/;"	f	class:CBackendx86	typeref:typename:void
+FindSymbol	./symtab.cpp	/^const CSymbol* CSymtab::FindSymbol(const string name, EScope scope) const$/;"	f	class:CSymtab	typeref:typename:const CSymbol *
+Get	./mytype/type.cpp	/^CTypeManager* CTypeManager::Get(void)$/;"	f	class:CTypeManager	typeref:typename:CTypeManager *
+Get	./scanner.cpp	/^CToken CScanner::Get()$/;"	f	class:CScanner	typeref:typename:CToken
+Get	./type.cpp	/^CTypeManager* CTypeManager::Get(void)$/;"	f	class:CTypeManager	typeref:typename:CTypeManager *
+GetAlign	./mytype/type.cpp	/^int CArrayType::GetAlign(void) const$/;"	f	class:CArrayType	typeref:typename:int
+GetAlign	./mytype/type.h	/^    virtual int GetAlign(void) const { return 0; };$/;"	f	class:CNullType	typeref:typename:int
+GetAlign	./mytype/type.h	/^    virtual int GetAlign(void) const { return 1; };$/;"	f	class:CBoolType	typeref:typename:int
+GetAlign	./mytype/type.h	/^    virtual int GetAlign(void) const { return 1; };$/;"	f	class:CCharType	typeref:typename:int
+GetAlign	./mytype/type.h	/^    virtual int GetAlign(void) const { return 4; };$/;"	f	class:CIntType	typeref:typename:int
+GetAlign	./mytype/type.h	/^    virtual int GetAlign(void) const { return 4; };$/;"	f	class:CPointerType	typeref:typename:int
+GetAlign	./type.cpp	/^int CArrayType::GetAlign(void) const$/;"	f	class:CArrayType	typeref:typename:int
+GetAlign	./type.h	/^    virtual int GetAlign(void) const { return 0; };$/;"	f	class:CNullType	typeref:typename:int
+GetAlign	./type.h	/^    virtual int GetAlign(void) const { return 1; };$/;"	f	class:CBoolType	typeref:typename:int
+GetAlign	./type.h	/^    virtual int GetAlign(void) const { return 1; };$/;"	f	class:CCharType	typeref:typename:int
+GetAlign	./type.h	/^    virtual int GetAlign(void) const { return 4; };$/;"	f	class:CIntType	typeref:typename:int
+GetAlign	./type.h	/^    virtual int GetAlign(void) const { return 4; };$/;"	f	class:CPointerType	typeref:typename:int
+GetArg	./ast.cpp	/^CAstExpression* CAstFunctionCall::GetArg(int index) const$/;"	f	class:CAstFunctionCall	typeref:typename:CAstExpression *
+GetArg	./myast/ast.cpp	/^CAstExpression* CAstFunctionCall::GetArg(int index) const$/;"	f	class:CAstFunctionCall	typeref:typename:CAstExpression *
+GetArray	./mytype/type.cpp	/^const CArrayType* CTypeManager::GetArray(int nelem, const CType *innertype)$/;"	f	class:CTypeManager	typeref:typename:const CArrayType *
+GetArray	./type.cpp	/^const CArrayType* CTypeManager::GetArray(int nelem, const CType *innertype)$/;"	f	class:CTypeManager	typeref:typename:const CArrayType *
+GetBaseRegister	./symtab.cpp	/^string CSymbol::GetBaseRegister(void) const$/;"	f	class:CSymbol	typeref:typename:string
+GetBaseType	./mytype/type.cpp	/^const CType* CArrayType::GetBaseType(void) const$/;"	f	class:CArrayType	typeref:typename:const CType *
+GetBaseType	./mytype/type.h	/^    const CType* GetBaseType(void) const { return _basetype; };$/;"	f	class:CPointerType	typeref:typename:const CType *
+GetBaseType	./type.cpp	/^const CType* CArrayType::GetBaseType(void) const$/;"	f	class:CArrayType	typeref:typename:const CType *
+GetBaseType	./type.h	/^    const CType* GetBaseType(void) const { return _basetype; };$/;"	f	class:CPointerType	typeref:typename:const CType *
+GetBody	./ast.cpp	/^CAstStatement* CAstStatWhile::GetBody(void) const$/;"	f	class:CAstStatWhile	typeref:typename:CAstStatement *
+GetBody	./myast/ast.cpp	/^CAstStatement* CAstStatWhile::GetBody(void) const$/;"	f	class:CAstStatWhile	typeref:typename:CAstStatement *
+GetBool	./mytype/type.cpp	/^const CBoolType* CTypeManager::GetBool(void) const$/;"	f	class:CTypeManager	typeref:typename:const CBoolType *
+GetBool	./type.cpp	/^const CBoolType* CTypeManager::GetBool(void) const$/;"	f	class:CTypeManager	typeref:typename:const CBoolType *
+GetCall	./ast.cpp	/^CAstFunctionCall* CAstStatCall::GetCall(void) const$/;"	f	class:CAstStatCall	typeref:typename:CAstFunctionCall *
+GetCall	./myast/ast.cpp	/^CAstFunctionCall* CAstStatCall::GetCall(void) const$/;"	f	class:CAstStatCall	typeref:typename:CAstFunctionCall *
+GetChar	./mytype/type.cpp	/^const CCharType* CTypeManager::GetChar(void) const$/;"	f	class:CTypeManager	typeref:typename:const CCharType *
+GetChar	./scanner.cpp	/^char CScanner::GetChar()$/;"	f	class:CScanner	typeref:typename:char
+GetChar	./scanner.cpp	/^string CScanner::GetChar(int n)$/;"	f	class:CScanner	typeref:typename:string
+GetChar	./type.cpp	/^const CCharType* CTypeManager::GetChar(void) const$/;"	f	class:CTypeManager	typeref:typename:const CCharType *
+GetCharPosition	./scanner.h	/^    int GetCharPosition() const { return _char; };$/;"	f	class:CScanner	typeref:typename:int
+GetCharPosition	./scanner.h	/^    int GetCharPosition(void) const { return _char; };$/;"	f	class:CToken	typeref:typename:int
+GetChild	./ast.cpp	/^CAstScope* CAstScope::GetChild(size_t i) const$/;"	f	class:CAstScope	typeref:typename:CAstScope *
+GetChild	./myast/ast.cpp	/^CAstScope* CAstScope::GetChild(size_t i) const$/;"	f	class:CAstScope	typeref:typename:CAstScope *
+GetCodeBlock	./ast.cpp	/^CCodeBlock* CAstScope::GetCodeBlock(void) const$/;"	f	class:CAstScope	typeref:typename:CCodeBlock *
+GetCodeBlock	./ir.cpp	/^CCodeBlock* CScope::GetCodeBlock(void) const$/;"	f	class:CScope	typeref:typename:CCodeBlock *
+GetCodeBlock	./myast/ast.cpp	/^CCodeBlock* CAstScope::GetCodeBlock(void) const$/;"	f	class:CAstScope	typeref:typename:CCodeBlock *
+GetCondition	./ast.cpp	/^CAstExpression* CAstStatIf::GetCondition(void) const$/;"	f	class:CAstStatIf	typeref:typename:CAstExpression *
+GetCondition	./ast.cpp	/^CAstExpression* CAstStatWhile::GetCondition(void) const$/;"	f	class:CAstStatWhile	typeref:typename:CAstExpression *
+GetCondition	./myast/ast.cpp	/^CAstExpression* CAstStatIf::GetCondition(void) const$/;"	f	class:CAstStatIf	typeref:typename:CAstExpression *
+GetCondition	./myast/ast.cpp	/^CAstExpression* CAstStatWhile::GetCondition(void) const$/;"	f	class:CAstStatWhile	typeref:typename:CAstExpression *
+GetData	./data.cpp	/^string CDataInitString::GetData(void) const$/;"	f	class:CDataInitString	typeref:typename:string
+GetData	./mydata/data.cpp	/^string CDataInitString::GetData(void) const$/;"	f	class:CDataInitString	typeref:typename:string
+GetData	./symtab.cpp	/^const CDataInitializer* CSymbol::GetData(void) const$/;"	f	class:CSymbol	typeref:typename:const CDataInitializer *
+GetDataSize	./mytype/type.cpp	/^int CArrayType::GetDataSize(void) const$/;"	f	class:CArrayType	typeref:typename:int
+GetDataSize	./mytype/type.cpp	/^int CType::GetDataSize(void) const$/;"	f	class:CType	typeref:typename:int
+GetDataSize	./type.cpp	/^int CArrayType::GetDataSize(void) const$/;"	f	class:CArrayType	typeref:typename:int
+GetDataSize	./type.cpp	/^int CType::GetDataSize(void) const$/;"	f	class:CType	typeref:typename:int
+GetDataType	./symtab.cpp	/^const CType* CSymbol::GetDataType(void) const$/;"	f	class:CSymbol	typeref:typename:const CType *
+GetDeclaration	./ir.cpp	/^CSymbol* CModule::GetDeclaration(void) const$/;"	f	class:CModule	typeref:typename:CSymbol *
+GetDeclaration	./ir.cpp	/^CSymbol* CProcedure::GetDeclaration(void) const$/;"	f	class:CProcedure	typeref:typename:CSymbol *
+GetDerefSymbol	./ir.cpp	/^const CSymbol* CTacReference::GetDerefSymbol(void) const$/;"	f	class:CTacReference	typeref:typename:const CSymbol *
+GetDest	./ir.cpp	/^CTac* CTacInstr::GetDest(void) const$/;"	f	class:CTacInstr	typeref:typename:CTac *
+GetElseBody	./ast.cpp	/^CAstStatement* CAstStatIf::GetElseBody(void) const$/;"	f	class:CAstStatIf	typeref:typename:CAstStatement *
+GetElseBody	./myast/ast.cpp	/^CAstStatement* CAstStatIf::GetElseBody(void) const$/;"	f	class:CAstStatIf	typeref:typename:CAstStatement *
+GetErrorMessage	./myparser/parser.cpp	/^string CParser::GetErrorMessage(void) const$/;"	f	class:CParser	typeref:typename:string
+GetErrorMessage	./parser.cpp	/^string CParser::GetErrorMessage(void) const$/;"	f	class:CParser	typeref:typename:string
+GetErrorToken	./myparser/parser.cpp	/^const CToken* CParser::GetErrorToken(void) const$/;"	f	class:CParser	typeref:typename:const CToken *
+GetErrorToken	./parser.cpp	/^const CToken* CParser::GetErrorToken(void) const$/;"	f	class:CParser	typeref:typename:const CToken *
+GetExpression	./ast.cpp	/^CAstExpression* CAstStatReturn::GetExpression(void) const$/;"	f	class:CAstStatReturn	typeref:typename:CAstExpression *
+GetExpression	./myast/ast.cpp	/^CAstExpression* CAstStatReturn::GetExpression(void) const$/;"	f	class:CAstStatReturn	typeref:typename:CAstExpression *
+GetID	./ast.cpp	/^int CAstNode::GetID(void) const$/;"	f	class:CAstNode	typeref:typename:int
+GetID	./myast/ast.cpp	/^int CAstNode::GetID(void) const$/;"	f	class:CAstNode	typeref:typename:int
+GetId	./ir.cpp	/^unsigned int CTacInstr::GetId(void) const$/;"	f	class:CTacInstr	typeref:typename:unsigned int
+GetIfBody	./ast.cpp	/^CAstStatement* CAstStatIf::GetIfBody(void) const$/;"	f	class:CAstStatIf	typeref:typename:CAstStatement *
+GetIfBody	./myast/ast.cpp	/^CAstStatement* CAstStatIf::GetIfBody(void) const$/;"	f	class:CAstStatIf	typeref:typename:CAstStatement *
+GetIndex	./ast.cpp	/^CAstExpression* CAstArrayDesignator::GetIndex(int index) const$/;"	f	class:CAstArrayDesignator	typeref:typename:CAstExpression *
+GetIndex	./myast/ast.cpp	/^CAstExpression* CAstArrayDesignator::GetIndex(int index) const$/;"	f	class:CAstArrayDesignator	typeref:typename:CAstExpression *
+GetIndex	./symtab.cpp	/^int CSymParam::GetIndex(void) const$/;"	f	class:CSymParam	typeref:typename:int
+GetInnerType	./mytype/type.h	/^    const CType* GetInnerType(void) const { return _innertype; };$/;"	f	class:CArrayType	typeref:typename:const CType *
+GetInnerType	./type.h	/^    const CType* GetInnerType(void) const { return _innertype; };$/;"	f	class:CArrayType	typeref:typename:const CType *
+GetInstr	./ir.cpp	/^const list<CTacInstr*>& CCodeBlock::GetInstr(void) const$/;"	f	class:CCodeBlock	typeref:typename:const list<CTacInstr * > &
+GetInt	./mytype/type.cpp	/^const CIntType* CTypeManager::GetInt(void) const$/;"	f	class:CTypeManager	typeref:typename:const CIntType *
+GetInt	./type.cpp	/^const CIntType* CTypeManager::GetInt(void) const$/;"	f	class:CTypeManager	typeref:typename:const CIntType *
+GetLHS	./ast.cpp	/^CAstDesignator* CAstStatAssign::GetLHS(void) const$/;"	f	class:CAstStatAssign	typeref:typename:CAstDesignator *
+GetLHS	./myast/ast.cpp	/^CAstDesignator* CAstStatAssign::GetLHS(void) const$/;"	f	class:CAstStatAssign	typeref:typename:CAstDesignator *
+GetLabel	./ir.cpp	/^const string CTacLabel::GetLabel(void) const$/;"	f	class:CTacLabel	typeref:typename:const string
+GetLeft	./ast.cpp	/^CAstExpression* CAstBinaryOp::GetLeft(void) const$/;"	f	class:CAstBinaryOp	typeref:typename:CAstExpression *
+GetLeft	./myast/ast.cpp	/^CAstExpression* CAstBinaryOp::GetLeft(void) const$/;"	f	class:CAstBinaryOp	typeref:typename:CAstExpression *
+GetLineNumber	./scanner.h	/^    int GetLineNumber(void) const { return _line; };$/;"	f	class:CScanner	typeref:typename:int
+GetLineNumber	./scanner.h	/^    int GetLineNumber(void) const { return _line; };$/;"	f	class:CToken	typeref:typename:int
+GetNArgs	./ast.cpp	/^int CAstFunctionCall::GetNArgs(void) const$/;"	f	class:CAstFunctionCall	typeref:typename:int
+GetNArgs	./myast/ast.cpp	/^int CAstFunctionCall::GetNArgs(void) const$/;"	f	class:CAstFunctionCall	typeref:typename:int
+GetNDim	./mytype/type.cpp	/^int CArrayType::GetNDim(void) const$/;"	f	class:CArrayType	typeref:typename:int
+GetNDim	./type.cpp	/^int CArrayType::GetNDim(void) const$/;"	f	class:CArrayType	typeref:typename:int
+GetNElem	./mytype/type.h	/^    int GetNElem(void) const { return _nelem; };$/;"	f	class:CArrayType	typeref:typename:int
+GetNElem	./type.h	/^    int GetNElem(void) const { return _nelem; };$/;"	f	class:CArrayType	typeref:typename:int
+GetNIndices	./ast.cpp	/^int CAstArrayDesignator::GetNIndices(void) const$/;"	f	class:CAstArrayDesignator	typeref:typename:int
+GetNIndices	./myast/ast.cpp	/^int CAstArrayDesignator::GetNIndices(void) const$/;"	f	class:CAstArrayDesignator	typeref:typename:int
+GetNParams	./symtab.cpp	/^int CSymProc::GetNParams(void) const$/;"	f	class:CSymProc	typeref:typename:int
+GetName	./ast.cpp	/^const string CAstScope::GetName(void) const$/;"	f	class:CAstScope	typeref:typename:const string
+GetName	./ir.cpp	/^string CCodeBlock::GetName(void) const$/;"	f	class:CCodeBlock	typeref:typename:string
+GetName	./ir.cpp	/^string CScope::GetName(void) const$/;"	f	class:CScope	typeref:typename:string
+GetName	./myast/ast.cpp	/^const string CAstScope::GetName(void) const$/;"	f	class:CAstScope	typeref:typename:const string
+GetName	./scanner.cpp	/^const string CToken::GetName(void) const$/;"	f	class:CToken	typeref:typename:const string
+GetName	./symtab.cpp	/^string CSymbol::GetName(void) const$/;"	f	class:CSymbol	typeref:typename:string
+GetNext	./ast.cpp	/^CAstStatement* CAstStatement::GetNext(void) const$/;"	f	class:CAstStatement	typeref:typename:CAstStatement *
+GetNext	./myast/ast.cpp	/^CAstStatement* CAstStatement::GetNext(void) const$/;"	f	class:CAstStatement	typeref:typename:CAstStatement *
+GetNull	./mytype/type.cpp	/^const CNullType* CTypeManager::GetNull(void) const$/;"	f	class:CTypeManager	typeref:typename:const CNullType *
+GetNull	./type.cpp	/^const CNullType* CTypeManager::GetNull(void) const$/;"	f	class:CTypeManager	typeref:typename:const CNullType *
+GetNumChildren	./ast.cpp	/^size_t CAstScope::GetNumChildren(void) const$/;"	f	class:CAstScope	typeref:typename:size_t
+GetNumChildren	./myast/ast.cpp	/^size_t CAstScope::GetNumChildren(void) const$/;"	f	class:CAstScope	typeref:typename:size_t
+GetNumSrc	./ir.cpp	/^unsigned int CTacInstr::GetNumSrc(void) const$/;"	f	class:CTacInstr	typeref:typename:unsigned int
+GetOffset	./symtab.cpp	/^int CSymbol::GetOffset(void) const$/;"	f	class:CSymbol	typeref:typename:int
+GetOperand	./ast.cpp	/^CAstExpression* CAstSpecialOp::GetOperand(void) const$/;"	f	class:CAstSpecialOp	typeref:typename:CAstExpression *
+GetOperand	./ast.cpp	/^CAstExpression* CAstUnaryOp::GetOperand(void) const$/;"	f	class:CAstUnaryOp	typeref:typename:CAstExpression *
+GetOperand	./myast/ast.cpp	/^CAstExpression* CAstSpecialOp::GetOperand(void) const$/;"	f	class:CAstSpecialOp	typeref:typename:CAstExpression *
+GetOperand	./myast/ast.cpp	/^CAstExpression* CAstUnaryOp::GetOperand(void) const$/;"	f	class:CAstUnaryOp	typeref:typename:CAstExpression *
+GetOperation	./ast.cpp	/^EOperation CAstOperation::GetOperation(void) const$/;"	f	class:CAstOperation	typeref:typename:EOperation
+GetOperation	./ir.cpp	/^EOperation CTacInstr::GetOperation(void) const$/;"	f	class:CTacInstr	typeref:typename:EOperation
+GetOperation	./myast/ast.cpp	/^EOperation CAstOperation::GetOperation(void) const$/;"	f	class:CAstOperation	typeref:typename:EOperation
+GetOwner	./ir.cpp	/^CScope* CCodeBlock::GetOwner(void) const$/;"	f	class:CCodeBlock	typeref:typename:CScope *
+GetParam	./symtab.cpp	/^const CSymParam* CSymProc::GetParam(int index) const$/;"	f	class:CSymProc	typeref:typename:const CSymParam *
+GetParent	./ast.cpp	/^CAstScope* CAstScope::GetParent(void) const$/;"	f	class:CAstScope	typeref:typename:CAstScope *
+GetParent	./ir.cpp	/^CScope* CScope::GetParent(void) const$/;"	f	class:CScope	typeref:typename:CScope *
+GetParent	./myast/ast.cpp	/^CAstScope* CAstScope::GetParent(void) const$/;"	f	class:CAstScope	typeref:typename:CAstScope *
+GetParenthesized	./myast/ast.cpp	/^bool CAstExpression::GetParenthesized(void) const$/;"	f	class:CAstExpression	typeref:typename:bool
+GetPointer	./mytype/type.cpp	/^const CPointerType* CTypeManager::GetPointer(const CType *basetype)$/;"	f	class:CTypeManager	typeref:typename:const CPointerType *
+GetPointer	./type.cpp	/^const CPointerType* CTypeManager::GetPointer(const CType *basetype)$/;"	f	class:CTypeManager	typeref:typename:const CPointerType *
+GetRHS	./ast.cpp	/^CAstExpression* CAstStatAssign::GetRHS(void) const$/;"	f	class:CAstStatAssign	typeref:typename:CAstExpression *
+GetRHS	./myast/ast.cpp	/^CAstExpression* CAstStatAssign::GetRHS(void) const$/;"	f	class:CAstStatAssign	typeref:typename:CAstExpression *
+GetRecordedStreamPosition	./scanner.cpp	/^void CScanner::GetRecordedStreamPosition(int *lineno, int *charpos)$/;"	f	class:CScanner	typeref:typename:void
+GetRefCnt	./ir.cpp	/^int CTacLabel::GetRefCnt(void) const$/;"	f	class:CTacLabel	typeref:typename:int
+GetRight	./ast.cpp	/^CAstExpression* CAstBinaryOp::GetRight(void) const$/;"	f	class:CAstBinaryOp	typeref:typename:CAstExpression *
+GetRight	./myast/ast.cpp	/^CAstExpression* CAstBinaryOp::GetRight(void) const$/;"	f	class:CAstBinaryOp	typeref:typename:CAstExpression *
+GetScope	./ast.cpp	/^CAstScope* CAstStatReturn::GetScope(void) const$/;"	f	class:CAstStatReturn	typeref:typename:CAstScope *
+GetScope	./backend.cpp	/^CScope* CBackendx86::GetScope(void) const$/;"	f	class:CBackendx86	typeref:typename:CScope *
+GetScope	./myast/ast.cpp	/^CAstScope* CAstStatReturn::GetScope(void) const$/;"	f	class:CAstStatReturn	typeref:typename:CAstScope *
+GetSize	./mytype/type.cpp	/^int CArrayType::GetSize(void) const$/;"	f	class:CArrayType	typeref:typename:int
+GetSize	./mytype/type.h	/^    virtual int GetSize(void) const { return 0; };$/;"	f	class:CNullType	typeref:typename:int
+GetSize	./mytype/type.h	/^    virtual int GetSize(void) const { return 1; };$/;"	f	class:CBoolType	typeref:typename:int
+GetSize	./mytype/type.h	/^    virtual int GetSize(void) const { return 1; };$/;"	f	class:CCharType	typeref:typename:int
+GetSize	./mytype/type.h	/^    virtual int GetSize(void) const { return 4; };$/;"	f	class:CIntType	typeref:typename:int
+GetSize	./mytype/type.h	/^    virtual int GetSize(void) const { return 4; };$/;"	f	class:CPointerType	typeref:typename:int
+GetSize	./type.cpp	/^int CArrayType::GetSize(void) const$/;"	f	class:CArrayType	typeref:typename:int
+GetSize	./type.h	/^    virtual int GetSize(void) const { return 0; };$/;"	f	class:CNullType	typeref:typename:int
+GetSize	./type.h	/^    virtual int GetSize(void) const { return 1; };$/;"	f	class:CBoolType	typeref:typename:int
+GetSize	./type.h	/^    virtual int GetSize(void) const { return 1; };$/;"	f	class:CCharType	typeref:typename:int
+GetSize	./type.h	/^    virtual int GetSize(void) const { return 4; };$/;"	f	class:CIntType	typeref:typename:int
+GetSize	./type.h	/^    virtual int GetSize(void) const { return 4; };$/;"	f	class:CPointerType	typeref:typename:int
+GetSrc	./ir.cpp	/^CTacAddr* CTacInstr::GetSrc(int index) const$/;"	f	class:CTacInstr	typeref:typename:CTacAddr *
+GetStatementSequence	./ast.cpp	/^CAstStatement* CAstScope::GetStatementSequence(void) const$/;"	f	class:CAstScope	typeref:typename:CAstStatement *
+GetStatementSequence	./myast/ast.cpp	/^CAstStatement* CAstScope::GetStatementSequence(void) const$/;"	f	class:CAstScope	typeref:typename:CAstStatement *
+GetSubscopes	./ir.cpp	/^const vector<CScope*>& CScope::GetSubscopes(void) const$/;"	f	class:CScope	typeref:typename:const vector<CScope * > &
+GetSymbol	./ast.cpp	/^CSymProc* CAstProcedure::GetSymbol(void) const$/;"	f	class:CAstProcedure	typeref:typename:CSymProc *
+GetSymbol	./ast.cpp	/^const CSymProc* CAstFunctionCall::GetSymbol(void) const$/;"	f	class:CAstFunctionCall	typeref:typename:const CSymProc *
+GetSymbol	./ast.cpp	/^const CSymbol* CAstDesignator::GetSymbol(void) const$/;"	f	class:CAstDesignator	typeref:typename:const CSymbol *
+GetSymbol	./ir.cpp	/^const CSymbol* CTacName::GetSymbol(void) const$/;"	f	class:CTacName	typeref:typename:const CSymbol *
+GetSymbol	./myast/ast.cpp	/^CSymProc* CAstProcedure::GetSymbol(void) const$/;"	f	class:CAstProcedure	typeref:typename:CSymProc *
+GetSymbol	./myast/ast.cpp	/^const CSymProc* CAstFunctionCall::GetSymbol(void) const$/;"	f	class:CAstFunctionCall	typeref:typename:const CSymProc *
+GetSymbol	./myast/ast.cpp	/^const CSymbol* CAstDesignator::GetSymbol(void) const$/;"	f	class:CAstDesignator	typeref:typename:const CSymbol *
+GetSymbolTable	./ast.cpp	/^CSymtab* CAstScope::GetSymbolTable(void) const$/;"	f	class:CAstScope	typeref:typename:CSymtab *
+GetSymbolTable	./ir.cpp	/^CSymtab* CScope::GetSymbolTable(void) const$/;"	f	class:CScope	typeref:typename:CSymtab *
+GetSymbolTable	./myast/ast.cpp	/^CSymtab* CAstScope::GetSymbolTable(void) const$/;"	f	class:CAstScope	typeref:typename:CSymtab *
+GetSymbolTable	./symtab.cpp	/^CSymtab* CSymbol::GetSymbolTable(void) const$/;"	f	class:CSymbol	typeref:typename:CSymtab *
+GetSymbolType	./symtab.cpp	/^ESymbolType CSymbol::GetSymbolType(void) const$/;"	f	class:CSymbol	typeref:typename:ESymbolType
+GetSymbols	./symtab.cpp	/^vector<CSymbol*> CSymtab::GetSymbols(void) const$/;"	f	class:CSymtab	typeref:typename:vector<CSymbol * >
+GetTacAddr	./ast.cpp	/^CTacAddr* CAstNode::GetTacAddr(void) const$/;"	f	class:CAstNode	typeref:typename:CTacAddr *
+GetTacAddr	./myast/ast.cpp	/^CTacAddr* CAstNode::GetTacAddr(void) const$/;"	f	class:CAstNode	typeref:typename:CTacAddr *
+GetToken	./ast.cpp	/^CToken CAstNode::GetToken(void) const$/;"	f	class:CAstNode	typeref:typename:CToken
+GetToken	./myast/ast.cpp	/^CToken CAstNode::GetToken(void) const$/;"	f	class:CAstNode	typeref:typename:CToken
+GetType	./ast.cpp	/^const CType* CAstArrayDesignator::GetType(void) const$/;"	f	class:CAstArrayDesignator	typeref:typename:const CType *
+GetType	./ast.cpp	/^const CType* CAstBinaryOp::GetType(void) const$/;"	f	class:CAstBinaryOp	typeref:typename:const CType *
+GetType	./ast.cpp	/^const CType* CAstConstant::GetType(void) const$/;"	f	class:CAstConstant	typeref:typename:const CType *
+GetType	./ast.cpp	/^const CType* CAstDesignator::GetType(void) const$/;"	f	class:CAstDesignator	typeref:typename:const CType *
+GetType	./ast.cpp	/^const CType* CAstFunctionCall::GetType(void) const$/;"	f	class:CAstFunctionCall	typeref:typename:const CType *
+GetType	./ast.cpp	/^const CType* CAstNode::GetType(void) const$/;"	f	class:CAstNode	typeref:typename:const CType *
+GetType	./ast.cpp	/^const CType* CAstProcedure::GetType(void) const$/;"	f	class:CAstProcedure	typeref:typename:const CType *
+GetType	./ast.cpp	/^const CType* CAstSpecialOp::GetType(void) const$/;"	f	class:CAstSpecialOp	typeref:typename:const CType *
+GetType	./ast.cpp	/^const CType* CAstStatAssign::GetType(void) const$/;"	f	class:CAstStatAssign	typeref:typename:const CType *
+GetType	./ast.cpp	/^const CType* CAstStatReturn::GetType(void) const$/;"	f	class:CAstStatReturn	typeref:typename:const CType *
+GetType	./ast.cpp	/^const CType* CAstStringConstant::GetType(void) const$/;"	f	class:CAstStringConstant	typeref:typename:const CType *
+GetType	./ast.cpp	/^const CType* CAstType::GetType(void) const$/;"	f	class:CAstType	typeref:typename:const CType *
+GetType	./ast.cpp	/^const CType* CAstUnaryOp::GetType(void) const$/;"	f	class:CAstUnaryOp	typeref:typename:const CType *
+GetType	./myast/ast.cpp	/^const CType* CAstArrayDesignator::GetType(void) const$/;"	f	class:CAstArrayDesignator	typeref:typename:const CType *
+GetType	./myast/ast.cpp	/^const CType* CAstBinaryOp::GetType(void) const$/;"	f	class:CAstBinaryOp	typeref:typename:const CType *
+GetType	./myast/ast.cpp	/^const CType* CAstConstant::GetType(void) const$/;"	f	class:CAstConstant	typeref:typename:const CType *
+GetType	./myast/ast.cpp	/^const CType* CAstDesignator::GetType(void) const$/;"	f	class:CAstDesignator	typeref:typename:const CType *
+GetType	./myast/ast.cpp	/^const CType* CAstFunctionCall::GetType(void) const$/;"	f	class:CAstFunctionCall	typeref:typename:const CType *
+GetType	./myast/ast.cpp	/^const CType* CAstNode::GetType(void) const$/;"	f	class:CAstNode	typeref:typename:const CType *
+GetType	./myast/ast.cpp	/^const CType* CAstProcedure::GetType(void) const$/;"	f	class:CAstProcedure	typeref:typename:const CType *
+GetType	./myast/ast.cpp	/^const CType* CAstSpecialOp::GetType(void) const$/;"	f	class:CAstSpecialOp	typeref:typename:const CType *
+GetType	./myast/ast.cpp	/^const CType* CAstStatAssign::GetType(void) const$/;"	f	class:CAstStatAssign	typeref:typename:const CType *
+GetType	./myast/ast.cpp	/^const CType* CAstStatReturn::GetType(void) const$/;"	f	class:CAstStatReturn	typeref:typename:const CType *
+GetType	./myast/ast.cpp	/^const CType* CAstStringConstant::GetType(void) const$/;"	f	class:CAstStringConstant	typeref:typename:const CType *
+GetType	./myast/ast.cpp	/^const CType* CAstType::GetType(void) const$/;"	f	class:CAstType	typeref:typename:const CType *
+GetType	./myast/ast.cpp	/^const CType* CAstUnaryOp::GetType(void) const$/;"	f	class:CAstUnaryOp	typeref:typename:const CType *
+GetType	./scanner.h	/^    EToken GetType(void) const { return _type; };$/;"	f	class:CToken	typeref:typename:EToken
+GetValue	./ast.cpp	/^const string CAstStringConstant::GetValue(void) const$/;"	f	class:CAstStringConstant	typeref:typename:const string
+GetValue	./ast.cpp	/^long long CAstConstant::GetValue(void) const$/;"	f	class:CAstConstant	typeref:typename:long long
+GetValue	./ir.cpp	/^int CTacConst::GetValue(void) const$/;"	f	class:CTacConst	typeref:typename:int
+GetValue	./myast/ast.cpp	/^const string CAstStringConstant::GetValue(void) const$/;"	f	class:CAstStringConstant	typeref:typename:const string
+GetValue	./myast/ast.cpp	/^long long CAstConstant::GetValue(void) const$/;"	f	class:CAstConstant	typeref:typename:long long
+GetValue	./scanner.h	/^    string GetValue(void) const { return _value; };$/;"	f	class:CToken	typeref:typename:string
+GetValueStr	./ast.cpp	/^const string CAstStringConstant::GetValueStr(void) const$/;"	f	class:CAstStringConstant	typeref:typename:const string
+GetValueStr	./ast.cpp	/^string CAstConstant::GetValueStr(void) const$/;"	f	class:CAstConstant	typeref:typename:string
+GetValueStr	./myast/ast.cpp	/^const string CAstStringConstant::GetValueStr(void) const$/;"	f	class:CAstStringConstant	typeref:typename:const string
+GetValueStr	./myast/ast.cpp	/^string CAstConstant::GetValueStr(void) const$/;"	f	class:CAstConstant	typeref:typename:string
+GetVoidPtr	./mytype/type.cpp	/^const CPointerType* CTypeManager::GetVoidPtr(void) const$/;"	f	class:CTypeManager	typeref:typename:const CPointerType *
+GetVoidPtr	./type.cpp	/^const CPointerType* CTypeManager::GetVoidPtr(void) const$/;"	f	class:CTypeManager	typeref:typename:const CPointerType *
+Good	./scanner.h	/^    bool Good(void) const { return _good; };$/;"	f	class:CScanner	typeref:typename:bool
+HasError	./myparser/parser.h	/^    bool HasError(void) const { return _abort; };$/;"	f	class:CParser	typeref:typename:bool
+HasError	./parser.h	/^    bool HasError(void) const { return _abort; };$/;"	f	class:CParser	typeref:typename:bool
+Imm	./backend.cpp	/^string CBackendx86::Imm(int value) const$/;"	f	class:CBackendx86	typeref:typename:string
+IndicesComplete	./ast.cpp	/^void CAstArrayDesignator::IndicesComplete(void)$/;"	f	class:CAstArrayDesignator	typeref:typename:void
+IndicesComplete	./myast/ast.cpp	/^void CAstArrayDesignator::IndicesComplete(void)$/;"	f	class:CAstArrayDesignator	typeref:typename:void
+InitKeywords	./scanner.cpp	/^void CScanner::InitKeywords(void)$/;"	f	class:CScanner	typeref:typename:void
+InitSymbolTable	./myparser/parser.cpp	/^void CParser::InitSymbolTable(CSymtab *s)$/;"	f	class:CParser	typeref:typename:void
+InitSymbolTable	./parser.cpp	/^void CParser::InitSymbolTable(CSymtab *s)$/;"	f	class:CParser	typeref:typename:void
+IsArray	./mytype/type.h	/^    virtual bool IsArray(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsArray	./mytype/type.h	/^    virtual bool IsArray(void) const { return true; };$/;"	f	class:CArrayType	typeref:typename:bool
+IsArray	./type.h	/^    virtual bool IsArray(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsArray	./type.h	/^    virtual bool IsArray(void) const { return true; };$/;"	f	class:CArrayType	typeref:typename:bool
+IsAsciiChar	./scanner.cpp	/^bool CScanner::IsAsciiChar(char c) const$/;"	f	class:CScanner	typeref:typename:bool
+IsBoolean	./mytype/type.h	/^    virtual bool IsBoolean(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsBoolean	./mytype/type.h	/^    virtual bool IsBoolean(void) const { return true; };$/;"	f	class:CBoolType	typeref:typename:bool
+IsBoolean	./type.h	/^    virtual bool IsBoolean(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsBoolean	./type.h	/^    virtual bool IsBoolean(void) const { return true; };$/;"	f	class:CBoolType	typeref:typename:bool
+IsBranch	./ir.cpp	/^bool CTacInstr::IsBranch(void) const$/;"	f	class:CTacInstr	typeref:typename:bool
+IsChar	./mytype/type.h	/^    virtual bool IsChar(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsChar	./mytype/type.h	/^    virtual bool IsChar(void) const { return true; };$/;"	f	class:CCharType	typeref:typename:bool
+IsChar	./type.h	/^    virtual bool IsChar(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsChar	./type.h	/^    virtual bool IsChar(void) const { return true; };$/;"	f	class:CCharType	typeref:typename:bool
+IsComment	./scanner.cpp	/^bool CScanner::IsComment(char c)$/;"	f	class:CScanner	typeref:typename:bool
+IsDigit	./scanner.cpp	/^bool CScanner::IsDigit(char c) const$/;"	f	class:CScanner	typeref:typename:bool
+IsInt	./mytype/type.h	/^    virtual bool IsInt(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsInt	./mytype/type.h	/^    virtual bool IsInt(void) const { return true; };$/;"	f	class:CIntType	typeref:typename:bool
+IsInt	./type.h	/^    virtual bool IsInt(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsInt	./type.h	/^    virtual bool IsInt(void) const { return true; };$/;"	f	class:CIntType	typeref:typename:bool
+IsLetter	./scanner.cpp	/^bool CScanner::IsLetter(char c) const$/;"	f	class:CScanner	typeref:typename:bool
+IsNull	./mytype/type.h	/^    virtual bool IsNull(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsNull	./mytype/type.h	/^    virtual bool IsNull(void) const { return true; };$/;"	f	class:CNullType	typeref:typename:bool
+IsNull	./type.h	/^    virtual bool IsNull(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsNull	./type.h	/^    virtual bool IsNull(void) const { return true; };$/;"	f	class:CNullType	typeref:typename:bool
+IsPointer	./mytype/type.h	/^    virtual bool IsPointer(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsPointer	./mytype/type.h	/^    virtual bool IsPointer(void) const { return true; };$/;"	f	class:CPointerType	typeref:typename:bool
+IsPointer	./type.h	/^    virtual bool IsPointer(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsPointer	./type.h	/^    virtual bool IsPointer(void) const { return true; };$/;"	f	class:CPointerType	typeref:typename:bool
+IsRelOp	./ir.cpp	/^bool IsRelOp(EOperation t)$/;"	f	typeref:typename:bool
+IsScalar	./mytype/type.h	/^    virtual bool IsScalar(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsScalar	./mytype/type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CBoolType	typeref:typename:bool
+IsScalar	./mytype/type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CCharType	typeref:typename:bool
+IsScalar	./mytype/type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CIntType	typeref:typename:bool
+IsScalar	./mytype/type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CPointerType	typeref:typename:bool
+IsScalar	./type.h	/^    virtual bool IsScalar(void) const { return false; };$/;"	f	class:CType	typeref:typename:bool
+IsScalar	./type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CBoolType	typeref:typename:bool
+IsScalar	./type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CCharType	typeref:typename:bool
+IsScalar	./type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CIntType	typeref:typename:bool
+IsScalar	./type.h	/^    virtual bool IsScalar(void) const { return true; };$/;"	f	class:CPointerType	typeref:typename:bool
+IsWhite	./scanner.cpp	/^bool CScanner::IsWhite(char c) const$/;"	f	class:CScanner	typeref:typename:bool
+Keywords	./scanner.cpp	/^pair<const char*, EToken> Keywords[] =$/;"	v	typeref:typename:pair<const char *,EToken>[]
+Label	./backend.cpp	/^string CBackendx86::Label(const CTacLabel* label) const$/;"	f	class:CBackendx86	typeref:typename:string
+Label	./backend.cpp	/^string CBackendx86::Label(string label) const$/;"	f	class:CBackendx86	typeref:typename:string
+Load	./backend.cpp	/^void CBackendx86::Load(CTacAddr *src, string dst, string comment)$/;"	f	class:CBackendx86	typeref:typename:void
+Match	./mytype/type.cpp	/^bool CArrayType::Match(const CType *t) const$/;"	f	class:CArrayType	typeref:typename:bool
+Match	./mytype/type.cpp	/^bool CPointerType::Match(const CType *t) const$/;"	f	class:CPointerType	typeref:typename:bool
+Match	./mytype/type.cpp	/^bool CScalarType::Match(const CType *t) const$/;"	f	class:CScalarType	typeref:typename:bool
+Match	./type.cpp	/^bool CArrayType::Match(const CType *t) const$/;"	f	class:CArrayType	typeref:typename:bool
+Match	./type.cpp	/^bool CPointerType::Match(const CType *t) const$/;"	f	class:CPointerType	typeref:typename:bool
+Match	./type.cpp	/^bool CScalarType::Match(const CType *t) const$/;"	f	class:CScalarType	typeref:typename:bool
+Name	./scanner.cpp	/^const string CToken::Name(EToken type)$/;"	f	class:CToken	typeref:typename:const string
+NewToken	./scanner.cpp	/^CToken* CScanner::NewToken(EToken type, const string token)$/;"	f	class:CScanner	typeref:typename:CToken *
+NextToken	./scanner.cpp	/^void CScanner::NextToken()$/;"	f	class:CScanner	typeref:typename:void
+OPEN	./mytype/type.h	/^    const static int OPEN = -1;   \/\/\/< open array (dimensions unspecified)$/;"	m	class:CArrayType	typeref:typename:const int
+OPEN	./type.h	/^    const static int OPEN = -1;   \/\/\/< open array (dimensions unspecified)$/;"	m	class:CArrayType	typeref:typename:const int
+OPERATION_STRLEN	./ir.cpp	/^#define OPERATION_STRLEN /;"	d	file:
+OnRemove	./scanner.cpp	/^bool CScanner::OnRemove()$/;"	f	class:CScanner	typeref:typename:bool
+Operand	./backend.cpp	/^string CBackendx86::Operand(const CTac *op)$/;"	f	class:CBackendx86	typeref:typename:string
+OperandSize	./backend.cpp	/^int CBackendx86::OperandSize(CTac *t) const$/;"	f	class:CBackendx86	typeref:typename:int
+Parse	./myparser/parser.cpp	/^CAstNode* CParser::Parse(void)$/;"	f	class:CParser	typeref:typename:CAstNode *
+Parse	./parser.cpp	/^CAstNode* CParser::Parse(void)$/;"	f	class:CParser	typeref:typename:CAstNode *
+ParseArgs	./snuplc.cpp	/^void ParseArgs(int argc, char *argv[])$/;"	f	typeref:typename:void
+Peek	./scanner.cpp	/^CToken CScanner::Peek() const$/;"	f	class:CScanner	typeref:typename:CToken
+RecordStreamPosition	./scanner.cpp	/^void CScanner::RecordStreamPosition()$/;"	f	class:CScanner	typeref:typename:void
+RunCompile	./snuplc.cpp	/^void RunCompile(string file)$/;"	f	typeref:typename:void
+RunDOT	./snuplc.cpp	/^void RunDOT(string file)$/;"	f	typeref:typename:void
+Scan	./scanner.cpp	/^CToken* CScanner::Scan()$/;"	f	class:CScanner	typeref:typename:CToken *
+ScanChar	./scanner.cpp	/^void CScanner::ScanChar(EToken &token, string &tokval)$/;"	f	class:CScanner	typeref:typename:void
+ScanString	./scanner.cpp	/^void CScanner::ScanString(EToken &token, string &tokval)$/;"	f	class:CScanner	typeref:typename:void
+SetBaseRegister	./symtab.cpp	/^void CSymbol::SetBaseRegister(string rbase)$/;"	f	class:CSymbol	typeref:typename:void
+SetData	./symtab.cpp	/^void CSymbol::SetData(const CDataInitializer *data)$/;"	f	class:CSymbol	typeref:typename:void
+SetDataType	./symtab.cpp	/^void CSymbol::SetDataType(const CType *datatype)$/;"	f	class:CSymbol	typeref:typename:void
+SetDest	./ir.cpp	/^void CTacInstr::SetDest(CTac* dst)$/;"	f	class:CTacInstr	typeref:typename:void
+SetError	./myparser/parser.cpp	/^void CParser::SetError(CToken t, const string message)$/;"	f	class:CParser	typeref:typename:void
+SetError	./parser.cpp	/^void CParser::SetError(CToken t, const string message)$/;"	f	class:CParser	typeref:typename:void
+SetId	./ir.cpp	/^void CTacInstr::SetId(unsigned int id)$/;"	f	class:CTacInstr	typeref:typename:void
+SetNext	./ast.cpp	/^void CAstStatement::SetNext(CAstStatement *next)$/;"	f	class:CAstStatement	typeref:typename:void
+SetNext	./myast/ast.cpp	/^void CAstStatement::SetNext(CAstStatement *next)$/;"	f	class:CAstStatement	typeref:typename:void
+SetOffset	./symtab.cpp	/^void CSymbol::SetOffset(int offset)$/;"	f	class:CSymbol	typeref:typename:void
+SetParenthesized	./myast/ast.cpp	/^void CAstExpression::SetParenthesized(bool parenthesized)$/;"	f	class:CAstExpression	typeref:typename:void
+SetScope	./backend.cpp	/^void CBackendx86::SetScope(CScope *scope)$/;"	f	class:CBackendx86	typeref:typename:void
+SetStatementSequence	./ast.cpp	/^void CAstScope::SetStatementSequence(CAstStatement *statseq)$/;"	f	class:CAstScope	typeref:typename:void
+SetStatementSequence	./myast/ast.cpp	/^void CAstScope::SetStatementSequence(CAstStatement *statseq)$/;"	f	class:CAstScope	typeref:typename:void
+SetSymbolTable	./ast.cpp	/^void CAstScope::SetSymbolTable(CSymtab *st)$/;"	f	class:CAstScope	typeref:typename:void
+SetSymbolTable	./myast/ast.cpp	/^void CAstScope::SetSymbolTable(CSymtab *st)$/;"	f	class:CAstScope	typeref:typename:void
+SetSymbolTable	./symtab.cpp	/^void CSymbol::SetSymbolTable(CSymtab *symtab)$/;"	f	class:CSymbol	typeref:typename:void
+SetValue	./ast.cpp	/^void CAstConstant::SetValue(long long value)$/;"	f	class:CAstConstant	typeref:typename:void
+SetValue	./myast/ast.cpp	/^void CAstConstant::SetValue(long long value)$/;"	f	class:CAstConstant	typeref:typename:void
+Store	./backend.cpp	/^void CBackendx86::Store(CTac *dst, char src_base, string comment)$/;"	f	class:CBackendx86	typeref:typename:void
+Syntax	./snuplc.cpp	/^void Syntax(string msg)$/;"	f	typeref:typename:void
+TOKEN_STRLEN	./scanner.cpp	/^#define TOKEN_STRLEN /;"	d	file:
+ToTac	./ast.cpp	/^CTacAddr* CAstArrayDesignator::ToTac(CCodeBlock *cb)$/;"	f	class:CAstArrayDesignator	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstArrayDesignator::ToTac(CCodeBlock *cb,$/;"	f	class:CAstArrayDesignator	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstBinaryOp::ToTac(CCodeBlock *cb)$/;"	f	class:CAstBinaryOp	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstBinaryOp::ToTac(CCodeBlock *cb,$/;"	f	class:CAstBinaryOp	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstConstant::ToTac(CCodeBlock *cb)$/;"	f	class:CAstConstant	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstConstant::ToTac(CCodeBlock *cb,$/;"	f	class:CAstConstant	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstDesignator::ToTac(CCodeBlock *cb)$/;"	f	class:CAstDesignator	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstDesignator::ToTac(CCodeBlock *cb,$/;"	f	class:CAstDesignator	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstExpression::ToTac(CCodeBlock *cb)$/;"	f	class:CAstExpression	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstExpression::ToTac(CCodeBlock *cb,$/;"	f	class:CAstExpression	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstFunctionCall::ToTac(CCodeBlock *cb)$/;"	f	class:CAstFunctionCall	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstFunctionCall::ToTac(CCodeBlock *cb,$/;"	f	class:CAstFunctionCall	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstScope::ToTac(CCodeBlock *cb)$/;"	f	class:CAstScope	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstSpecialOp::ToTac(CCodeBlock *cb)$/;"	f	class:CAstSpecialOp	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstStatAssign::ToTac(CCodeBlock *cb, CTacLabel *next)$/;"	f	class:CAstStatAssign	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstStatCall::ToTac(CCodeBlock *cb, CTacLabel *next)$/;"	f	class:CAstStatCall	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstStatIf::ToTac(CCodeBlock *cb, CTacLabel *next)$/;"	f	class:CAstStatIf	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstStatReturn::ToTac(CCodeBlock *cb, CTacLabel *next)$/;"	f	class:CAstStatReturn	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstStatWhile::ToTac(CCodeBlock *cb, CTacLabel *next)$/;"	f	class:CAstStatWhile	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstStringConstant::ToTac(CCodeBlock *cb)$/;"	f	class:CAstStringConstant	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstStringConstant::ToTac(CCodeBlock *cb,$/;"	f	class:CAstStringConstant	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstUnaryOp::ToTac(CCodeBlock *cb)$/;"	f	class:CAstUnaryOp	typeref:typename:CTacAddr *
+ToTac	./ast.cpp	/^CTacAddr* CAstUnaryOp::ToTac(CCodeBlock *cb,$/;"	f	class:CAstUnaryOp	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstArrayDesignator::ToTac(CCodeBlock *cb)$/;"	f	class:CAstArrayDesignator	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstArrayDesignator::ToTac(CCodeBlock *cb,$/;"	f	class:CAstArrayDesignator	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstBinaryOp::ToTac(CCodeBlock *cb)$/;"	f	class:CAstBinaryOp	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstBinaryOp::ToTac(CCodeBlock *cb,$/;"	f	class:CAstBinaryOp	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstConstant::ToTac(CCodeBlock *cb)$/;"	f	class:CAstConstant	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstConstant::ToTac(CCodeBlock *cb,$/;"	f	class:CAstConstant	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstDesignator::ToTac(CCodeBlock *cb)$/;"	f	class:CAstDesignator	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstDesignator::ToTac(CCodeBlock *cb,$/;"	f	class:CAstDesignator	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstExpression::ToTac(CCodeBlock *cb)$/;"	f	class:CAstExpression	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstExpression::ToTac(CCodeBlock *cb,$/;"	f	class:CAstExpression	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstFunctionCall::ToTac(CCodeBlock *cb)$/;"	f	class:CAstFunctionCall	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstFunctionCall::ToTac(CCodeBlock *cb,$/;"	f	class:CAstFunctionCall	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstScope::ToTac(CCodeBlock *cb)$/;"	f	class:CAstScope	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstSpecialOp::ToTac(CCodeBlock *cb)$/;"	f	class:CAstSpecialOp	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstStatAssign::ToTac(CCodeBlock *cb, CTacLabel *next)$/;"	f	class:CAstStatAssign	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstStatCall::ToTac(CCodeBlock *cb, CTacLabel *next)$/;"	f	class:CAstStatCall	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstStatIf::ToTac(CCodeBlock *cb, CTacLabel *next)$/;"	f	class:CAstStatIf	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstStatReturn::ToTac(CCodeBlock *cb, CTacLabel *next)$/;"	f	class:CAstStatReturn	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstStatWhile::ToTac(CCodeBlock *cb, CTacLabel *next)$/;"	f	class:CAstStatWhile	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstStatement::ToTac(CCodeBlock *cb, CTacLabel *next)$/;"	f	class:CAstStatement	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstStringConstant::ToTac(CCodeBlock *cb)$/;"	f	class:CAstStringConstant	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstStringConstant::ToTac(CCodeBlock *cb,$/;"	f	class:CAstStringConstant	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstUnaryOp::ToTac(CCodeBlock *cb)$/;"	f	class:CAstUnaryOp	typeref:typename:CTacAddr *
+ToTac	./myast/ast.cpp	/^CTacAddr* CAstUnaryOp::ToTac(CCodeBlock *cb,$/;"	f	class:CAstUnaryOp	typeref:typename:CTacAddr *
+TrimQuotation	./scanner.cpp	/^void CScanner::TrimQuotation(string &tokval)$/;"	f	class:CScanner	typeref:typename:void
+TypeCheck	./ast.cpp	/^bool CAstArrayDesignator::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstArrayDesignator	typeref:typename:bool
+TypeCheck	./ast.cpp	/^bool CAstBinaryOp::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstBinaryOp	typeref:typename:bool
+TypeCheck	./ast.cpp	/^bool CAstConstant::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstConstant	typeref:typename:bool
+TypeCheck	./ast.cpp	/^bool CAstDesignator::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstDesignator	typeref:typename:bool
+TypeCheck	./ast.cpp	/^bool CAstFunctionCall::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstFunctionCall	typeref:typename:bool
+TypeCheck	./ast.cpp	/^bool CAstScope::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstScope	typeref:typename:bool
+TypeCheck	./ast.cpp	/^bool CAstSpecialOp::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstSpecialOp	typeref:typename:bool
+TypeCheck	./ast.cpp	/^bool CAstStatAssign::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstStatAssign	typeref:typename:bool
+TypeCheck	./ast.cpp	/^bool CAstStatCall::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstStatCall	typeref:typename:bool
+TypeCheck	./ast.cpp	/^bool CAstStatIf::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstStatIf	typeref:typename:bool
+TypeCheck	./ast.cpp	/^bool CAstStatReturn::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstStatReturn	typeref:typename:bool
+TypeCheck	./ast.cpp	/^bool CAstStatWhile::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstStatWhile	typeref:typename:bool
+TypeCheck	./ast.cpp	/^bool CAstStringConstant::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstStringConstant	typeref:typename:bool
+TypeCheck	./ast.cpp	/^bool CAstUnaryOp::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstUnaryOp	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstArrayDesignator::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstArrayDesignator	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstBinaryOp::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstBinaryOp	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstConstant::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstConstant	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstDesignator::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstDesignator	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstFunctionCall::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstFunctionCall	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstScope::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstScope	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstSpecialOp::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstSpecialOp	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstStatAssign::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstStatAssign	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstStatCall::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstStatCall	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstStatIf::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstStatIf	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstStatReturn::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstStatReturn	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstStatWhile::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstStatWhile	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstStringConstant::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstStringConstant	typeref:typename:bool
+TypeCheck	./myast/ast.cpp	/^bool CAstUnaryOp::TypeCheck(CToken *t, string *msg) const$/;"	f	class:CAstUnaryOp	typeref:typename:bool
+__SnuPL1_SCANNER_H__	./scanner.h	/^#define __SnuPL1_SCANNER_H__$/;"	d
+__SnuPL_AST_H__	./ast.h	/^#define __SnuPL_AST_H__$/;"	d
+__SnuPL_AST_H__	./myast/ast.h	/^#define __SnuPL_AST_H__$/;"	d
+__SnuPL_BACKEND_H__	./backend.h	/^#define __SnuPL_BACKEND_H__$/;"	d
+__SnuPL_DATA_H__	./data.h	/^#define __SnuPL_DATA_H__$/;"	d
+__SnuPL_DATA_H__	./mydata/data.h	/^#define __SnuPL_DATA_H__$/;"	d
+__SnuPL_IR_H__	./ir.h	/^#define __SnuPL_IR_H__$/;"	d
+__SnuPL_PARSER_H__	./myparser/parser.h	/^#define __SnuPL_PARSER_H__$/;"	d
+__SnuPL_PARSER_H__	./parser.h	/^#define __SnuPL_PARSER_H__$/;"	d
+__SnuPL_SYMTAB_H__	./symtab.h	/^#define __SnuPL_SYMTAB_H__$/;"	d
+__SnuPL_TYPE_H__	./mytype/type.h	/^#define __SnuPL_TYPE_H__$/;"	d
+__SnuPL_TYPE_H__	./type.h	/^#define __SnuPL_TYPE_H__$/;"	d
+_abort	./myparser/parser.h	/^    bool          _abort;         \/\/\/< error flag$/;"	m	class:CParser	typeref:typename:bool
+_abort	./parser.h	/^    bool          _abort;         \/\/\/< error flag$/;"	m	class:CParser	typeref:typename:bool
+_addr	./ast.h	/^    CTacAddr   *_addr;              \/\/\/< result of this node in three-address$/;"	m	class:CAstNode	typeref:typename:CTacAddr *
+_addr	./myast/ast.h	/^    CTacAddr   *_addr;              \/\/\/< result of this node in three-address$/;"	m	class:CAstNode	typeref:typename:CTacAddr *
+_arg	./ast.h	/^    vector<CAstExpression*> _arg;   \/\/\/< parameter list$/;"	m	class:CAstFunctionCall	typeref:typename:vector<CAstExpression * >
+_arg	./myast/ast.h	/^    vector<CAstExpression*> _arg;   \/\/\/< parameter list$/;"	m	class:CAstFunctionCall	typeref:typename:vector<CAstExpression * >
+_array	./mytype/type.h	/^    vector<CArrayType*> _array;   \/\/\/< array types$/;"	m	class:CTypeManager	typeref:typename:vector<CArrayType * >
+_array	./type.h	/^    vector<CArrayType*> _array;   \/\/\/< array types$/;"	m	class:CTypeManager	typeref:typename:vector<CArrayType * >
+_ast	./ir.h	/^    CAstNode *_ast;                  \/\/\/< abstract syntax tree$/;"	m	class:CScope	typeref:typename:CAstNode *
+_basetype	./mytype/type.h	/^    const CType   *_basetype;     \/\/\/< base type$/;"	m	class:CPointerType	typeref:typename:const CType *
+_basetype	./type.h	/^    const CType   *_basetype;     \/\/\/< base type$/;"	m	class:CPointerType	typeref:typename:const CType *
+_body	./ast.h	/^    CAstStatement *_body;           \/\/\/< body$/;"	m	class:CAstStatWhile	typeref:typename:CAstStatement *
+_body	./myast/ast.h	/^    CAstStatement *_body;           \/\/\/< body$/;"	m	class:CAstStatWhile	typeref:typename:CAstStatement *
+_boolean	./mytype/type.h	/^    CBoolType     *_boolean;      \/\/\/< boolean base type$/;"	m	class:CTypeManager	typeref:typename:CBoolType *
+_boolean	./type.h	/^    CBoolType     *_boolean;      \/\/\/< boolean base type$/;"	m	class:CTypeManager	typeref:typename:CBoolType *
+_call	./ast.h	/^    CAstFunctionCall *_call;        \/\/\/< call expression$/;"	m	class:CAstStatCall	typeref:typename:CAstFunctionCall *
+_call	./myast/ast.h	/^    CAstFunctionCall *_call;        \/\/\/< call expression$/;"	m	class:CAstStatCall	typeref:typename:CAstFunctionCall *
+_cb	./ast.h	/^    CCodeBlock *_cb;                \/\/\/< (entry) code block for this scope$/;"	m	class:CAstScope	typeref:typename:CCodeBlock *
+_cb	./ir.h	/^    CCodeBlock* _cb;                 \/\/\/< list of code blocks$/;"	m	class:CScope	typeref:typename:CCodeBlock *
+_cb	./myast/ast.h	/^    CCodeBlock *_cb;                \/\/\/< (entry) code block for this scope$/;"	m	class:CAstScope	typeref:typename:CCodeBlock *
+_char	./mytype/type.h	/^    CCharType     *_char;         \/\/\/< char base type$/;"	m	class:CTypeManager	typeref:typename:CCharType *
+_char	./scanner.h	/^    int     _char;                  \/\/\/< current stream position (character pos)$/;"	m	class:CScanner	typeref:typename:int
+_char	./scanner.h	/^    int    _char;                   \/\/\/< input stream position (character pos)$/;"	m	class:CToken	typeref:typename:int
+_char	./type.h	/^    CCharType     *_char;         \/\/\/< char base type$/;"	m	class:CTypeManager	typeref:typename:CCharType *
+_children	./ast.h	/^    vector<CAstScope*> _children;   \/\/\/< subordinate scopes$/;"	m	class:CAstScope	typeref:typename:vector<CAstScope * >
+_children	./ir.h	/^    vector<CScope*> _children;       \/\/\/< list of functions$/;"	m	class:CScope	typeref:typename:vector<CScope * >
+_children	./myast/ast.h	/^    vector<CAstScope*> _children;   \/\/\/< subordinate scopes$/;"	m	class:CAstScope	typeref:typename:vector<CAstScope * >
+_cond	./ast.h	/^    CAstExpression *_cond;          \/\/\/< condition$/;"	m	class:CAstStatIf	typeref:typename:CAstExpression *
+_cond	./ast.h	/^    CAstExpression *_cond;          \/\/\/< condition$/;"	m	class:CAstStatWhile	typeref:typename:CAstExpression *
+_cond	./myast/ast.h	/^    CAstExpression *_cond;          \/\/\/< condition$/;"	m	class:CAstStatIf	typeref:typename:CAstExpression *
+_cond	./myast/ast.h	/^    CAstExpression *_cond;          \/\/\/< condition$/;"	m	class:CAstStatWhile	typeref:typename:CAstExpression *
+_curr_scope	./backend.h	/^    CScope *_curr_scope;            \/\/\/< current scope$/;"	m	class:CBackendx86	typeref:typename:CScope *
+_data	./data.h	/^    const string   _data;         \/\/\/< string data$/;"	m	class:CDataInitString	typeref:typename:const string
+_data	./mydata/data.h	/^    const string   _data;         \/\/\/< string data$/;"	m	class:CDataInitString	typeref:typename:const string
+_data	./symtab.h	/^    const CDataInitializer *_data;\/\/\/< data initializer$/;"	m	class:CSymbol	typeref:typename:const CDataInitializer *
+_datatype	./symtab.h	/^    const CType   *_datatype;     \/\/\/< data type$/;"	m	class:CSymbol	typeref:typename:const CType *
+_delete_in	./scanner.h	/^    bool    _delete_in;             \/\/\/< delete input stream upon destruction$/;"	m	class:CScanner	typeref:typename:bool
+_deref	./ir.h	/^    const CSymbol *_deref;           \/\/\/< symbol this reference is pointing to$/;"	m	class:CTacReference	typeref:typename:const CSymbol *
+_done	./ast.h	/^    bool _done;                     \/\/\/< flag indicating all index expressions$/;"	m	class:CAstArrayDesignator	typeref:typename:bool
+_done	./myast/ast.h	/^    bool _done;                     \/\/\/< flag indicating all index expressions$/;"	m	class:CAstArrayDesignator	typeref:typename:bool
+_dst	./ir.h	/^    CTac          *_dst;             \/\/\/< destination operand$/;"	m	class:CTacInstr	typeref:typename:CTac *
+_elseBody	./ast.h	/^    CAstStatement *_elseBody;       \/\/\/< else body$/;"	m	class:CAstStatIf	typeref:typename:CAstStatement *
+_elseBody	./myast/ast.h	/^    CAstStatement *_elseBody;       \/\/\/< else body$/;"	m	class:CAstStatIf	typeref:typename:CAstStatement *
+_error_token	./myparser/parser.h	/^    CToken        _error_token;   \/\/\/< error token$/;"	m	class:CParser	typeref:typename:CToken
+_error_token	./parser.h	/^    CToken        _error_token;   \/\/\/< error token$/;"	m	class:CParser	typeref:typename:CToken
+_expr	./ast.h	/^    CAstExpression *_expr;          \/\/\/< return expression$/;"	m	class:CAstStatReturn	typeref:typename:CAstExpression *
+_expr	./myast/ast.h	/^    CAstExpression *_expr;          \/\/\/< return expression$/;"	m	class:CAstStatReturn	typeref:typename:CAstExpression *
+_global_id	./ast.cpp	/^int CAstNode::_global_id = 0;$/;"	m	class:CAstNode	typeref:typename:int
+_global_id	./ast.h	/^    static int _global_id;          \/\/\/< holds the (global) next id$/;"	m	class:CAstNode	typeref:typename:int
+_global_id	./myast/ast.cpp	/^int CAstNode::_global_id = 0;$/;"	m	class:CAstNode	typeref:typename:int
+_global_id	./myast/ast.h	/^    static int _global_id;          \/\/\/< holds the (global) next id$/;"	m	class:CAstNode	typeref:typename:int
+_global_tm	./mytype/type.cpp	/^CTypeManager* CTypeManager::_global_tm = NULL;$/;"	m	class:CTypeManager	typeref:typename:CTypeManager *
+_global_tm	./mytype/type.h	/^    static CTypeManager *_global_tm; \/\/\/< global type manager instance$/;"	m	class:CTypeManager	typeref:typename:CTypeManager *
+_global_tm	./type.cpp	/^CTypeManager* CTypeManager::_global_tm = NULL;$/;"	m	class:CTypeManager	typeref:typename:CTypeManager *
+_global_tm	./type.h	/^    static CTypeManager *_global_tm; \/\/\/< global type manager instance$/;"	m	class:CTypeManager	typeref:typename:CTypeManager *
+_good	./scanner.h	/^    bool    _good;                  \/\/\/< scanner status flag$/;"	m	class:CScanner	typeref:typename:bool
+_id	./ast.h	/^    int        _id;                 \/\/\/< id of the node$/;"	m	class:CAstNode	typeref:typename:int
+_id	./ir.h	/^    unsigned int   _id;              \/\/\/< unique instruction id$/;"	m	class:CTacInstr	typeref:typename:unsigned int
+_id	./myast/ast.h	/^    int        _id;                 \/\/\/< id of the node$/;"	m	class:CAstNode	typeref:typename:int
+_idx	./ast.cpp	/^int CAstStringConstant::_idx = 0;$/;"	m	class:CAstStringConstant	typeref:typename:int
+_idx	./ast.h	/^    static int       _idx;          \/\/\/< static counter$/;"	m	class:CAstStringConstant	typeref:typename:int
+_idx	./ast.h	/^    vector<CAstExpression*> _idx;   \/\/\/< index expressions$/;"	m	class:CAstArrayDesignator	typeref:typename:vector<CAstExpression * >
+_idx	./myast/ast.cpp	/^int CAstStringConstant::_idx = 0;$/;"	m	class:CAstStringConstant	typeref:typename:int
+_idx	./myast/ast.h	/^    static int       _idx;          \/\/\/< static counter$/;"	m	class:CAstStringConstant	typeref:typename:int
+_idx	./myast/ast.h	/^    vector<CAstExpression*> _idx;   \/\/\/< index expressions$/;"	m	class:CAstArrayDesignator	typeref:typename:vector<CAstExpression * >
+_ifBody	./ast.h	/^    CAstStatement *_ifBody;         \/\/\/< if body$/;"	m	class:CAstStatIf	typeref:typename:CAstStatement *
+_ifBody	./myast/ast.h	/^    CAstStatement *_ifBody;         \/\/\/< if body$/;"	m	class:CAstStatIf	typeref:typename:CAstStatement *
+_in	./scanner.h	/^    istream *_in;                   \/\/\/< input stream$/;"	m	class:CScanner	typeref:typename:istream *
+_ind	./backend.h	/^    string _ind;                    \/\/\/< indentation$/;"	m	class:CBackendx86	typeref:typename:string
+_index	./symtab.h	/^    int            _index;        \/\/\/< index$/;"	m	class:CSymParam	typeref:typename:int
+_innertype	./mytype/type.h	/^    const CType   *_innertype;    \/\/\/< inner type$/;"	m	class:CArrayType	typeref:typename:const CType *
+_innertype	./type.h	/^    const CType   *_innertype;    \/\/\/< inner type$/;"	m	class:CArrayType	typeref:typename:const CType *
+_inst_id	./ir.h	/^    unsigned int _inst_id;           \/\/\/< next id for instructions$/;"	m	class:CCodeBlock	typeref:typename:unsigned int
+_integer	./mytype/type.h	/^    CIntType      *_integer;      \/\/\/< integer base type$/;"	m	class:CTypeManager	typeref:typename:CIntType *
+_integer	./type.h	/^    CIntType      *_integer;      \/\/\/< integer base type$/;"	m	class:CTypeManager	typeref:typename:CIntType *
+_label	./ir.h	/^    const string _label;             \/\/\/< label$/;"	m	class:CTacLabel	typeref:typename:const string
+_label_id	./ir.h	/^    unsigned int _label_id;          \/\/\/< next id for labels$/;"	m	class:CScope	typeref:typename:unsigned int
+_left	./ast.h	/^    CAstExpression *_left;          \/\/\/< left operand$/;"	m	class:CAstBinaryOp	typeref:typename:CAstExpression *
+_left	./myast/ast.h	/^    CAstExpression *_left;          \/\/\/< left operand$/;"	m	class:CAstBinaryOp	typeref:typename:CAstExpression *
+_lhs	./ast.h	/^    CAstDesignator *_lhs;           \/\/\/< LHS (designator)$/;"	m	class:CAstStatAssign	typeref:typename:CAstDesignator *
+_lhs	./myast/ast.h	/^    CAstDesignator   *_lhs;           \/\/\/< LHS (designator)$/;"	m	class:CAstStatAssign	typeref:typename:CAstDesignator *
+_line	./scanner.h	/^    int     _line;                  \/\/\/< current stream position (line)$/;"	m	class:CScanner	typeref:typename:int
+_line	./scanner.h	/^    int    _line;                   \/\/\/< input stream position (line)$/;"	m	class:CToken	typeref:typename:int
+_m	./backend.h	/^    CModule *_m;                    \/\/\/< module$/;"	m	class:CBackend	typeref:typename:CModule *
+_message	./myparser/parser.h	/^    string        _message;       \/\/\/< error message$/;"	m	class:CParser	typeref:typename:string
+_message	./parser.h	/^    string        _message;       \/\/\/< error message$/;"	m	class:CParser	typeref:typename:string
+_module	./myparser/parser.h	/^    CAstModule   *_module;        \/\/\/< root node of the program$/;"	m	class:CParser	typeref:typename:CAstModule *
+_module	./parser.h	/^    CAstModule   *_module;        \/\/\/< root node of the program$/;"	m	class:CParser	typeref:typename:CAstModule *
+_name	./ast.h	/^    string    _name;                \/\/\/< name$/;"	m	class:CAstScope	typeref:typename:string
+_name	./ir.h	/^    string         _name;            \/\/\/< name (for debugging purposes)$/;"	m	class:CTacInstr	typeref:typename:string
+_name	./ir.h	/^    string _name;                    \/\/\/< name$/;"	m	class:CScope	typeref:typename:string
+_name	./myast/ast.h	/^    string    _name;                \/\/\/< name$/;"	m	class:CAstScope	typeref:typename:string
+_name	./symtab.h	/^    string         _name;         \/\/\/< name$/;"	m	class:CSymbol	typeref:typename:string
+_nelem	./mytype/type.h	/^    int            _nelem;        \/\/\/< element count$/;"	m	class:CArrayType	typeref:typename:int
+_nelem	./type.h	/^    int            _nelem;        \/\/\/< element count$/;"	m	class:CArrayType	typeref:typename:int
+_next	./ast.h	/^    CAstStatement* _next;           \/\/\/< next statement$/;"	m	class:CAstStatement	typeref:typename:CAstStatement *
+_next	./myast/ast.h	/^    CAstStatement* _next;           \/\/\/< next statement$/;"	m	class:CAstStatement	typeref:typename:CAstStatement *
+_null	./mytype/type.h	/^    CNullType     *_null;         \/\/\/< null base type$/;"	m	class:CTypeManager	typeref:typename:CNullType *
+_null	./type.h	/^    CNullType     *_null;         \/\/\/< null base type$/;"	m	class:CTypeManager	typeref:typename:CNullType *
+_offset	./ast.h	/^    CAstExpression *_offset;        \/\/\/< address computation expression$/;"	m	class:CAstArrayDesignator	typeref:typename:CAstExpression *
+_offset	./myast/ast.h	/^    CAstExpression *_offset;        \/\/\/< address computation expression$/;"	m	class:CAstArrayDesignator	typeref:typename:CAstExpression *
+_offset	./symtab.h	/^    int            _offset;       \/\/\/< offset$/;"	m	class:CSymbol	typeref:typename:int
+_op	./ir.h	/^    EOperation     _op;              \/\/\/< opcode$/;"	m	class:CTacInstr	typeref:typename:EOperation
+_oper	./ast.h	/^    EOperation _oper;               \/\/\/< operation$/;"	m	class:CAstOperation	typeref:typename:EOperation
+_oper	./myast/ast.h	/^    EOperation _oper;               \/\/\/< operation$/;"	m	class:CAstOperation	typeref:typename:EOperation
+_operand	./ast.h	/^    CAstExpression *_operand;       \/\/\/< operand$/;"	m	class:CAstSpecialOp	typeref:typename:CAstExpression *
+_operand	./ast.h	/^    CAstExpression *_operand;       \/\/\/< operand$/;"	m	class:CAstUnaryOp	typeref:typename:CAstExpression *
+_operand	./myast/ast.h	/^    CAstExpression *_operand;       \/\/\/< operand$/;"	m	class:CAstSpecialOp	typeref:typename:CAstExpression *
+_operand	./myast/ast.h	/^    CAstExpression *_operand;       \/\/\/< operand$/;"	m	class:CAstUnaryOp	typeref:typename:CAstExpression *
+_ops	./ir.h	/^    list<CTacInstr*> _ops;           \/\/\/< operation list$/;"	m	class:CCodeBlock	typeref:typename:list<CTacInstr * >
+_out	./backend.h	/^    ostream &_out;                  \/\/\/< output stream$/;"	m	class:CBackend	typeref:typename:ostream &
+_owner	./ir.h	/^    CScope *_owner;                  \/\/\/< block owner$/;"	m	class:CCodeBlock	typeref:typename:CScope *
+_param	./symtab.h	/^    vector<CSymParam*> _param;      \/\/\/< parameter list$/;"	m	class:CSymProc	typeref:typename:vector<CSymParam * >
+_parent	./ast.h	/^    CAstScope *_parent;             \/\/\/< superordinate scope$/;"	m	class:CAstScope	typeref:typename:CAstScope *
+_parent	./ir.h	/^    CScope *_parent;                 \/\/\/< superordinate scope$/;"	m	class:CScope	typeref:typename:CScope *
+_parent	./myast/ast.h	/^    CAstScope *_parent;             \/\/\/< superordinate scope$/;"	m	class:CAstScope	typeref:typename:CAstScope *
+_parent	./symtab.h	/^    CSymtab       *_parent;       \/\/\/< parent$/;"	m	class:CSymtab	typeref:typename:CSymtab *
+_parenthesized	./myast/ast.h	/^    bool       _parenthesized;      \/\/\/< expression was parenthesized$/;"	m	class:CAstExpression	typeref:typename:bool
+_ptr	./mytype/type.h	/^    vector<CPointerType*> _ptr;   \/\/\/< pointer types$/;"	m	class:CTypeManager	typeref:typename:vector<CPointerType * >
+_ptr	./type.h	/^    vector<CPointerType*> _ptr;   \/\/\/< pointer types$/;"	m	class:CTypeManager	typeref:typename:vector<CPointerType * >
+_rbase	./symtab.h	/^    string         _rbase;        \/\/\/< base register$/;"	m	class:CSymbol	typeref:typename:string
+_refcnt	./ir.h	/^    int _refcnt;                     \/\/\/< reference counter$/;"	m	class:CTacLabel	typeref:typename:int
+_rhs	./ast.h	/^    CAstExpression *_rhs;           \/\/\/< RHS (expression)$/;"	m	class:CAstStatAssign	typeref:typename:CAstExpression *
+_rhs	./myast/ast.h	/^    CAstExpression *_rhs;           \/\/\/< RHS (expression)$/;"	m	class:CAstStatAssign	typeref:typename:CAstExpression *
+_right	./ast.h	/^    CAstExpression *_right;         \/\/\/< right operand$/;"	m	class:CAstBinaryOp	typeref:typename:CAstExpression *
+_right	./myast/ast.h	/^    CAstExpression *_right;         \/\/\/< right operand$/;"	m	class:CAstBinaryOp	typeref:typename:CAstExpression *
+_saved_char	./scanner.h	/^    int     _saved_char;            \/\/\/< saved stream position (character pos)$/;"	m	class:CScanner	typeref:typename:int
+_saved_line	./scanner.h	/^    int     _saved_line;            \/\/\/< saved stream position (line)$/;"	m	class:CScanner	typeref:typename:int
+_scanner	./myparser/parser.h	/^    CScanner     *_scanner;       \/\/\/< CScanner instance$/;"	m	class:CParser	typeref:typename:CScanner *
+_scanner	./parser.h	/^    CScanner     *_scanner;       \/\/\/< CScanner instance$/;"	m	class:CParser	typeref:typename:CScanner *
+_scope	./ast.h	/^    CAstScope      *_scope;         \/\/\/< enclosing scope$/;"	m	class:CAstStatReturn	typeref:typename:CAstScope *
+_scope	./myast/ast.h	/^    CAstScope      *_scope;         \/\/\/< enclosing scope$/;"	m	class:CAstStatReturn	typeref:typename:CAstScope *
+_src1	./ir.h	/^    CTacAddr      *_src1;            \/\/\/< source operand 1$/;"	m	class:CTacInstr	typeref:typename:CTacAddr *
+_src2	./ir.h	/^    CTacAddr      *_src2;            \/\/\/< source operand 2$/;"	m	class:CTacInstr	typeref:typename:CTacAddr *
+_statseq	./ast.h	/^    CAstStatement* _statseq;        \/\/\/< statement sequence$/;"	m	class:CAstScope	typeref:typename:CAstStatement *
+_statseq	./myast/ast.h	/^    CAstStatement* _statseq;        \/\/\/< statement sequence$/;"	m	class:CAstScope	typeref:typename:CAstStatement *
+_sym	./ast.h	/^    CSymGlobal      *_sym;          \/\/\/< symbol holding the string$/;"	m	class:CAstStringConstant	typeref:typename:CSymGlobal *
+_sym	./myast/ast.h	/^    CSymGlobal      *_sym;          \/\/\/< symbol holding the string$/;"	m	class:CAstStringConstant	typeref:typename:CSymGlobal *
+_symbol	./ast.h	/^    CSymProc *_symbol;              \/\/\/< corresponding symbol$/;"	m	class:CAstProcedure	typeref:typename:CSymProc *
+_symbol	./ast.h	/^    const CSymProc *_symbol;        \/\/\/< symbol$/;"	m	class:CAstFunctionCall	typeref:typename:const CSymProc *
+_symbol	./ast.h	/^    const CSymbol *_symbol;         \/\/\/< symbol$/;"	m	class:CAstDesignator	typeref:typename:const CSymbol *
+_symbol	./ir.h	/^    const CSymbol *_symbol;          \/\/\/< symbol$/;"	m	class:CTacName	typeref:typename:const CSymbol *
+_symbol	./myast/ast.h	/^    CSymProc *_symbol;              \/\/\/< corresponding symbol$/;"	m	class:CAstProcedure	typeref:typename:CSymProc *
+_symbol	./myast/ast.h	/^    const CSymProc *_symbol;        \/\/\/< symbol$/;"	m	class:CAstFunctionCall	typeref:typename:const CSymProc *
+_symbol	./myast/ast.h	/^    const CSymbol *_symbol;         \/\/\/< symbol$/;"	m	class:CAstDesignator	typeref:typename:const CSymbol *
+_symboltype	./symtab.h	/^    ESymbolType    _symboltype;   \/\/\/< symbol type$/;"	m	class:CSymbol	typeref:typename:ESymbolType
+_symtab	./ast.h	/^    CSymtab   *_symtab;             \/\/\/< symbol table$/;"	m	class:CAstScope	typeref:typename:CSymtab *
+_symtab	./ir.h	/^    CSymtab *_symtab;                \/\/\/< symbol table$/;"	m	class:CScope	typeref:typename:CSymtab *
+_symtab	./myast/ast.h	/^    CSymtab   *_symtab;             \/\/\/< symbol table$/;"	m	class:CAstScope	typeref:typename:CSymtab *
+_symtab	./symtab.h	/^    CSymtab       *_symtab;       \/\/\/< symbol table owning this symbol$/;"	m	class:CSymbol	typeref:typename:CSymtab *
+_symtab	./symtab.h	/^    map<string, CSymbol*> _symtab;\/\/\/< local symbol table$/;"	m	class:CSymtab	typeref:typename:map<string,CSymbol * >
+_temp_id	./ir.h	/^    unsigned int _temp_id;           \/\/\/< next id for temporaries$/;"	m	class:CScope	typeref:typename:unsigned int
+_token	./ast.h	/^    CToken     _token;              \/\/\/< token in input stream that triggered$/;"	m	class:CAstNode	typeref:typename:CToken
+_token	./myast/ast.h	/^    CToken     _token;              \/\/\/< token in input stream that triggered$/;"	m	class:CAstNode	typeref:typename:CToken
+_token	./myparser/parser.h	/^    CToken        _token;         \/\/\/< current token$/;"	m	class:CParser	typeref:typename:CToken
+_token	./parser.h	/^    CToken        _token;         \/\/\/< current token$/;"	m	class:CParser	typeref:typename:CToken
+_token	./scanner.h	/^    CToken *_token;                 \/\/\/< next token in input stream$/;"	m	class:CScanner	typeref:typename:CToken *
+_type	./ast.h	/^    const CType     *_type;         \/\/\/< constant type$/;"	m	class:CAstStringConstant	typeref:typename:const CType *
+_type	./ast.h	/^    const CType *_type;             \/\/\/< constant type$/;"	m	class:CAstConstant	typeref:typename:const CType *
+_type	./ast.h	/^    const CType *_type;             \/\/\/< forced type of this op$/;"	m	class:CAstSpecialOp	typeref:typename:const CType *
+_type	./ast.h	/^    const CType *_type;             \/\/\/< type$/;"	m	class:CAstType	typeref:typename:const CType *
+_type	./myast/ast.h	/^    const CType     *_type;         \/\/\/< constant type$/;"	m	class:CAstStringConstant	typeref:typename:const CType *
+_type	./myast/ast.h	/^    const CType *_type;             \/\/\/< constant type$/;"	m	class:CAstConstant	typeref:typename:const CType *
+_type	./myast/ast.h	/^    const CType *_type;             \/\/\/< forced type of this op$/;"	m	class:CAstSpecialOp	typeref:typename:const CType *
+_type	./myast/ast.h	/^    const CType *_type;             \/\/\/< type$/;"	m	class:CAstType	typeref:typename:const CType *
+_type	./scanner.h	/^    EToken _type;                   \/\/\/< token type$/;"	m	class:CToken	typeref:typename:EToken
+_value	./ast.h	/^    CDataInitString *_value;        \/\/\/< data initializer (holds string data)$/;"	m	class:CAstStringConstant	typeref:typename:CDataInitString *
+_value	./ast.h	/^    long long _value;               \/\/\/< constant value$/;"	m	class:CAstConstant	typeref:typename:long long
+_value	./ir.h	/^    int _value;                      \/\/\/< constant value$/;"	m	class:CTacConst	typeref:typename:int
+_value	./myast/ast.h	/^    CDataInitString *_value;        \/\/\/< data initializer (holds string data)$/;"	m	class:CAstStringConstant	typeref:typename:CDataInitString *
+_value	./myast/ast.h	/^    long long _value;               \/\/\/< constant value$/;"	m	class:CAstConstant	typeref:typename:long long
+_value	./scanner.h	/^    string _value;                  \/\/\/< token value$/;"	m	class:CToken	typeref:typename:string
+_voidptr	./mytype/type.h	/^    CPointerType  *_voidptr;      \/\/\/< void pointer type$/;"	m	class:CTypeManager	typeref:typename:CPointerType *
+_voidptr	./type.h	/^    CPointerType  *_voidptr;      \/\/\/< void pointer type$/;"	m	class:CTypeManager	typeref:typename:CPointerType *
+addressExpression	./myparser/parser.cpp	/^CAstExpression* CParser::addressExpression(CAstScope* s)$/;"	f	class:CParser	typeref:typename:CAstExpression *
+addressExpression	./parser.cpp	/^CAstExpression* CParser::addressExpression(CAstScope* s)$/;"	f	class:CParser	typeref:typename:CAstExpression *
+assignment	./myparser/parser.cpp	/^CAstStatAssign* CParser::assignment(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstStatAssign *
+assignment	./parser.cpp	/^CAstStatAssign* CParser::assignment(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstStatAssign *
+boolean	./myparser/parser.cpp	/^CAstConstant* CParser::boolean(void)$/;"	f	class:CParser	typeref:typename:CAstConstant *
+boolean	./parser.cpp	/^CAstConstant* CParser::boolean(void)$/;"	f	class:CParser	typeref:typename:CAstConstant *
+character	./myparser/parser.cpp	/^CAstConstant* CParser::character(void)$/;"	f	class:CParser	typeref:typename:CAstConstant *
+character	./parser.cpp	/^CAstConstant* CParser::character(void)$/;"	f	class:CParser	typeref:typename:CAstConstant *
+count	./backend.cpp	/^int count = 0;$/;"	v	typeref:typename:int
+dotAttr	./ast.cpp	/^string CAstArrayDesignator::dotAttr(void) const$/;"	f	class:CAstArrayDesignator	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstBinaryOp::dotAttr(void) const$/;"	f	class:CAstBinaryOp	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstConstant::dotAttr(void) const$/;"	f	class:CAstConstant	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstDesignator::dotAttr(void) const$/;"	f	class:CAstDesignator	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstFunctionCall::dotAttr(void) const$/;"	f	class:CAstFunctionCall	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstModule::dotAttr(void) const$/;"	f	class:CAstModule	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstNode::dotAttr(void) const$/;"	f	class:CAstNode	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstProcedure::dotAttr(void) const$/;"	f	class:CAstProcedure	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstSpecialOp::dotAttr(void) const$/;"	f	class:CAstSpecialOp	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstStatAssign::dotAttr(void) const$/;"	f	class:CAstStatAssign	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstStatCall::dotAttr(void) const$/;"	f	class:CAstStatCall	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstStatIf::dotAttr(void) const$/;"	f	class:CAstStatIf	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstStatReturn::dotAttr(void) const$/;"	f	class:CAstStatReturn	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstStatWhile::dotAttr(void) const$/;"	f	class:CAstStatWhile	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstStringConstant::dotAttr(void) const$/;"	f	class:CAstStringConstant	typeref:typename:string
+dotAttr	./ast.cpp	/^string CAstUnaryOp::dotAttr(void) const$/;"	f	class:CAstUnaryOp	typeref:typename:string
+dotAttr	./ir.cpp	/^string CCodeBlock::dotAttr(void) const$/;"	f	class:CCodeBlock	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstArrayDesignator::dotAttr(void) const$/;"	f	class:CAstArrayDesignator	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstBinaryOp::dotAttr(void) const$/;"	f	class:CAstBinaryOp	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstConstant::dotAttr(void) const$/;"	f	class:CAstConstant	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstDesignator::dotAttr(void) const$/;"	f	class:CAstDesignator	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstFunctionCall::dotAttr(void) const$/;"	f	class:CAstFunctionCall	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstModule::dotAttr(void) const$/;"	f	class:CAstModule	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstNode::dotAttr(void) const$/;"	f	class:CAstNode	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstProcedure::dotAttr(void) const$/;"	f	class:CAstProcedure	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstSpecialOp::dotAttr(void) const$/;"	f	class:CAstSpecialOp	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstStatAssign::dotAttr(void) const$/;"	f	class:CAstStatAssign	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstStatCall::dotAttr(void) const$/;"	f	class:CAstStatCall	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstStatIf::dotAttr(void) const$/;"	f	class:CAstStatIf	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstStatReturn::dotAttr(void) const$/;"	f	class:CAstStatReturn	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstStatWhile::dotAttr(void) const$/;"	f	class:CAstStatWhile	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstStringConstant::dotAttr(void) const$/;"	f	class:CAstStringConstant	typeref:typename:string
+dotAttr	./myast/ast.cpp	/^string CAstUnaryOp::dotAttr(void) const$/;"	f	class:CAstUnaryOp	typeref:typename:string
+dotID	./ast.cpp	/^string CAstNode::dotID(void) const$/;"	f	class:CAstNode	typeref:typename:string
+dotID	./ast.cpp	/^string CAstStatCall::dotID(void) const$/;"	f	class:CAstStatCall	typeref:typename:string
+dotID	./ir.cpp	/^string CCodeBlock::dotID(void) const$/;"	f	class:CCodeBlock	typeref:typename:string
+dotID	./ir.cpp	/^string CScope::dotID(void) const$/;"	f	class:CScope	typeref:typename:string
+dotID	./myast/ast.cpp	/^string CAstNode::dotID(void) const$/;"	f	class:CAstNode	typeref:typename:string
+dotID	./myast/ast.cpp	/^string CAstStatCall::dotID(void) const$/;"	f	class:CAstStatCall	typeref:typename:string
+dump_asm	./snuplc.cpp	/^bool dump_asm = true;$/;"	v	typeref:typename:bool
+dump_ast	./snuplc.cpp	/^bool dump_ast = false;$/;"	v	typeref:typename:bool
+dump_dot	./snuplc.cpp	/^bool dump_dot = true;$/;"	v	typeref:typename:bool
+dump_tac	./snuplc.cpp	/^bool dump_tac = false;$/;"	v	typeref:typename:bool
+escape	./scanner.cpp	/^string CToken::escape(const string text)$/;"	f	class:CToken	typeref:typename:string
+expression	./myparser/parser.cpp	/^CAstExpression* CParser::expression(CAstScope* s)$/;"	f	class:CParser	typeref:typename:CAstExpression *
+expression	./parser.cpp	/^CAstExpression* CParser::expression(CAstScope* s)$/;"	f	class:CParser	typeref:typename:CAstExpression *
+expression_e	./myparser/parser.cpp	/^CAstExpression* CParser::expression_e(CAstScope* s)$/;"	f	class:CParser	typeref:typename:CAstExpression *
+factor	./myparser/parser.cpp	/^CAstExpression* CParser::factor(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstExpression *
+factor	./parser.cpp	/^CAstExpression* CParser::factor(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstExpression *
+files	./snuplc.cpp	/^vector<string> files;$/;"	v	typeref:typename:vector<string>
+formalParam	./parser.cpp	/^void CParser::formalParam$/;"	f	class:CParser	typeref:typename:void
+formalParam_e	./myparser/parser.cpp	/^void CParser::formalParam_e$/;"	f	class:CParser	typeref:typename:void
+functionCall	./parser.cpp	/^CAstFunctionCall* CParser::functionCall(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstFunctionCall *
+functionCall_e	./myparser/parser.cpp	/^CAstFunctionCall* CParser::functionCall_e(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstFunctionCall *
+functionDecl	./myparser/parser.cpp	/^void CParser::functionDecl(CAstScope *s)$/;"	f	class:CParser	typeref:typename:void
+functionDecl	./parser.cpp	/^CAstProcedure* CParser::functionDecl(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstProcedure *
+ident	./myparser/parser.cpp	/^vector <CToken> CParser::ident(CAstScope *s)$/;"	f	class:CParser	typeref:typename:vector<CToken>
+ident	./parser.cpp	/^CAstDesignator* CParser::ident(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstDesignator *
+ident_e	./myparser/parser.cpp	/^CAstDesignator* CParser::ident_e(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstDesignator *
+ifStatement	./parser.cpp	/^CAstStatIf* CParser::ifStatement(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstStatIf *
+kBegin	./scanner.h	/^  kBegin,                           \/\/\/< begin$/;"	e	enum:EToken
+kBool	./scanner.h	/^  kBool,                            \/\/\/< true or false$/;"	e	enum:EToken
+kDo	./scanner.h	/^  kDo,                              \/\/\/< do$/;"	e	enum:EToken
+kElse	./scanner.h	/^  kElse,                            \/\/\/< else$/;"	e	enum:EToken
+kEnd	./scanner.h	/^  kEnd,                             \/\/\/< end$/;"	e	enum:EToken
+kFunc	./scanner.h	/^  kFunc,                            \/\/\/< function$/;"	e	enum:EToken
+kIf	./scanner.h	/^  kIf,                              \/\/\/< if$/;"	e	enum:EToken
+kModule	./scanner.h	/^  kModule = 0,                      \/\/\/< module$/;"	e	enum:EToken
+kProc	./scanner.h	/^  kProc,                            \/\/\/< procedure$/;"	e	enum:EToken
+kReturn	./scanner.h	/^  kReturn,                          \/\/\/< return$/;"	e	enum:EToken
+kThen	./scanner.h	/^  kThen,                            \/\/\/< then$/;"	e	enum:EToken
+kType	./scanner.h	/^  kType,                            \/\/\/< boolean or char or integer$/;"	e	enum:EToken
+kVar	./scanner.h	/^  kVar,                             \/\/\/< var$/;"	e	enum:EToken
+kWhile	./scanner.h	/^  kWhile,                           \/\/\/< while$/;"	e	enum:EToken
+keywords	./scanner.cpp	/^map<string, EToken> CScanner::keywords;$/;"	m	class:CScanner	typeref:typename:map<string,EToken>
+keywords	./scanner.h	/^    static map<string, EToken> keywords;\/\/\/< reserved keywords with corr. tokens$/;"	m	class:CScanner	typeref:typename:map<string,EToken>
+main	./mytest_parser/test_parser.cpp	/^int main(int argc, char *argv[])$/;"	f	typeref:typename:int
+main	./snuplc.cpp	/^int main(int argc, char *argv[])$/;"	f	typeref:typename:int
+main	./test_ir.cpp	/^int main(int argc, char *argv[])$/;"	f	typeref:typename:int
+main	./test_parser.cpp	/^int main(int argc, char *argv[])$/;"	f	typeref:typename:int
+main	./test_scanner.cpp	/^int main(int argc, char *argv[])$/;"	f	typeref:typename:int
+module	./myparser/parser.cpp	/^CAstModule* CParser::module(void)$/;"	f	class:CParser	typeref:typename:CAstModule *
+module	./parser.cpp	/^CAstModule* CParser::module(void)$/;"	f	class:CParser	typeref:typename:CAstModule *
+number	./myparser/parser.cpp	/^CAstConstant* CParser::number(int posflag)$/;"	f	class:CParser	typeref:typename:CAstConstant *
+number	./parser.cpp	/^CAstConstant* CParser::number(void)$/;"	f	class:CParser	typeref:typename:CAstConstant *
+opAdd	./ir.h	/^  opAdd=0,                          \/\/\/< +  addition$/;"	e	enum:EOperation
+opAddress	./ir.h	/^  opAddress,                        \/\/\/< reference: dst = &src1$/;"	e	enum:EOperation
+opAnd	./ir.h	/^  opAnd,                            \/\/\/< && binary and$/;"	e	enum:EOperation
+opAssign	./ir.h	/^  opAssign,                         \/\/\/< assignment$/;"	e	enum:EOperation
+opBiggerEqual	./ir.h	/^  opBiggerEqual,                    \/\/\/< >= bigger or equal$/;"	e	enum:EOperation
+opBiggerThan	./ir.h	/^  opBiggerThan,                     \/\/\/< >  bigger than$/;"	e	enum:EOperation
+opCall	./ir.h	/^  opCall,                           \/\/\/< call:  dst = call src1$/;"	e	enum:EOperation
+opCast	./ir.h	/^  opCast,                           \/\/\/< type cast: dst = (type)src1$/;"	e	enum:EOperation
+opDeref	./ir.h	/^  opDeref,                          \/\/\/< dereference: dst = *src1$/;"	e	enum:EOperation
+opDiv	./ir.h	/^  opDiv,                            \/\/\/< \/  division$/;"	e	enum:EOperation
+opEqual	./ir.h	/^  opEqual,                          \/\/\/< =  equal$/;"	e	enum:EOperation
+opGoto	./ir.h	/^  opGoto,                           \/\/\/< dst = target$/;"	e	enum:EOperation
+opLabel	./ir.h	/^  opLabel,                          \/\/\/< jump label; no arguments$/;"	e	enum:EOperation
+opLessEqual	./ir.h	/^  opLessEqual,                      \/\/\/< <= less or equal$/;"	e	enum:EOperation
+opLessThan	./ir.h	/^  opLessThan,                       \/\/\/< <  less than$/;"	e	enum:EOperation
+opMul	./ir.h	/^  opMul,                            \/\/\/< *  multiplication$/;"	e	enum:EOperation
+opNeg	./ir.h	/^  opNeg,                            \/\/\/< -  negation$/;"	e	enum:EOperation
+opNop	./ir.h	/^  opNop,                            \/\/\/< no operation$/;"	e	enum:EOperation
+opNot	./ir.h	/^  opNot,                            \/\/\/< !  binary not$/;"	e	enum:EOperation
+opNotEqual	./ir.h	/^  opNotEqual,                       \/\/\/< #  not equal$/;"	e	enum:EOperation
+opOr	./ir.h	/^  opOr,                             \/\/\/< || binary or$/;"	e	enum:EOperation
+opParam	./ir.h	/^  opParam,                          \/\/\/< parameter: dst = index,src1 = parameter$/;"	e	enum:EOperation
+opPos	./ir.h	/^  opPos,                            \/\/\/< +  unary +$/;"	e	enum:EOperation
+opReturn	./ir.h	/^  opReturn,                         \/\/\/< return: return optional src1$/;"	e	enum:EOperation
+opSub	./ir.h	/^  opSub,                            \/\/\/< -  subtraction$/;"	e	enum:EOperation
+operator <<	./ast.cpp	/^ostream& operator<<(ostream &out, const CAstNode &t)$/;"	f	typeref:typename:ostream &
+operator <<	./ast.cpp	/^ostream& operator<<(ostream &out, const CAstNode *t)$/;"	f	typeref:typename:ostream &
+operator <<	./data.cpp	/^ostream& operator<<(ostream &out, const CDataInitializer &t)$/;"	f	typeref:typename:ostream &
+operator <<	./data.cpp	/^ostream& operator<<(ostream &out, const CDataInitializer *t)$/;"	f	typeref:typename:ostream &
+operator <<	./ir.cpp	/^ostream& operator<<(ostream &out, EOperation t)$/;"	f	typeref:typename:ostream &
+operator <<	./ir.cpp	/^ostream& operator<<(ostream &out, const CCodeBlock &t)$/;"	f	typeref:typename:ostream &
+operator <<	./ir.cpp	/^ostream& operator<<(ostream &out, const CCodeBlock *t)$/;"	f	typeref:typename:ostream &
+operator <<	./ir.cpp	/^ostream& operator<<(ostream &out, const CScope &t)$/;"	f	typeref:typename:ostream &
+operator <<	./ir.cpp	/^ostream& operator<<(ostream &out, const CScope *t)$/;"	f	typeref:typename:ostream &
+operator <<	./ir.cpp	/^ostream& operator<<(ostream &out, const CTac &t)$/;"	f	typeref:typename:ostream &
+operator <<	./ir.cpp	/^ostream& operator<<(ostream &out, const CTac *t)$/;"	f	typeref:typename:ostream &
+operator <<	./myast/ast.cpp	/^ostream& operator<<(ostream &out, const CAstNode &t)$/;"	f	typeref:typename:ostream &
+operator <<	./myast/ast.cpp	/^ostream& operator<<(ostream &out, const CAstNode *t)$/;"	f	typeref:typename:ostream &
+operator <<	./mydata/data.cpp	/^ostream& operator<<(ostream &out, const CDataInitializer &t)$/;"	f	typeref:typename:ostream &
+operator <<	./mydata/data.cpp	/^ostream& operator<<(ostream &out, const CDataInitializer *t)$/;"	f	typeref:typename:ostream &
+operator <<	./mytype/type.cpp	/^ostream& operator<<(ostream &out, const CType &t)$/;"	f	typeref:typename:ostream &
+operator <<	./mytype/type.cpp	/^ostream& operator<<(ostream &out, const CType *t)$/;"	f	typeref:typename:ostream &
+operator <<	./scanner.cpp	/^ostream& operator<<(ostream &out, const CToken &t)$/;"	f	typeref:typename:ostream &
+operator <<	./scanner.cpp	/^ostream& operator<<(ostream &out, const CToken *t)$/;"	f	typeref:typename:ostream &
+operator <<	./symtab.cpp	/^ostream& operator<<(ostream &out, const CSymbol &t)$/;"	f	typeref:typename:ostream &
+operator <<	./symtab.cpp	/^ostream& operator<<(ostream &out, const CSymbol *t)$/;"	f	typeref:typename:ostream &
+operator <<	./symtab.cpp	/^ostream& operator<<(ostream &out, const CSymtab &t)$/;"	f	typeref:typename:ostream &
+operator <<	./symtab.cpp	/^ostream& operator<<(ostream &out, const CSymtab *t)$/;"	f	typeref:typename:ostream &
+operator <<	./type.cpp	/^ostream& operator<<(ostream &out, const CType &t)$/;"	f	typeref:typename:ostream &
+operator <<	./type.cpp	/^ostream& operator<<(ostream &out, const CType *t)$/;"	f	typeref:typename:ostream &
+paramDecl	./myparser/parser.cpp	/^void CParser::paramDecl(CAstProcedure *s)$/;"	f	class:CParser	typeref:typename:void
+paramDeclSequence	./myparser/parser.cpp	/^void CParser::paramDeclSequence(CAstProcedure *s)$/;"	f	class:CParser	typeref:typename:void
+print	./ast.cpp	/^ostream& CAstArrayDesignator::print(ostream &out, int indent) const$/;"	f	class:CAstArrayDesignator	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstBinaryOp::print(ostream &out, int indent) const$/;"	f	class:CAstBinaryOp	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstConstant::print(ostream &out, int indent) const$/;"	f	class:CAstConstant	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstDesignator::print(ostream &out, int indent) const$/;"	f	class:CAstDesignator	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstFunctionCall::print(ostream &out, int indent) const$/;"	f	class:CAstFunctionCall	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstScope::print(ostream &out, int indent) const$/;"	f	class:CAstScope	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstSpecialOp::print(ostream &out, int indent) const$/;"	f	class:CAstSpecialOp	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstStatAssign::print(ostream &out, int indent) const$/;"	f	class:CAstStatAssign	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstStatCall::print(ostream &out, int indent) const$/;"	f	class:CAstStatCall	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstStatIf::print(ostream &out, int indent) const$/;"	f	class:CAstStatIf	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstStatReturn::print(ostream &out, int indent) const$/;"	f	class:CAstStatReturn	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstStatWhile::print(ostream &out, int indent) const$/;"	f	class:CAstStatWhile	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstStringConstant::print(ostream &out, int indent) const$/;"	f	class:CAstStringConstant	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstType::print(ostream &out, int indent) const$/;"	f	class:CAstType	typeref:typename:ostream &
+print	./ast.cpp	/^ostream& CAstUnaryOp::print(ostream &out, int indent) const$/;"	f	class:CAstUnaryOp	typeref:typename:ostream &
+print	./data.cpp	/^ostream& CDataInitString::print(ostream &out, int indent) const$/;"	f	class:CDataInitString	typeref:typename:ostream &
+print	./ir.cpp	/^ostream& CCodeBlock::print(ostream &out, int indent) const$/;"	f	class:CCodeBlock	typeref:typename:ostream &
+print	./ir.cpp	/^ostream& CModule::print(ostream &out, int indent) const$/;"	f	class:CModule	typeref:typename:ostream &
+print	./ir.cpp	/^ostream& CProcedure::print(ostream &out, int indent) const$/;"	f	class:CProcedure	typeref:typename:ostream &
+print	./ir.cpp	/^ostream& CScope::print(ostream &out, int indent) const$/;"	f	class:CScope	typeref:typename:ostream &
+print	./ir.cpp	/^ostream& CTacConst::print(ostream &out, int indent) const$/;"	f	class:CTacConst	typeref:typename:ostream &
+print	./ir.cpp	/^ostream& CTacInstr::print(ostream &out, int indent) const$/;"	f	class:CTacInstr	typeref:typename:ostream &
+print	./ir.cpp	/^ostream& CTacLabel::print(ostream &out, int indent) const$/;"	f	class:CTacLabel	typeref:typename:ostream &
+print	./ir.cpp	/^ostream& CTacName::print(ostream &out, int indent) const$/;"	f	class:CTacName	typeref:typename:ostream &
+print	./ir.cpp	/^ostream& CTacReference::print(ostream &out, int indent) const$/;"	f	class:CTacReference	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstArrayDesignator::print(ostream &out, int indent) const$/;"	f	class:CAstArrayDesignator	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstBinaryOp::print(ostream &out, int indent) const$/;"	f	class:CAstBinaryOp	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstConstant::print(ostream &out, int indent) const$/;"	f	class:CAstConstant	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstDesignator::print(ostream &out, int indent) const$/;"	f	class:CAstDesignator	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstFunctionCall::print(ostream &out, int indent) const$/;"	f	class:CAstFunctionCall	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstScope::print(ostream &out, int indent) const$/;"	f	class:CAstScope	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstSpecialOp::print(ostream &out, int indent) const$/;"	f	class:CAstSpecialOp	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstStatAssign::print(ostream &out, int indent) const$/;"	f	class:CAstStatAssign	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstStatCall::print(ostream &out, int indent) const$/;"	f	class:CAstStatCall	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstStatIf::print(ostream &out, int indent) const$/;"	f	class:CAstStatIf	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstStatReturn::print(ostream &out, int indent) const$/;"	f	class:CAstStatReturn	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstStatWhile::print(ostream &out, int indent) const$/;"	f	class:CAstStatWhile	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstStringConstant::print(ostream &out, int indent) const$/;"	f	class:CAstStringConstant	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstType::print(ostream &out, int indent) const$/;"	f	class:CAstType	typeref:typename:ostream &
+print	./myast/ast.cpp	/^ostream& CAstUnaryOp::print(ostream &out, int indent) const$/;"	f	class:CAstUnaryOp	typeref:typename:ostream &
+print	./mydata/data.cpp	/^ostream& CDataInitString::print(ostream &out, int indent) const$/;"	f	class:CDataInitString	typeref:typename:ostream &
+print	./mytype/type.cpp	/^ostream& CArrayType::print(ostream &out, int indent) const$/;"	f	class:CArrayType	typeref:typename:ostream &
+print	./mytype/type.cpp	/^ostream& CBoolType::print(ostream &out, int indent) const$/;"	f	class:CBoolType	typeref:typename:ostream &
+print	./mytype/type.cpp	/^ostream& CCharType::print(ostream &out, int indent) const$/;"	f	class:CCharType	typeref:typename:ostream &
+print	./mytype/type.cpp	/^ostream& CIntType::print(ostream &out, int indent) const$/;"	f	class:CIntType	typeref:typename:ostream &
+print	./mytype/type.cpp	/^ostream& CNullType::print(ostream &out, int indent) const$/;"	f	class:CNullType	typeref:typename:ostream &
+print	./mytype/type.cpp	/^ostream& CPointerType::print(ostream &out, int indent) const$/;"	f	class:CPointerType	typeref:typename:ostream &
+print	./mytype/type.cpp	/^ostream& CTypeManager::print(ostream &out, int indent) const$/;"	f	class:CTypeManager	typeref:typename:ostream &
+print	./scanner.cpp	/^ostream& CToken::print(ostream &out) const$/;"	f	class:CToken	typeref:typename:ostream &
+print	./symtab.cpp	/^ostream& CSymGlobal::print(ostream &out, int indent) const$/;"	f	class:CSymGlobal	typeref:typename:ostream &
+print	./symtab.cpp	/^ostream& CSymLocal::print(ostream &out, int indent) const$/;"	f	class:CSymLocal	typeref:typename:ostream &
+print	./symtab.cpp	/^ostream& CSymParam::print(ostream &out, int indent) const$/;"	f	class:CSymParam	typeref:typename:ostream &
+print	./symtab.cpp	/^ostream& CSymProc::print(ostream &out, int indent) const$/;"	f	class:CSymProc	typeref:typename:ostream &
+print	./symtab.cpp	/^ostream& CSymbol::print(ostream &out, int indent) const$/;"	f	class:CSymbol	typeref:typename:ostream &
+print	./symtab.cpp	/^ostream& CSymtab::print(ostream &out, int indent) const$/;"	f	class:CSymtab	typeref:typename:ostream &
+print	./type.cpp	/^ostream& CArrayType::print(ostream &out, int indent) const$/;"	f	class:CArrayType	typeref:typename:ostream &
+print	./type.cpp	/^ostream& CBoolType::print(ostream &out, int indent) const$/;"	f	class:CBoolType	typeref:typename:ostream &
+print	./type.cpp	/^ostream& CCharType::print(ostream &out, int indent) const$/;"	f	class:CCharType	typeref:typename:ostream &
+print	./type.cpp	/^ostream& CIntType::print(ostream &out, int indent) const$/;"	f	class:CIntType	typeref:typename:ostream &
+print	./type.cpp	/^ostream& CNullType::print(ostream &out, int indent) const$/;"	f	class:CNullType	typeref:typename:ostream &
+print	./type.cpp	/^ostream& CPointerType::print(ostream &out, int indent) const$/;"	f	class:CPointerType	typeref:typename:ostream &
+print	./type.cpp	/^ostream& CTypeManager::print(ostream &out, int indent) const$/;"	f	class:CTypeManager	typeref:typename:ostream &
+procedureDecl	./myparser/parser.cpp	/^void CParser::procedureDecl(CAstScope *s)$/;"	f	class:CParser	typeref:typename:void
+procedureDecl	./parser.cpp	/^CAstProcedure* CParser::procedureDecl(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstProcedure *
+procedureDecl_e	./myparser/parser.cpp	/^CAstProcedure* CParser::procedureDecl_e(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstProcedure *
+qualident	./myparser/parser.cpp	/^CAstDesignator* CParser::qualident(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstDesignator *
+qualident	./parser.cpp	/^CAstDesignator* CParser::qualident(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstDesignator *
+qualident_e	./myparser/parser.cpp	/^CAstDesignator* CParser::qualident_e(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstDesignator *
+returnStatement	./parser.cpp	/^CAstStatReturn* CParser::returnStatement(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstStatReturn *
+rte_path	./snuplc.cpp	/^string rte_path = "rte\/IA32\/";$/;"	v	typeref:typename:string
+run_dot	./snuplc.cpp	/^bool run_dot  = true;$/;"	v	typeref:typename:bool
+run_gcc	./snuplc.cpp	/^bool run_gcc  = false;$/;"	v	typeref:typename:bool
+sGlobal	./symtab.h	/^  sGlobal,                        \/\/\/< global$/;"	e	enum:EScope
+sLocal	./symtab.h	/^  sLocal,                         \/\/\/< local$/;"	e	enum:EScope
+simpleexpr	./myparser/parser.cpp	/^CAstExpression* CParser::simpleexpr(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstExpression *
+simpleexpr	./parser.cpp	/^CAstExpression* CParser::simpleexpr(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstExpression *
+simpleexpr_e	./myparser/parser.cpp	/^CAstExpression* CParser::simpleexpr_e(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstExpression *
+stGlobal	./symtab.h	/^  stGlobal,         \/\/\/< global symbol$/;"	e	enum:ESymbolType
+stLocal	./symtab.h	/^  stLocal,          \/\/\/< local symbol$/;"	e	enum:ESymbolType
+stParam	./symtab.h	/^  stParam,          \/\/\/< parameter symbol$/;"	e	enum:ESymbolType
+stProcedure	./symtab.h	/^  stProcedure,      \/\/\/< procedure symbol$/;"	e	enum:ESymbolType
+stReserved	./symtab.h	/^  stReserved,       \/\/\/< reserved names$/;"	e	enum:ESymbolType
+statSequence	./myparser/parser.cpp	/^CAstStatement* CParser::statSequence(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstStatement *
+statSequence	./parser.cpp	/^CAstStatement* CParser::statSequence(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstStatement *
+stat_call	./myparser/parser.cpp	/^CAstStatCall*  CParser::stat_call(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstStatCall *
+stat_if	./myparser/parser.cpp	/^CAstStatIf* 	CParser::stat_if(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstStatIf *
+stat_return	./myparser/parser.cpp	/^CAstStatReturn* CParser::stat_return(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstStatReturn *
+stat_var	./myparser/parser.cpp	/^void CParser::stat_var(CAstScope *m)$/;"	f	class:CParser	typeref:typename:void
+stat_while	./myparser/parser.cpp	/^CAstStatWhile* CParser::stat_while(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstStatWhile *
+stringC	./myparser/parser.cpp	/^CAstStringConstant* CParser::stringC(CAstScope* s)$/;"	f	class:CParser	typeref:typename:CAstStringConstant *
+stringConst	./parser.cpp	/^CAstStringConstant* CParser::stringConst(CAstScope* s)$/;"	f	class:CParser	typeref:typename:CAstStringConstant *
+subroutineBody	./parser.cpp	/^void CParser::subroutineBody(CAstScope *s)$/;"	f	class:CParser	typeref:typename:void
+subroutineBody_e	./myparser/parser.cpp	/^void CParser::subroutineBody_e(CAstScope *s)$/;"	f	class:CParser	typeref:typename:void
+subroutineCall	./parser.cpp	/^CAstStatCall* CParser::subroutineCall(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstStatCall *
+subroutineCall_e	./myparser/parser.cpp	/^CAstStatCall* CParser::subroutineCall_e(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstStatCall *
+subroutineDecl	./myparser/parser.cpp	/^void CParser::subroutineDecl(CAstScope *m)$/;"	f	class:CParser	typeref:typename:void
+tAndOr	./scanner.h	/^  tAndOr,                           \/\/\/< '&&' or '||'$/;"	e	enum:EToken
+tAssign	./scanner.h	/^  tAssign,                          \/\/\/< assignment operator$/;"	e	enum:EToken
+tChar	./scanner.h	/^  tChar,                            \/\/\/< a character$/;"	e	enum:EToken
+tColon	./scanner.h	/^  tColon,                           \/\/\/< a colon$/;"	e	enum:EToken
+tComma	./scanner.h	/^  tComma,                           \/\/\/< a comma$/;"	e	enum:EToken
+tDot	./scanner.h	/^  tDot,                             \/\/\/< a dot$/;"	e	enum:EToken
+tEOF	./scanner.h	/^  tEOF,                             \/\/\/< end of file$/;"	e	enum:EToken
+tIOError	./scanner.h	/^  tIOError,                         \/\/\/< I\/O error$/;"	e	enum:EToken
+tIdent	./scanner.h	/^  tIdent,                           \/\/\/< an identifier$/;"	e	enum:EToken
+tLBrak	./scanner.h	/^  tLBrak,                           \/\/\/< a left bracket$/;"	e	enum:EToken
+tLParen	./scanner.h	/^  tLParen,                          \/\/\/< a left paren$/;"	e	enum:EToken
+tMulDiv	./scanner.h	/^  tMulDiv,                          \/\/\/< '*' or '\/'$/;"	e	enum:EToken
+tNot	./scanner.h	/^  tNot,                             \/\/\/< a not operator$/;"	e	enum:EToken
+tNumber	./scanner.h	/^  tNumber,                          \/\/\/< a number$/;"	e	enum:EToken
+tPlusMinus	./scanner.h	/^  tPlusMinus,                       \/\/\/< '+' or '-'$/;"	e	enum:EToken
+tRBrak	./scanner.h	/^  tRBrak,                           \/\/\/< a right bracket$/;"	e	enum:EToken
+tRParen	./scanner.h	/^  tRParen,                          \/\/\/< a right paren$/;"	e	enum:EToken
+tRelOp	./scanner.h	/^  tRelOp,                           \/\/\/< relational operator$/;"	e	enum:EToken
+tSemicolon	./scanner.h	/^  tSemicolon,                       \/\/\/< a semicolon$/;"	e	enum:EToken
+tString	./scanner.h	/^  tString,                          \/\/\/< a string$/;"	e	enum:EToken
+tUndefined	./scanner.h	/^  tUndefined,                       \/\/\/< undefined$/;"	e	enum:EToken
+term	./myparser/parser.cpp	/^CAstExpression* CParser::term(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstExpression *
+term	./parser.cpp	/^CAstExpression* CParser::term(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstExpression *
+toDot	./ast.cpp	/^void CAstArrayDesignator::toDot(ostream &out, int indent) const$/;"	f	class:CAstArrayDesignator	typeref:typename:void
+toDot	./ast.cpp	/^void CAstBinaryOp::toDot(ostream &out, int indent) const$/;"	f	class:CAstBinaryOp	typeref:typename:void
+toDot	./ast.cpp	/^void CAstDesignator::toDot(ostream &out, int indent) const$/;"	f	class:CAstDesignator	typeref:typename:void
+toDot	./ast.cpp	/^void CAstFunctionCall::toDot(ostream &out, int indent) const$/;"	f	class:CAstFunctionCall	typeref:typename:void
+toDot	./ast.cpp	/^void CAstNode::toDot(ostream &out, int indent) const$/;"	f	class:CAstNode	typeref:typename:void
+toDot	./ast.cpp	/^void CAstScope::toDot(ostream &out, int indent) const$/;"	f	class:CAstScope	typeref:typename:void
+toDot	./ast.cpp	/^void CAstSpecialOp::toDot(ostream &out, int indent) const$/;"	f	class:CAstSpecialOp	typeref:typename:void
+toDot	./ast.cpp	/^void CAstStatAssign::toDot(ostream &out, int indent) const$/;"	f	class:CAstStatAssign	typeref:typename:void
+toDot	./ast.cpp	/^void CAstStatCall::toDot(ostream &out, int indent) const$/;"	f	class:CAstStatCall	typeref:typename:void
+toDot	./ast.cpp	/^void CAstStatIf::toDot(ostream &out, int indent) const$/;"	f	class:CAstStatIf	typeref:typename:void
+toDot	./ast.cpp	/^void CAstStatReturn::toDot(ostream &out, int indent) const$/;"	f	class:CAstStatReturn	typeref:typename:void
+toDot	./ast.cpp	/^void CAstStatWhile::toDot(ostream &out, int indent) const$/;"	f	class:CAstStatWhile	typeref:typename:void
+toDot	./ast.cpp	/^void CAstUnaryOp::toDot(ostream &out, int indent) const$/;"	f	class:CAstUnaryOp	typeref:typename:void
+toDot	./ir.cpp	/^void CCodeBlock::toDot(ostream &out, int indent) const$/;"	f	class:CCodeBlock	typeref:typename:void
+toDot	./ir.cpp	/^void CScope::toDot(ostream &out, int indent) const$/;"	f	class:CScope	typeref:typename:void
+toDot	./myast/ast.cpp	/^void CAstArrayDesignator::toDot(ostream &out, int indent) const$/;"	f	class:CAstArrayDesignator	typeref:typename:void
+toDot	./myast/ast.cpp	/^void CAstBinaryOp::toDot(ostream &out, int indent) const$/;"	f	class:CAstBinaryOp	typeref:typename:void
+toDot	./myast/ast.cpp	/^void CAstDesignator::toDot(ostream &out, int indent) const$/;"	f	class:CAstDesignator	typeref:typename:void
+toDot	./myast/ast.cpp	/^void CAstFunctionCall::toDot(ostream &out, int indent) const$/;"	f	class:CAstFunctionCall	typeref:typename:void
+toDot	./myast/ast.cpp	/^void CAstNode::toDot(ostream &out, int indent) const$/;"	f	class:CAstNode	typeref:typename:void
+toDot	./myast/ast.cpp	/^void CAstScope::toDot(ostream &out, int indent) const$/;"	f	class:CAstScope	typeref:typename:void
+toDot	./myast/ast.cpp	/^void CAstSpecialOp::toDot(ostream &out, int indent) const$/;"	f	class:CAstSpecialOp	typeref:typename:void
+toDot	./myast/ast.cpp	/^void CAstStatAssign::toDot(ostream &out, int indent) const$/;"	f	class:CAstStatAssign	typeref:typename:void
+toDot	./myast/ast.cpp	/^void CAstStatCall::toDot(ostream &out, int indent) const$/;"	f	class:CAstStatCall	typeref:typename:void
+toDot	./myast/ast.cpp	/^void CAstStatIf::toDot(ostream &out, int indent) const$/;"	f	class:CAstStatIf	typeref:typename:void
+toDot	./myast/ast.cpp	/^void CAstStatReturn::toDot(ostream &out, int indent) const$/;"	f	class:CAstStatReturn	typeref:typename:void
+toDot	./myast/ast.cpp	/^void CAstStatWhile::toDot(ostream &out, int indent) const$/;"	f	class:CAstStatWhile	typeref:typename:void
+toDot	./myast/ast.cpp	/^void CAstUnaryOp::toDot(ostream &out, int indent) const$/;"	f	class:CAstUnaryOp	typeref:typename:void
+type	./myparser/parser.cpp	/^const CType* CParser::type(CAstScope *s)$/;"	f	class:CParser	typeref:typename:const CType *
+type	./parser.cpp	/^CAstType* CParser::type(bool isParam)$/;"	f	class:CParser	typeref:typename:CAstType *
+type_e	./myparser/parser.cpp	/^CAstType* CParser::type_e(bool isParam)$/;"	f	class:CParser	typeref:typename:CAstType *
+unescape	./scanner.cpp	/^string CToken::unescape(const string text)$/;"	f	class:CToken	typeref:typename:string
+varDecl	./myparser/parser.cpp	/^void CParser::varDecl(CAstScope *s)$/;"	f	class:CParser	typeref:typename:void
+varDecl	./parser.cpp	/^void CParser::varDecl(vector<string> &vars, CAstType* &ttype, vector<string> &allVars)$/;"	f	class:CParser	typeref:typename:void
+varDeclInternal	./parser.cpp	/^void CParser::varDeclInternal(vector<string> &vars, vector<string> &allVars)$/;"	f	class:CParser	typeref:typename:void
+varDeclInternal_e	./myparser/parser.cpp	/^void CParser::varDeclInternal_e(vector<string> &vars, vector<string> &allVars)$/;"	f	class:CParser	typeref:typename:void
+varDeclParam	./parser.cpp	/^void CParser::varDeclParam(vector<string> &vars, CAstType* &ttype, vector<string> &allVars)$/;"	f	class:CParser	typeref:typename:void
+varDeclParam_e	./myparser/parser.cpp	/^void CParser::varDeclParam_e(vector<string> &vars, CAstType* &ttype, vector<string> &allVars)$/;"	f	class:CParser	typeref:typename:void
+varDeclSequence	./myparser/parser.cpp	/^void CParser::varDeclSequence(CAstScope *s)$/;"	f	class:CParser	typeref:typename:void
+varDecl_e	./myparser/parser.cpp	/^void CParser::varDecl_e(vector<string> &vars, CAstType* &ttype, vector<string> &allVars)$/;"	f	class:CParser	typeref:typename:void
+varDeclaration	./parser.cpp	/^void CParser::varDeclaration(CAstScope *s)$/;"	f	class:CParser	typeref:typename:void
+varDeclaration_e	./myparser/parser.cpp	/^void CParser::varDeclaration_e(CAstScope *s)$/;"	f	class:CParser	typeref:typename:void
+whileStatement	./parser.cpp	/^CAstStatWhile* CParser::whileStatement(CAstScope *s)$/;"	f	class:CParser	typeref:typename:CAstStatWhile *
+~CArrayType	./mytype/type.cpp	/^CArrayType::~CArrayType(void)$/;"	f	class:CArrayType
+~CArrayType	./type.cpp	/^CArrayType::~CArrayType(void)$/;"	f	class:CArrayType
+~CAstNode	./ast.cpp	/^CAstNode::~CAstNode(void)$/;"	f	class:CAstNode
+~CAstNode	./myast/ast.cpp	/^CAstNode::~CAstNode(void)$/;"	f	class:CAstNode
+~CAstScope	./ast.cpp	/^CAstScope::~CAstScope(void)$/;"	f	class:CAstScope
+~CAstScope	./myast/ast.cpp	/^CAstScope::~CAstScope(void)$/;"	f	class:CAstScope
+~CAstStatement	./ast.cpp	/^CAstStatement::~CAstStatement(void)$/;"	f	class:CAstStatement
+~CAstStatement	./myast/ast.cpp	/^CAstStatement::~CAstStatement(void)$/;"	f	class:CAstStatement
+~CBackend	./backend.cpp	/^CBackend::~CBackend(void)$/;"	f	class:CBackend
+~CBackendx86	./backend.cpp	/^CBackendx86::~CBackendx86(void)$/;"	f	class:CBackendx86
+~CCodeBlock	./ir.cpp	/^CCodeBlock::~CCodeBlock(void)$/;"	f	class:CCodeBlock
+~CDataInitializer	./data.cpp	/^CDataInitializer::~CDataInitializer(void)$/;"	f	class:CDataInitializer
+~CDataInitializer	./mydata/data.cpp	/^CDataInitializer::~CDataInitializer(void)$/;"	f	class:CDataInitializer
+~CModule	./ir.cpp	/^CModule::~CModule(void)$/;"	f	class:CModule
+~CProcedure	./ir.cpp	/^CProcedure::~CProcedure(void)$/;"	f	class:CProcedure
+~CScanner	./scanner.cpp	/^CScanner::~CScanner()$/;"	f	class:CScanner
+~CScope	./ir.cpp	/^CScope::~CScope(void)$/;"	f	class:CScope
+~CSymbol	./symtab.cpp	/^CSymbol::~CSymbol(void)$/;"	f	class:CSymbol
+~CSymtab	./symtab.cpp	/^CSymtab::~CSymtab(void)$/;"	f	class:CSymtab
+~CTac	./ir.cpp	/^CTac::~CTac(void)$/;"	f	class:CTac
+~CTacAddr	./ir.cpp	/^CTacAddr::~CTacAddr(void)$/;"	f	class:CTacAddr
+~CTacInstr	./ir.cpp	/^CTacInstr::~CTacInstr(void)$/;"	f	class:CTacInstr
+~CTacLabel	./ir.cpp	/^CTacLabel::~CTacLabel(void)$/;"	f	class:CTacLabel
+~CType	./mytype/type.cpp	/^CType::~CType(void)$/;"	f	class:CType
+~CType	./type.cpp	/^CType::~CType(void)$/;"	f	class:CType
+~CTypeManager	./mytype/type.cpp	/^CTypeManager::~CTypeManager(void)$/;"	f	class:CTypeManager
+~CTypeManager	./type.cpp	/^CTypeManager::~CTypeManager(void)$/;"	f	class:CTypeManager

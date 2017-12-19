@@ -49,20 +49,20 @@ using namespace std;
 /// each member of this enumeration represents a token in SnuPL/1
 ///
 enum EToken {
-  tModule = 0,                      ///< module
-  tBegin,                           ///< begin
-  tEnd,                             ///< end
-  tType,                            ///< boolean or char or integer
-  tBool,                            ///< true or false
-  tIf,                              ///< if
-  tThen,                            ///< then
-  tElse,                            ///< else
-  tWhile,                           ///< while
-  tDo,                              ///< do
-  tReturn,                          ///< return
-  tVar,                             ///< var
-  tProc,                            ///< procedure
-  tFunc,                            ///< function
+  kModule = 0,                      ///< module
+  kBegin,                           ///< begin
+  kEnd,                             ///< end
+  kType,                            ///< boolean or char or integer
+  kBool,                            ///< true or false
+  kIf,                              ///< if
+  kThen,                            ///< then
+  kElse,                            ///< else
+  kWhile,                           ///< while
+  kDo,                              ///< do
+  kReturn,                          ///< return
+  kVar,                             ///< var
+  kProc,                            ///< procedure
+  kFunc,                            ///< function
 
   tIdent,                           ///< an identifier
   tNumber,                          ///< a number
@@ -297,29 +297,71 @@ class CScanner {
     char GetChar(void);
 
     /// @brief return the next 'n' characters from the input stream
-    /// /// @param n number of characters to read
+    ///
+    /// @param n number of characters to read
     /// @retval string containing the characters read
     string GetChar(int n);
 
-    bool Removement(void);
+    /// @brief check whether a character is a white character or comment
+    ///
+    /// @retval true character is white space or comment
+    /// @retval false character is not white space or comment
+    bool OnRemove(void);
 
-    void DelLine(void);
+    /// @brief delete one line from the input stream
+    void DeleteLine(void);
 
-    bool Space(char c) const;
+    /// @brief check if a character is a white character
+    ///
+    /// @param c character
+    /// @retval true character is white space
+    /// @retval false character is not white space
+    bool IsWhite(char c) const;
 
-    bool Comment(char c);
+    /// @brief check if two characters are representing comment line
+    ///
+    /// @param c character
+    /// @retval true characters are comment
+    /// @retval false characters are not comment
+    bool IsComment(char c);
 
-    void scanc(EToken& token, string& tokval);
+    /// @brief scan istream until meet character '\'' and make char token
+    ///
+    /// @param token token type reference
+    /// @param tokval token attribute reference
+    void ScanChar(EToken& token, string& tokval);
 
-    void scanstring(EToken& token, string& tokval);
+    /// @brief scan istream until meet character '\"' and make string token
+    ///
+    /// @param token token type reference
+    /// @param tokval token attribute reference
+    void ScanString(EToken& token, string& tokval);
     
-    void delquote(string &tokval);
+    /// @brief trim quotation mark from string
+    ///
+    /// @param tokval string with quotation mark
+    void TrimQuotation(string &tokval);
 
-    bool Asciic(char c) const;
+    /// @brief check if a character is printable ASCII character
+    ///
+    /// @param c character
+    /// @retval true character is a printable ASCII character
+    /// @retval false character is not a printable ASCII character
+    bool IsAsciiChar(char c) const;
     
-    bool Letter(char c) const;
+    /// @brief check if a character is a letter
+    ///
+    /// @param c character
+    /// @retval true character is a letter
+    /// @retval false character is not a digit
+    bool IsLetter(char c) const;
     
-    bool Digit(char c) const;
+    /// @brief check if a character is a digit
+    ///
+    /// @param c character
+    /// @retval true character is a digit
+    /// @retval false character is not a digit
+    bool IsDigit(char c) const;
 
     /// @}
 

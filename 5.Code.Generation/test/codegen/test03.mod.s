@@ -63,18 +63,18 @@ l_test03_4:
 l_test03_5:
     movzbl  -13(%ebp), %eax         #  13:     assign c <- t0
     movb    %al, c                 
-    movzbl  c, %eax                 #  14:     if     c = 1 goto 8_if_true
+    movzbl  c, %eax                 #  14:     if     c = 1 goto 9_if_true
     movl    $1, %ebx               
     cmpl    %ebx, %eax             
-    je      l_test03_8_if_true     
-    jmp     l_test03_9_if_false     #  15:     goto   9_if_false
-l_test03_8_if_true:
+    je      l_test03_9_if_true     
+    jmp     l_test03_8_if_false     #  15:     goto   8_if_false
+l_test03_9_if_true:
     movl    $1, %eax                #  17:     param  0 <- 1
     pushl   %eax                   
     call    WriteInt                #  18:     call   WriteInt
     addl    $4, %esp               
     jmp     l_test03_7              #  19:     goto   7
-l_test03_9_if_false:
+l_test03_8_if_false:
     movl    $0, %eax                #  21:     param  0 <- 0
     pushl   %eax                   
     call    WriteInt                #  22:     call   WriteInt
@@ -99,18 +99,18 @@ l_test03_14:
 l_test03_15:
     movzbl  -14(%ebp), %eax         #  33:     assign c <- t1
     movb    %al, c                 
-    movzbl  c, %eax                 #  34:     if     c = 1 goto 18_if_true
+    movzbl  c, %eax                 #  34:     if     c = 1 goto 19_if_true
     movl    $1, %ebx               
     cmpl    %ebx, %eax             
-    je      l_test03_18_if_true    
-    jmp     l_test03_19_if_false    #  35:     goto   19_if_false
-l_test03_18_if_true:
+    je      l_test03_19_if_true    
+    jmp     l_test03_18_if_false    #  35:     goto   18_if_false
+l_test03_19_if_true:
     movl    $1, %eax                #  37:     param  0 <- 1
     pushl   %eax                   
     call    WriteInt                #  38:     call   WriteInt
     addl    $4, %esp               
     jmp     l_test03_17             #  39:     goto   17
-l_test03_19_if_false:
+l_test03_18_if_false:
     movl    $0, %eax                #  41:     param  0 <- 0
     pushl   %eax                   
     call    WriteInt                #  42:     call   WriteInt
@@ -135,18 +135,18 @@ l_test03_24:
 l_test03_25:
     movzbl  -15(%ebp), %eax         #  53:     assign c <- t2
     movb    %al, c                 
-    movzbl  c, %eax                 #  54:     if     c = 1 goto 28_if_true
+    movzbl  c, %eax                 #  54:     if     c = 1 goto 29_if_true
     movl    $1, %ebx               
     cmpl    %ebx, %eax             
-    je      l_test03_28_if_true    
-    jmp     l_test03_29_if_false    #  55:     goto   29_if_false
-l_test03_28_if_true:
+    je      l_test03_29_if_true    
+    jmp     l_test03_28_if_false    #  55:     goto   28_if_false
+l_test03_29_if_true:
     movl    $1, %eax                #  57:     param  0 <- 1
     pushl   %eax                   
     call    WriteInt                #  58:     call   WriteInt
     addl    $4, %esp               
     jmp     l_test03_27             #  59:     goto   27
-l_test03_29_if_false:
+l_test03_28_if_false:
     movl    $0, %eax                #  61:     param  0 <- 0
     pushl   %eax                   
     call    WriteInt                #  62:     call   WriteInt

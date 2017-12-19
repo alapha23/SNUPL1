@@ -41,16 +41,16 @@ fib:
     mov     %esp, %edi             
     rep     stosl                  
 
-    movl    8(%ebp), %eax           #   0:     if     n <= 1 goto 1_if_true
+    movl    8(%ebp), %eax           #   0:     if     n <= 1 goto 2_if_true
     movl    $1, %ebx               
     cmpl    %ebx, %eax             
-    jle     l_fib_1_if_true        
-    jmp     l_fib_2_if_false        #   1:     goto   2_if_false
-l_fib_1_if_true:
+    jle     l_fib_2_if_true        
+    jmp     l_fib_1_if_false        #   1:     goto   1_if_false
+l_fib_2_if_true:
     movl    8(%ebp), %eax           #   3:     return n
     jmp     l_fib_exit              #   3:     return n
     jmp     l_fib_0                 #   4:     goto   0
-l_fib_2_if_false:
+l_fib_1_if_false:
     movl    8(%ebp), %eax           #   6:     sub    t8 <- n, 1
     movl    $1, %ebx               
     subl    %ebx, %eax             
@@ -168,13 +168,13 @@ main:
     movl    %eax, -24(%ebp)        
     movl    -24(%ebp), %eax         #   8:     assign i <- t2
     movl    %eax, i                
-l_fibonacci_5_while_cond:
-    movl    i, %eax                 #  10:     if     i > 0 goto 6_while_body
+l_fibonacci_6_while_cond:
+    movl    i, %eax                 #  10:     if     i > 0 goto 5_while_body
     movl    $0, %ebx               
     cmpl    %ebx, %eax             
-    jg      l_fibonacci_6_while_body
+    jg      l_fibonacci_5_while_body
     jmp     l_fibonacci_4           #  11:     goto   4
-l_fibonacci_6_while_body:
+l_fibonacci_5_while_body:
     leal    _str_8, %eax            #  13:     &()    t3 <- _str_8
     movl    %eax, -28(%ebp)        
     movl    -28(%ebp), %eax         #  14:     param  0 <- t3
@@ -210,7 +210,7 @@ l_fibonacci_6_while_body:
     movl    %eax, -44(%ebp)        
     movl    -44(%ebp), %eax         #  29:     assign i <- t7
     movl    %eax, i                
-    jmp     l_fibonacci_5_while_cond #  30:     goto   5_while_cond
+    jmp     l_fibonacci_6_while_cond #  30:     goto   6_while_cond
 l_fibonacci_4:
 
 l_fibonacci_exit:

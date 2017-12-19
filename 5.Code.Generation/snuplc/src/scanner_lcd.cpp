@@ -6,10 +6,9 @@
 /// 2013/03/07 Bernhard Egger adapted to SnuPL/0
 /// 2014/09/10 Bernhard Egger assignment 1: scans SnuPL/-1
 /// 2016/03/13 Bernhard Egger assignment 1: adapted to modified SnuPL/-1 syntax
-/// 2017/09/22 Bernhard Egger fixed implementation of strings and characters
-
+///
 /// @section license_section License
-/// Copyright (c) 2012-2017, Bernhard Egger
+/// Copyright (c) 2012-2016, Bernhard Egger
 /// All rights reserved.
 ///
 /// Redistribution and use in source and binary forms,  with or without modifi-
@@ -41,7 +40,6 @@
 #include <cstring>
 #include <cassert>
 #include <cstdio>
-#include <iterator>
 
 #include "scanner.h"
 using namespace std;
@@ -52,20 +50,20 @@ using namespace std;
 #define TOKEN_STRLEN 32
 
 char ETokenName[][TOKEN_STRLEN] = {
-  "tModule",                        ///< module
-  "tBegin",                         ///< begin
-  "tEnd",                           ///< end
-  "tType",                          ///< boolean or char or integer (type)
-  "tBool",                          ///< true or false
-  "tIf",                            ///< if
-  "tThen",                          ///< then
-  "tElse",                          ///< else
-  "tWhile",                         ///< while
-  "tDo",                            ///< do
-  "tReturn",                        ///< return
-  "tVar",                           ///< var
-  "tProc",                          ///< procedure
-  "tFunc",                          ///< function
+  "kModule",                        ///< module
+  "kBegin",                         ///< begin
+  "kEnd",                           ///< end
+  "kType",                          ///< boolean or char or integer (type)
+  "kBool",                          ///< true or false
+  "kIf",                            ///< if
+  "kThen",                          ///< then
+  "kElse",                          ///< else
+  "kWhile",                         ///< while
+  "kDo",                            ///< do
+  "kReturn",                        ///< return
+  "kVar",                           ///< var
+  "kProc",                          ///< procedure
+  "kFunc",                          ///< function
 
   "tIdent",                         ///< an identifier
   "tNumber",                        ///< a number
@@ -97,20 +95,20 @@ char ETokenName[][TOKEN_STRLEN] = {
 //
 
 char ETokenStr[][TOKEN_STRLEN] = {
-  "tModule",                        ///< module
-  "tBegin",                         ///< begin
-  "tEnd",                           ///< end
-  "tType (%s)",                     ///< boolean or char or integer
-  "tBool (%s)",                     ///< true or false
-  "tIf",                            ///< if
-  "tThen",                          ///< then
-  "tElse",                          ///< else
-  "tWhile",                         ///< while
-  "tDo",                            ///< do
-  "tReturn",                        ///< return
-  "tVar",                           ///< var
-  "tProc",                          ///< procedure
-  "tFunc",                          ///< function
+  "kModule",                        ///< module
+  "kBegin",                         ///< begin
+  "kEnd",                           ///< end
+  "kType (%s)",                     ///< boolean or char or integer
+  "kBool (%s)",                     ///< true or false
+  "kIf",                            ///< if
+  "kThen",                          ///< then
+  "kElse",                          ///< else
+  "kWhile",                         ///< while
+  "kDo",                            ///< do
+  "kReturn",                        ///< return
+  "kVar",                           ///< var
+  "kProc",                          ///< procedure
+  "kFunc",                          ///< function
 
   "tIdent (%s)",                    ///< an identifier
   "tNumber (%s)",                   ///< a number
@@ -142,23 +140,23 @@ char ETokenStr[][TOKEN_STRLEN] = {
 //
 pair<const char*, EToken> Keywords[] =
 {
-  {"module", tModule},
-  {"begin", tBegin},
-  {"end", tEnd},
-  {"boolean", tType},
-  {"char", tType},
-  {"integer", tType},
-  {"true", tBool},
-  {"false", tBool},
-  {"if", tIf},
-  {"then", tThen},
-  {"else", tElse},
-  {"while", tWhile},
-  {"do", tDo},
-  {"return", tReturn},
-  {"var", tVar},
-  {"procedure", tProc},
-  {"function", tFunc}
+  {"module", kModule},
+  {"begin", kBegin},
+  {"end", kEnd},
+  {"boolean", kType},
+  {"char", kType},
+  {"integer", kType},
+  {"true", kBool},
+  {"false", kBool},
+  {"if", kIf},
+  {"then", kThen},
+  {"else", kElse},
+  {"while", kWhile},
+  {"do", kDo},
+  {"return", kReturn},
+  {"var", kVar},
+  {"procedure", kProc},
+  {"function", kFunc}
 };
 
 
@@ -360,15 +358,12 @@ CToken* CScanner::NewToken(EToken type, const string token)
 
 CToken* CScanner::Scan()
 {
-  EToken token;
-  char c;
-  
-  while(Removement()) {
-    while (_in->good() && Space(_in->peek()))
+  while(OnRemove()) {
+    while (_in->good() && IsWhite(_in->peek()))
       GetChar();
 
-    if (_in->good() && Comment(_in->peek()))
-      DelLine();
+    if (_in->good() && IsComment(_in->peek()))
+      DeleteLine();
   }
 
   RecordStreamPosition();
@@ -376,9 +371,9 @@ CToken* CScanner::Scan()
   if (_in->eof()) return NewToken(tEOF);
   if (!_in->good()) return NewToken(tIOError);
 
-  c = GetChar();
+  char c = GetChar();
   string tokval(1, c);
-  token = tUndefined;
+  EToken token = tUndefined;
 
   switch (c) {
     case ':':
@@ -426,14 +421,6 @@ CToken* CScanner::Scan()
       }
       break;
 
-    case '(':
-      token = tLParen;
-      break;
-
-    case ')':
-      token = tRParen;
-      break;
-
     case ';':
       token = tSemicolon;
       break;
@@ -447,17 +434,17 @@ CToken* CScanner::Scan()
       break;
 
     case '\'':
-      scanc(token, tokval);
+      ScanChar(token, tokval);
 
       if (token == tChar)
-        delquote(tokval);
+        TrimQuotation(tokval);
       break;
 
     case '\"':
-      scanstring(token, tokval);
+      ScanString(token, tokval);
 
       if (token == tString)
-        delquote(tokval);
+        TrimQuotation(tokval);
       break;
 
     case '[':
@@ -468,35 +455,42 @@ CToken* CScanner::Scan()
       token = tRBrak;
       break;
 
-    default:
+    case '(':
+      token = tLParen;
+      break;
 
-      if (Letter(c)) {
+    case ')':
+      token = tRParen;
+      break;
+
+    default:
+      /* number */
+      if (IsDigit(c)) {
+        token = tNumber;
+        while (_in->good()) {
+          char nc = _in->peek();
+          if (!IsDigit(nc))
+            break;
+          tokval += GetChar();
+        }
+      }
+
+      /* identifier or keywords */
+      else if (IsLetter(c)) {
         token = tIdent;
 
         while (_in->good()) {
           char nc = _in->peek();
-          if (!Letter(nc) && !Digit(nc))
+          if (!IsLetter(nc) && !IsDigit(nc))
             break;
           tokval += GetChar();
         }
 
-//        std::vector<string, EToken>::iterator iter = keywords.find(tokval); 
-        auto iter = keywords.find(tokval); 
-	
+        auto iter = keywords.find(tokval);
         if (iter != keywords.end())
           token = iter->second;
         else
           keywords[tokval] = token;
-      }
-      /* number */
-      else if (Digit(c)) {
-        token = tNumber;
-        while (_in->good()) {
-          char nc = _in->peek();
-          if (!Digit(nc))
-            break;
-          tokval += GetChar();
-        }
       }
 
       break;
@@ -524,13 +518,13 @@ string CScanner::GetChar(int n)
   return str;
 }
 
-bool CScanner::Removement()
+bool CScanner::OnRemove()
 {
-  return (_in->good() && (Space(_in->peek()) || Comment(_in->peek())));
+  return (_in->good() && (IsWhite(_in->peek()) || IsComment(_in->peek())));
 }
 
 
-void CScanner::DelLine()
+void CScanner::DeleteLine()
 {
   while (_in->good() && _in->peek() != '\n' && _in->peek() != EOF)
     GetChar();
@@ -539,65 +533,65 @@ void CScanner::DelLine()
     GetChar();
 }
 
-bool CScanner::Space(char c) const
+bool CScanner::IsWhite(char c) const
 {
   return ((c == ' ') || (c == '\n') || (c == '\t'));
 }
 
-bool CScanner::Comment(char c)
+bool CScanner::IsComment(char c)
 {
-  bool returnval = false;
+  bool retval = false;
 
   if (c == '/')
   {
     _in->get();
     if (!_in->good()) return false;
-    if (_in->peek() == '/') returnval = true;
+    if (_in->peek() == '/') retval = true;
     _in->unget();
   }
 
-  return returnval;
+  return retval;
 }
 
-void CScanner::scanc(EToken &token, string &tokval)
+void CScanner::ScanChar(EToken &token, string &tokval)
 {
-  bool escape = false;
-  bool waitQ = false;
+  bool faced_escape = false;
+  bool waiting_quot = false;
 
   while (_in->good()) {
     char c = _in->peek();
 
     if (c == EOF) break;
-    else if (waitQ) {
+    else if (waiting_quot) {
       if (c == '\'') {
         token = tChar;
         tokval += GetChar();
       }
       break;
     }
-    else if (!Asciic(c)) {
+    else if (!IsAsciiChar(c)) {
       tokval += GetChar();
       break;
     }
-    else if (c == '\\' && !escape) {
-      escape = true;
+    else if (c == '\\' && !faced_escape) {
+      faced_escape = true;
       tokval += GetChar();
     }
-    else if (escape) {
-      escape = false;
-      waitQ = true;
+    else if (faced_escape) {
+      faced_escape = false;
+      waiting_quot = true;
       tokval.pop_back();
 
       bool valid = true;
       switch (c) {
-        case '\'':
         case '\"':
+        case '\'':
         case '\\':
           tokval += GetChar();
           break;
 
-        case '0':
-          tokval += '\0';
+        case 'n':
+          tokval += '\n';
           GetChar();
           break;
 
@@ -606,9 +600,8 @@ void CScanner::scanc(EToken &token, string &tokval)
           GetChar();
           break;
 
-
-        case 'n':
-          tokval += '\n';
+        case '0':
+          tokval += '\0';
           GetChar();
           break;
 
@@ -627,16 +620,16 @@ void CScanner::scanc(EToken &token, string &tokval)
     }
     else {
       tokval += GetChar();
-      waitQ = true;
+      waiting_quot = true;
     }
   }
 }
 
-void CScanner::scanstring(EToken &token, string &tokval)
+void CScanner::ScanString(EToken &token, string &tokval)
 {
   token = tString;
 
-  bool escape = false;
+  bool faced_escape = false;
   while (_in->good()) {
     char c = _in->peek();
 
@@ -644,19 +637,19 @@ void CScanner::scanstring(EToken &token, string &tokval)
       token = tUndefined;
       break;
     }
-    else if (!Asciic(c)) {
+    else if (!IsAsciiChar(c)) {
       token = tUndefined;
       tokval += GetChar();
     }
     else if (c == '\\') {
-      escape ^= true;
+      faced_escape ^= true;
       GetChar();
 
-      if (escape)
+      if (faced_escape)
         tokval += c;
     }
-    else if (escape) {
-      escape = false;
+    else if (faced_escape) {
+      faced_escape = false;
       tokval.pop_back();
 
       switch (c) {
@@ -699,17 +692,17 @@ void CScanner::scanstring(EToken &token, string &tokval)
     token = tUndefined;
 }
 
-void CScanner::delquote(string &tokval)
+void CScanner::TrimQuotation(string &tokval)
 {
   tokval = tokval.substr(1, (int) tokval.size() - 2);
 }
 
-bool CScanner::Asciic(char c) const
+bool CScanner::IsAsciiChar(char c) const
 {
   return ' ' <= c && c <= '~';
 }
 
-bool CScanner::Letter(char c) const
+bool CScanner::IsLetter(char c) const
 {
   if ('A' <= c && c <= 'Z')
     return true;
@@ -719,7 +712,7 @@ bool CScanner::Letter(char c) const
   return c == '_';
 }
 
-bool CScanner::Digit(char c) const
+bool CScanner::IsDigit(char c) const
 {
   return '0' <= c && c <= '9';
 }

@@ -39,26 +39,26 @@ fact:
     mov     %esp, %edi             
     rep     stosl                  
 
-    movl    8(%ebp), %eax           #   0:     if     n <= 0 goto 1_if_true
+    movl    8(%ebp), %eax           #   0:     if     n <= 0 goto 2_if_true
     movl    $0, %ebx               
     cmpl    %ebx, %eax             
-    jle     l_fact_1_if_true       
-    jmp     l_fact_2_if_false       #   1:     goto   2_if_false
-l_fact_1_if_true:
+    jle     l_fact_2_if_true       
+    jmp     l_fact_1_if_false       #   1:     goto   1_if_false
+l_fact_2_if_true:
     movl    $0, %eax                #   3:     return 0
     jmp     l_fact_exit             #   3:     return 0
     jmp     l_fact_0                #   4:     goto   0
-l_fact_2_if_false:
-    movl    8(%ebp), %eax           #   6:     if     n <= 1 goto 6_if_true
+l_fact_1_if_false:
+    movl    8(%ebp), %eax           #   6:     if     n <= 1 goto 7_if_true
     movl    $1, %ebx               
     cmpl    %ebx, %eax             
-    jle     l_fact_6_if_true       
-    jmp     l_fact_7_if_false       #   7:     goto   7_if_false
-l_fact_6_if_true:
+    jle     l_fact_7_if_true       
+    jmp     l_fact_6_if_false       #   7:     goto   6_if_false
+l_fact_7_if_true:
     movl    8(%ebp), %eax           #   9:     return n
     jmp     l_fact_exit             #   9:     return n
     jmp     l_fact_5                #  10:     goto   5
-l_fact_7_if_false:
+l_fact_6_if_false:
     movl    8(%ebp), %eax           #  12:     sub    t8 <- n, 1
     movl    $1, %ebx               
     subl    %ebx, %eax             
@@ -168,13 +168,13 @@ main:
     movl    %eax, -24(%ebp)        
     movl    -24(%ebp), %eax         #   8:     assign i <- t2
     movl    %eax, i                
-l_factorial_5_while_cond:
-    movl    i, %eax                 #  10:     if     i > 0 goto 6_while_body
+l_factorial_6_while_cond:
+    movl    i, %eax                 #  10:     if     i > 0 goto 5_while_body
     movl    $0, %ebx               
     cmpl    %ebx, %eax             
-    jg      l_factorial_6_while_body
+    jg      l_factorial_5_while_body
     jmp     l_factorial_4           #  11:     goto   4
-l_factorial_6_while_body:
+l_factorial_5_while_body:
     leal    _str_3, %eax            #  13:     &()    t3 <- _str_3
     movl    %eax, -28(%ebp)        
     movl    -28(%ebp), %eax         #  14:     param  0 <- t3
@@ -210,7 +210,7 @@ l_factorial_6_while_body:
     movl    %eax, -44(%ebp)        
     movl    -44(%ebp), %eax         #  29:     assign i <- t7
     movl    %eax, i                
-    jmp     l_factorial_5_while_cond #  30:     goto   5_while_cond
+    jmp     l_factorial_6_while_cond #  30:     goto   6_while_cond
 l_factorial_4:
 
 l_factorial_exit:
